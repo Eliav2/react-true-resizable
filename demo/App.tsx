@@ -101,7 +101,7 @@ class MyClassDiv extends React.Component<any, any> {
 
 const MyClassDivForward = React.forwardRef<any, any>((props, ref) => <MyClassDiv innerRef={ref} {...props} />);
 
-const Div3 = React.forwardRef((props, ref) => (
+const Div3 = React.forwardRef<any, any>((props, ref) => (
   <div ref={ref} style={{ border: "solid" }}>
     asd
   </div>
