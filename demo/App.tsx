@@ -5,8 +5,17 @@ import { Box, Paper } from "@mui/material";
 
 const ResizableMuiBottomBar = () => {
   return (
-    <Resizable handlers={["top"]} allHandlerOptions={{ style: { background: "blue" } }} minHeight={40}>
-      <Paper sx={{ height: 60, position: "absolute", bottom: 0, left: 0, right: 0, border: "1px solid black", p: 2 }}>
+    <Resizable handlers={["top"]} allHandlerOptions={{ style: { background: "blue" } }} >
+      <Paper sx={{
+        height: 80,
+        position: "fixed",
+        bottom: 0,
+        left: 0,
+        right: 0,
+        border: "1px solid black",
+        p: 2,
+        minHeight: 40
+      }}>
         <Box>Mui Resizable Bottom bar</Box>
       </Paper>
     </Resizable>
@@ -22,7 +31,7 @@ const ResizableExample = () => {
 
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", position: "relative" }}>
         root Resizable
-        <Resizable onResize={reredner} allHandlerOptions={{ style: { background: "red" } }}>
+        <Resizable onResize={reredner} allHandlerOptions={{ style: { background: "red" } }} >
           <div style={{ border: "20px grey solid", overflow: "hidden" }}>
             <div style={{ height: 200, border: "dashed 1px", marginBottom: 16 }}>
               with relative size
@@ -54,23 +63,26 @@ const ResizableExample = () => {
             <div style={{ border: "dashed 1px" }}>
               display: flex; justify-content: center;
               <div style={{ display: "flex", justifyContent: "center" }}>
-                <Resizable allHandlerOptions={{ style: {} }} grid={10} minHeight={80}>
+                <Resizable allHandlerOptions={{ style: {} }} grid={10} minHeight={80} onResize={reredner}>
                   <Box sx={{ border: "2px solid black", p: 1, height: 100 }}>Box1</Box>
                 </Resizable>
-                <Resizable allHandlerOptions={{ style: {} }} grid={10} minHeight={80}>
+                <Resizable allHandlerOptions={{ style: {} }} grid={10} minHeight={80} onResize={reredner}>
                   <Box sx={{ border: "2px solid black", p: 1, height: 100 }}>Box2</Box>
                 </Resizable>
               </div>
             </div>
           </div>
         </Resizable>
+
       </div>
       <ResizableMuiBottomBar />
+
+
     </>
   );
 };
 
-const MyDivForward = React.forwardRef<any, any>(function ({ children, style, ...props }, ref) {
+const MyDivForward = React.forwardRef<any, any>(function({ children, style, ...props }, ref) {
   // console.log("MyDivForward", style);
   return (
     <div style={{ border: "solid", margin: 16 }} ref={ref}>

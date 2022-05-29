@@ -7,14 +7,16 @@ export default defineConfig({
   plugins: [react()],
   root: "demo",
   build: {
-    emptyOutDir: true,
+    // emptyOutDir: true,
     outDir: path.join(__dirname, "dist"),
     lib: {
       entry: path.join(__dirname, "src", "index.tsx"),
-      formats: ["cjs", "es"],
+      formats: ["cjs", "es"]
     },
     rollupOptions: {
-      external: ["react", "react-dom", "lodash", "react-fast-compare"],
+      external: ["react", "react-dom", "lodash", "react-fast-compare"]
+
     },
-  },
+
+  }
 });

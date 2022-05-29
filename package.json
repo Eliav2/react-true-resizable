@@ -4,10 +4,11 @@
   "description": "",
   "main": "dist/react-true-resizable.cjs.js",
   "module": "dist/react-true-resizable.es.js",
+  "typings": "dist/types",
   "scripts": {
     "prepublishOnly": "pnpm run build",
-    "dev": "vite",
-    "build": "vite build",
+    "dev": "concurrently \"tsc -p ./tsconfig.declarations.json -w\" \"vite build --config ./vite.config.watch.ts\" \"vite\"",
+    "build": "tsc -p tsconfig.declarations.json && vite build",
     "preview": "vite preview"
   },
   "author": "eliav2",
