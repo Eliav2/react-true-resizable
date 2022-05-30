@@ -1,9 +1,5 @@
 import React from "react";
-import clsx from "clsx";
-import styles from "./styles.module.css";
 import Resizable from "react-true-resizable";
-import { ResizableExample } from "../../../../demo/App";
-// import Resizable from "react-true-resizable/demo/App";
 
 const BoxStyle = {
   border: "solid",
@@ -42,19 +38,6 @@ export default function HomepageFeatures() {
             </div>
           </Resizable>
         ))}
-
-        {/*<Resizable>*/}
-        {/*  <div style={BoxStyle}> Resizable</div>*/}
-        {/*</Resizable>*/}
-        {/*<Resizable>*/}
-        {/*  <div style={BoxStyle}> Resizable</div>*/}
-        {/*</Resizable>*/}
-        {/*<Resizable>*/}
-        {/*  <div style={BoxStyle}> Resizable</div>*/}
-        {/*</Resizable>*/}
-        {/*<Resizable>*/}
-        {/*  <div style={BoxStyle}> Resizable</div>*/}
-        {/*</Resizable>*/}
       </div>
     </section>
   );
