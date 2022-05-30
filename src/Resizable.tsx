@@ -44,6 +44,10 @@ const Resizable: React.FC<ResizableProps> = React.forwardRef<any, ResizableProps
   // if the children passed a ref - copy its value instead of creating a new one
   let nodeRef = usePassRef(children);
   if (props.nodeRef) nodeRef = props.nodeRef;
+
+  // if Resizable would be wrapped with other components - the node ref would be passed to the wrapper
+  if (ref && nodeRef) ref.current = nodeRef.current;
+
   const nodePosition = usePosition(nodeRef.current);
 
   const handlerParentRef = useRef(null);
@@ -108,6 +112,7 @@ const Resizable: React.FC<ResizableProps> = React.forwardRef<any, ResizableProps
           {
             // inject ref to the element in not present from parent
             ref: nodeRef,
+            key: "ResizableNode", // required after transpile
             //// todo: should we pass the styles to the child? or should we manipulate styles at the DOM directly?
             // style: {
             //   // boxSizing: "border-box",
@@ -123,10 +128,11 @@ const Resizable: React.FC<ResizableProps> = React.forwardRef<any, ResizableProps
       {/* handles */}
       {nodeRef.current &&
         ReactDOM.createPortal(
-          <div style={{ position: "absolute" }} ref={handlerParentRef}>
+          <div style={{ position: "absolute" }} ref={handlerParentRef} key={"ResizableHandlerParent"}>
             {/*handles*/}
             {nodePosition &&
               handlers.map((handlerName) => {
+                // console.log(handlerName);
                 return (
                   <Handle
                     key={handlerName}

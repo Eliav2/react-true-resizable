@@ -1,28 +1,31 @@
 import React, { useRef, useState } from "react";
-import Resizable from "react-true-resizable";
+import ResizableProd from "react-true-resizable";
+import ResizableDev from "../src/Resizable";
 import useRerender from "shared/hooks/useRerender";
 import { Box, Paper } from "@mui/material";
 
 const ResizableMuiBottomBar = () => {
   return (
-    <Resizable handlers={["top"]} allHandlerOptions={{ style: { background: "blue" } }} >
-      <Paper sx={{
-        height: 80,
-        position: "fixed",
-        bottom: 0,
-        left: 0,
-        right: 0,
-        border: "1px solid black",
-        p: 2,
-        minHeight: 40
-      }}>
+    <ResizableProd handlers={["top"]} allHandlerOptions={{ style: { background: "blue" } }}>
+      <Paper
+        sx={{
+          height: 80,
+          position: "fixed",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          border: "1px solid black",
+          p: 2,
+          minHeight: 40,
+        }}
+      >
         <Box>Mui Resizable Bottom bar</Box>
       </Paper>
-    </Resizable>
+    </ResizableProd>
   );
 };
 
-const ResizableExample = () => {
+export const ResizableExample = () => {
   const reredner = useRerender();
 
   return (
@@ -31,11 +34,11 @@ const ResizableExample = () => {
 
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", position: "relative" }}>
         root Resizable
-        <Resizable onResize={reredner} allHandlerOptions={{ style: { background: "red" } }} >
+        <ResizableProd onResize={reredner} allHandlerOptions={{ style: { background: "red" } }}>
           <div style={{ border: "20px grey solid", overflow: "hidden" }}>
             <div style={{ height: 200, border: "dashed 1px", marginBottom: 16 }}>
               with relative size
-              <Resizable
+              <ResizableProd
                 allHandlerOptions={{ style: { background: "red" } }}
                 handlersOptions={{ left: { size: 24 }, top: { size: 4 } }}
               >
@@ -47,9 +50,9 @@ const ResizableExample = () => {
                   <br />
                   my handles have different sizes
                 </div>
-              </Resizable>
+              </ResizableProd>
             </div>
-            <Resizable
+            <ResizableProd
               grid={20}
               handlers={["top", "bottom"]}
               allHandlerOptions={{ style: { background: "blue" } }}
@@ -58,31 +61,28 @@ const ResizableExample = () => {
               <Box style={{ border: "2px solid black", padding: 8, margin: 16 }}>
                 resizable only vertically with grid 20
               </Box>
-            </Resizable>
+            </ResizableProd>
 
             <div style={{ border: "dashed 1px" }}>
               display: flex; justify-content: center;
               <div style={{ display: "flex", justifyContent: "center" }}>
-                <Resizable allHandlerOptions={{ style: {} }} grid={10} minHeight={80} onResize={reredner}>
+                <ResizableProd allHandlerOptions={{ style: {} }} grid={10} minHeight={80} onResize={reredner}>
                   <Box sx={{ border: "2px solid black", p: 1, height: 100 }}>Box1</Box>
-                </Resizable>
-                <Resizable allHandlerOptions={{ style: {} }} grid={10} minHeight={80} onResize={reredner}>
+                </ResizableProd>
+                <ResizableProd allHandlerOptions={{ style: {} }} grid={10} minHeight={80} onResize={reredner}>
                   <Box sx={{ border: "2px solid black", p: 1, height: 100 }}>Box2</Box>
-                </Resizable>
+                </ResizableProd>
               </div>
             </div>
           </div>
-        </Resizable>
-
+        </ResizableProd>
       </div>
       <ResizableMuiBottomBar />
-
-
     </>
   );
 };
 
-const MyDivForward = React.forwardRef<any, any>(function({ children, style, ...props }, ref) {
+const MyDivForward = React.forwardRef<any, any>(function ({ children, style, ...props }, ref) {
   // console.log("MyDivForward", style);
   return (
     <div style={{ border: "solid", margin: 16 }} ref={ref}>
@@ -131,11 +131,14 @@ function App() {
     <div style={{ textAlign: "center" }}>
       <button onClick={() => reredner()}>rerender</button>
 
-      <ResizableExample />
+      {/*<ResizableExample />*/}
 
-      {/*<Resizable>*/}
-      {/*  <div style={{ border: "solid", margin: 16 }}>Simple resizable div</div>*/}
-      {/*</Resizable>*/}
+      <ResizableProd>
+        <div style={{ border: "solid", margin: 16 }}>ResizableProd</div>
+      </ResizableProd>
+      <ResizableDev>
+        <div style={{ border: "solid", margin: 16 }}>ResizableDev</div>
+      </ResizableDev>
 
       <div style={{ border: "solid", margin: 16 }}>normal div</div>
 

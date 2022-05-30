@@ -11,8 +11,7 @@ export default defineConfig({
     ...defaultViteConfig.build,
     watch: {
       include: path.join(__dirname, "src/**/*"),
-      clearScreen:false,
-
-    }
-  }
+      clearScreen: false,
+    },
+  },
 });

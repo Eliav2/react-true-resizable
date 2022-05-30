@@ -18,7 +18,7 @@
     "noImplicitAny": false,
     "declaration": true,
   },
-  "include": ["."],
+  "include": ["./*"],
   "exclude": ["node_modules"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
