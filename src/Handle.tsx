@@ -1,10 +1,10 @@
 import React, { useRef, useState } from "react";
 import usePosition, { positionType } from "shared/hooks/usePosition";
-import { handlerNameType, handlerOptionsType, ResizableProps } from "./Resizable";
+import { handleNameType, handleOptionsType, ResizableProps } from "./Resizable";
 import useRerender from "shared/hooks/useRerender";
 import { HandleStyleFnType } from "./HandleFns";
 
-export interface HandlerProps {
+export interface HandleProps {
   ResizableProps: ResizableProps;
   nodePosition: positionType;
   nodeRef: React.RefObject<any>;
@@ -12,9 +12,9 @@ export interface HandlerProps {
   setCalculatedWidth: React.Dispatch<React.SetStateAction<number | null>>;
   grid: number | undefined;
   HandleStyleFn: HandleStyleFnType;
-  handlersParentPosition: positionType;
-  handlerOptions: handlerOptionsType;
-  handlersOptions: { [key in handlerNameType]: handlerOptionsType };
+  handlesParentPosition: positionType;
+  handleOptions: handleOptionsType;
+  handlesOptions: { [key in handleNameType]: handleOptionsType };
   delayRenders?: number;
 }
 
@@ -27,11 +27,11 @@ export const Handle = React.forwardRef(
       setCalculatedWidth,
       grid,
       HandleStyleFn,
-      handlersParentPosition,
-      handlerOptions,
-      handlersOptions,
+      handlesParentPosition,
+      handleOptions,
+      handlesOptions,
       ResizableProps,
-    }: HandlerProps,
+    }: HandleProps,
     ref
   ) => {
     const render = useRerender();
@@ -78,9 +78,8 @@ export const Handle = React.forwardRef(
     };
     const onPointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
       if (isDragging) {
-        if ("vertical" in handlerOptions.allowResize) {
-          const dragDirVertical = handlerOptions.allowResize["vertical"]?.reverseDrag ? -1 : 1;
-          console.log(dragDirVertical);
+        if ("vertical" in handleOptions.allowResize) {
+          const dragDirVertical = handleOptions.allowResize["vertical"]?.reverseDrag ? -1 : 1;
           let height =
             initialDraggingElementSize.height - //  move relative to the elements size
             // change position relative to the pointer position
@@ -91,8 +90,8 @@ export const Handle = React.forwardRef(
           if (ResizableProps.minHeight && height < ResizableProps.minHeight) height = ResizableProps.minHeight;
           setCalculatedHeight(height);
         }
-        if ("horizontal" in handlerOptions.allowResize) {
-          const dragDirHorizontal = handlerOptions.allowResize["horizontal"]?.reverseDrag ? -1 : 1;
+        if ("horizontal" in handleOptions.allowResize) {
+          const dragDirHorizontal = handleOptions.allowResize["horizontal"]?.reverseDrag ? -1 : 1;
           let width =
             initialDraggingElementSize.width - //  move relative to the elements size
             // change position relative to the pointer position
@@ -110,9 +109,9 @@ export const Handle = React.forwardRef(
     const style = HandleStyleFn({
       nodePosition,
       handlerPos,
-      handlersParentPosition,
-      handlerSize: handlerOptions.size,
-      handlersOptions: handlersOptions,
+      handlesParentPosition,
+      handlerSize: handleOptions.size,
+      handlesOptions: handlesOptions,
     });
 
     return (
@@ -122,7 +121,7 @@ export const Handle = React.forwardRef(
           // background: "green",
           position: "absolute",
           ...style,
-          ...handlerOptions.style,
+          ...handleOptions.style,
         }}
         onPointerMove={onPointerMove}
         onPointerDown={onPointerDown}

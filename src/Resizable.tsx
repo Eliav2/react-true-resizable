@@ -8,30 +8,33 @@ import ReactDOM from "react-dom";
 import { defaultHandlersFn } from "./HandleFns";
 
 export interface ResizableProps {
+  // A simple React element(like div) or React forwardRef element(React element which passed down a ref to a DOM element)
   children?: React.ReactElement;
-  // children: React.ReactElement<any, React.ReactHTML[keyof React.ReactHTML]>;
+  // Allow resize with respect to a grid
   grid?: number;
-  onResize?: ((dims: positionType) => void) | null;
-  renderRef?: React.RefObject<any>;
-  delayRenders?: number;
-  handlers?: handlerNameType[];
-  onResizeTop?: ((dims: positionType) => positionType) | null;
-  allHandlerOptions?: Partial<Partial<handlerOptionsType>>;
-  handlersOptions?: { [key in handlerNameType]?: Partial<handlerOptionsType> };
-  reverseDrag?: boolean;
+  // a callback that is called after resize ended and the DOM element is updated
+  onResizeEffect?: ((dims: positionType) => void) | null;
+
+  // renderRef?: React.RefObject<any>; // @deprecated
+
+  // An array handlers to enable
+  handles?: handleNameType[];
+  // options that will be passed to all handles
+  allHandlerOptions?: Partial<Partial<handleOptionsType>>;
+  handlersOptions?: { [key in handleNameType]?: Partial<handleOptionsType> };
   minHeight?: number;
   minWidth?: number;
   nodeRef?: React.RefObject<any>;
 }
 
-const Resizable: React.FC<ResizableProps> = React.forwardRef<any, ResizableProps>((props, ref) => {
+const Resizable: React.FC<ResizableProps> = React.forwardRef((props: ResizableProps, ref) => {
   // console.log("Resizable");
   let {
     grid,
     children,
-    onResize,
-    renderRef,
-    handlers = Object.keys(defaultHandlersFn) as handlerNameType[],
+    onResizeEffect,
+    // renderRef,
+    handles = Object.keys(defaultHandlersFn) as handleNameType[],
     allHandlerOptions = {},
     handlersOptions = {},
   } = props;
@@ -49,17 +52,20 @@ const Resizable: React.FC<ResizableProps> = React.forwardRef<any, ResizableProps
   const nodePosition = usePosition(nodeRef.current);
 
   const handlerParentRef = useRef(null);
-  const handlersParentPosition = usePosition(handlerParentRef.current);
+  const handlesParentPosition = usePosition(handlerParentRef.current);
 
   const [calculatedHeight, setCalculatedHeight] = useState<number | null>(null);
   const [calculatedWidth, setCalculatedWidth] = useState<number | null>(null);
+
+  // add event listeners to the window on mount
   useLayoutEffect(() => {
-    if (renderRef)
-      // @ts-ignore
-      renderRef.current = render;
-    window.addEventListener("resize", (e) => {
-      render();
-    });
+    // if (renderRef)
+    //   // @ts-ignore
+    //   renderRef.current = render;
+    window.addEventListener("resize", render);
+    return () => {
+      window.removeEventListener("resize", render);
+    };
   }, []);
 
   useLayoutEffect(() => {
@@ -69,22 +75,24 @@ const Resizable: React.FC<ResizableProps> = React.forwardRef<any, ResizableProps
   }, [nodeRef.current]);
 
   useLayoutEffect(() => {
-    onResize && onResize(nodePosition);
+    onResizeEffect && onResizeEffect(nodePosition);
   }, [calculatedHeight, calculatedWidth]);
 
   // strip away checks in production build
   if (!process.env.NODE_ENV || process.env.NODE_ENV !== "production") checkProps(props);
 
-  let finalHandlersOptions = {} as { [key in handlerNameType]: handlerOptionsType };
+  let finalHandlersOptions = {} as { [key in handleNameType]: handleOptionsType };
   // fill up empty handles sizes
-  for (const handle of handlers) {
+  for (const handle of handles) {
     if (handle in mergedHandlersOptions) {
       finalHandlersOptions[handle] = merge(cloneDeep(mergedHandlerOptions), mergedHandlersOptions[handle]);
     }
   }
 
-  const enableHorizontal = handlers.includes("left") || handlers.includes("right");
-  const enableVertical = handlers.includes("top") || handlers.includes("bottom");
+  // const enableHorizontal = handlers.includes("left") || handlers.includes("right");
+  // const enableVertical = handlers.includes("top") || handlers.includes("bottom");
+  const enableHorizontal = handles.find((h) => h.toLowerCase().includes("left") || h.toLowerCase().includes("right"));
+  const enableVertical = handles.find((h) => h.toLowerCase().includes("top") || h.toLowerCase().includes("bottom"));
   const height = enableVertical ? calculatedHeight ?? children?.props?.style?.height ?? undefined : undefined;
   const width = enableHorizontal ? calculatedWidth ?? children?.props?.style?.width ?? undefined : undefined;
 
@@ -127,7 +135,7 @@ const Resizable: React.FC<ResizableProps> = React.forwardRef<any, ResizableProps
           <div style={{ position: "absolute" }} ref={handlerParentRef} key={"ResizableHandlerParent"}>
             {/*handles*/}
             {nodePosition &&
-              handlers.map((handlerName) => {
+              handles.map((handlerName) => {
                 // console.log(handlerName);
                 return (
                   <Handle
@@ -139,9 +147,9 @@ const Resizable: React.FC<ResizableProps> = React.forwardRef<any, ResizableProps
                       setCalculatedWidth,
                       grid,
                       HandleStyleFn: defaultHandlersFn[handlerName],
-                      handlersParentPosition,
-                      handlerOptions: finalHandlersOptions[handlerName],
-                      handlersOptions: finalHandlersOptions,
+                      handlesParentPosition,
+                      handleOptions: finalHandlersOptions[handlerName],
+                      handlesOptions: finalHandlersOptions,
                     }}
                     ResizableProps={props}
                   />
@@ -153,12 +161,6 @@ const Resizable: React.FC<ResizableProps> = React.forwardRef<any, ResizableProps
     </>
   );
 });
-
-// const DelayedResizable: React.FC<ResizableProps> = React.forwardRef<any, ResizableProps>((props, ref) => {
-//   // console.log("DelayedResizeable");
-//   const delayRenders = props.delayRenders ?? 3;
-//   return <DelayedComponent delayRenders={delayRenders}>{() => <Resizable {...props} ref={ref} />}</DelayedComponent>;
-// });
 
 const checkProps = ({ children, nodeRef }: ResizableProps) => {
   {
@@ -188,20 +190,17 @@ const checkProps = ({ children, nodeRef }: ResizableProps) => {
 };
 
 type allowResizeType = "horizontal" | "vertical";
-export type handlerOptionsType = {
-  // allowResize: allowResizeType[];
-  // reverseDrag: boolean;
+export type handleOptionsType = {
   allowResize: { [key in allowResizeType]?: { reverseDrag: boolean } };
   size: number;
   style: React.CSSProperties;
 };
 
-const defaultHandlerOptions: Partial<handlerOptionsType> = {
-  // reverseDrag: false,
+const defaultHandlerOptions: Partial<handleOptionsType> = {
   size: 10,
 };
 
-const defaultHandlersOptions: { [key in handlerNameType]: Partial<handlerOptionsType> } = {
+const defaultHandlersOptions: { [key in handleNameType]: Partial<handleOptionsType> } = {
   top: { allowResize: { vertical: { reverseDrag: true } } },
   left: { allowResize: { horizontal: { reverseDrag: true } } },
   bottom: { allowResize: { vertical: { reverseDrag: false } } },
@@ -210,14 +209,12 @@ const defaultHandlersOptions: { [key in handlerNameType]: Partial<handlerOptions
   bottomLeft: { allowResize: { horizontal: { reverseDrag: true }, vertical: { reverseDrag: false } } },
   topRight: { allowResize: { horizontal: { reverseDrag: false }, vertical: { reverseDrag: true } } },
   topLeft: { allowResize: { horizontal: { reverseDrag: true }, vertical: { reverseDrag: true } } },
-
-  // topRight: { allowResize: ["horizontal", "vertical"], reverseDrag: false },
 };
 
-export type handlerNameType = keyof typeof defaultHandlersFn;
+export type handleNameType = keyof typeof defaultHandlersFn;
 
 Resizable.defaultProps = {
-  handlers: Object.keys(defaultHandlersFn) as handlerNameType[],
+  handles: Object.keys(defaultHandlersFn) as handleNameType[],
   minWidth: 0,
   minHeight: 0,
 };

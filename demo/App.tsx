@@ -131,7 +131,7 @@ function App() {
     <div style={{ textAlign: "center" }}>
       <button onClick={() => reredner()}>rerender</button>
 
-      {/*<ResizableExample />*/}
+      <ResizableExample />
 
       <ResizableProd>
         <div style={{ border: "solid", margin: 16 }}>ResizableProd</div>
