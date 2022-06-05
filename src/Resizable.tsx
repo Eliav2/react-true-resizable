@@ -21,7 +21,6 @@ export interface ResizableProps {
   reverseDrag?: boolean;
   minHeight?: number;
   minWidth?: number;
-  strategy?: "dom-tree" | "react-tree";
   nodeRef?: React.RefObject<any>;
 }
 
@@ -35,7 +34,6 @@ const Resizable: React.FC<ResizableProps> = React.forwardRef<any, ResizableProps
     handlers = Object.keys(defaultHandlersFn) as handlerNameType[],
     allHandlerOptions = {},
     handlersOptions = {},
-    strategy,
   } = props;
   let mergedHandlersOptions = merge(cloneDeep(defaultHandlersOptions), handlersOptions);
   let mergedHandlerOptions = merge(cloneDeep(defaultHandlerOptions), allHandlerOptions);
@@ -89,18 +87,16 @@ const Resizable: React.FC<ResizableProps> = React.forwardRef<any, ResizableProps
   const enableVertical = handlers.includes("top") || handlers.includes("bottom");
   const height = enableVertical ? calculatedHeight ?? children?.props?.style?.height ?? undefined : undefined;
   const width = enableHorizontal ? calculatedWidth ?? children?.props?.style?.width ?? undefined : undefined;
-  // console.log(children);
-  // console.log("Resizable", handlerParentRef.current, children?.props.children);
 
+  // control the size of the node
   if (nodeRef?.current) {
     if (height) nodeRef.current.style.height = height + "px";
     if (width) nodeRef.current.style.width = width + "px";
   }
+  // "border-box" sizing is required for correct positioning of handles
   useEffect(() => {
     if (nodeRef?.current) nodeRef.current.style.boxSizing = "border-box";
   }, [nodeRef.current]);
-
-  // console.log(nodeRef.current.parentElement);
 
   return (
     <>
@@ -193,22 +189,29 @@ const checkProps = ({ children, nodeRef }: ResizableProps) => {
 
 type allowResizeType = "horizontal" | "vertical";
 export type handlerOptionsType = {
-  allowResize: allowResizeType[];
-  reverseDrag: boolean;
+  // allowResize: allowResizeType[];
+  // reverseDrag: boolean;
+  allowResize: { [key in allowResizeType]?: { reverseDrag: boolean } };
   size: number;
   style: React.CSSProperties;
 };
 
 const defaultHandlerOptions: Partial<handlerOptionsType> = {
-  reverseDrag: false,
+  // reverseDrag: false,
   size: 10,
 };
 
 const defaultHandlersOptions: { [key in handlerNameType]: Partial<handlerOptionsType> } = {
-  top: { allowResize: ["vertical"], reverseDrag: true },
-  left: { allowResize: ["horizontal"], reverseDrag: true },
-  bottom: { allowResize: ["vertical"], reverseDrag: false },
-  right: { allowResize: ["horizontal"], reverseDrag: false },
+  top: { allowResize: { vertical: { reverseDrag: true } } },
+  left: { allowResize: { horizontal: { reverseDrag: true } } },
+  bottom: { allowResize: { vertical: { reverseDrag: false } } },
+  right: { allowResize: { horizontal: { reverseDrag: false } } },
+  bottomRight: { allowResize: { horizontal: { reverseDrag: false }, vertical: { reverseDrag: false } } },
+  bottomLeft: { allowResize: { horizontal: { reverseDrag: true }, vertical: { reverseDrag: false } } },
+  topRight: { allowResize: { horizontal: { reverseDrag: false }, vertical: { reverseDrag: true } } },
+  topLeft: { allowResize: { horizontal: { reverseDrag: true }, vertical: { reverseDrag: true } } },
+
+  // topRight: { allowResize: ["horizontal", "vertical"], reverseDrag: false },
 };
 
 export type handlerNameType = keyof typeof defaultHandlersFn;
@@ -217,7 +220,6 @@ Resizable.defaultProps = {
   handlers: Object.keys(defaultHandlersFn) as handlerNameType[],
   minWidth: 0,
   minHeight: 0,
-  strategy: "react-tree",
 };
 
 // export default DelayedResizable;

@@ -1,5 +1,5 @@
 import { round } from "./utils";
-import React, { useLayoutEffect, useRef } from "react";
+import React from "react";
 import { positionType } from "shared/hooks/usePosition";
 import { handlerNameType, handlerOptionsType } from "./Resizable";
 
@@ -11,12 +11,10 @@ export type HandleStyleFnType = (arg: {
   handlerSize: number;
   handlersOptions: { [key in handlerNameType]?: handlerOptionsType };
 }) => React.CSSProperties | undefined;
+
 /**
  *  Handles Styles
  *
- *  'right' special case (since the relative position depends on him) - for him, we will get the wanted style
- *  via relatively complicated special hook which can remembers last stable position and adjust the new style based on the
- *  last stable position.
  ***************************************************************/
 
 export const topHandlerStyle: HandleStyleFnType = ({
@@ -32,7 +30,7 @@ export const topHandlerStyle: HandleStyleFnType = ({
   return {
     top: round(top),
     left: round(nodePosition.left - handlersParentPosition.left + (handlersOptions.left?.size ?? 0)),
-    cursor: "n-resize",
+    cursor: "ns-resize",
     width: round(nodePosition?.width - (handlersOptions.left?.size ?? 0) - (handlersOptions.right?.size ?? 0)),
     height: handlerSize,
   };
@@ -50,7 +48,7 @@ export const bottomHandlerStyle: HandleStyleFnType = ({
   return {
     top: round(top),
     left: round(nodePosition.left - handlersParentPosition.left + (handlersOptions.left?.size ?? 0)),
-    cursor: "n-resize",
+    cursor: "ns-resize",
     width: round(nodePosition?.width - (handlersOptions.left?.size ?? 0) - (handlersOptions.right?.size ?? 0)),
     height: handlerSize,
   };
@@ -65,12 +63,12 @@ export const leftHandlerStyle: HandleStyleFnType = ({
   return {
     top: nodePosition.top - handlersParentPosition.top,
     left: nodePosition.left - handlersParentPosition.left,
-    cursor: "e-resize",
+    cursor: "ew-resize",
     height: nodePosition?.height,
     width: handlerSize,
   };
 };
-export const useRightHandlerStyle: HandleStyleFnType = ({
+export const rightHandlerStyle: HandleStyleFnType = ({
   nodePosition,
   handlerPos,
   handlersParentPosition,
@@ -82,14 +80,89 @@ export const useRightHandlerStyle: HandleStyleFnType = ({
   return {
     top: round(nodePosition.top - handlersParentPosition.top),
     left: round(left),
-    cursor: "e-resize",
+    cursor: "ew-resize",
     height: round(nodePosition?.height),
     width: round(handlerSize),
   };
 };
+export const bottomRightHandlerStyle: HandleStyleFnType = ({
+  nodePosition,
+  handlerPos,
+  handlersParentPosition,
+  handlerSize,
+}) => {
+  if (!nodePosition || !handlerPos || !handlersParentPosition) return {};
+  let left = nodePosition.width - handlerSize - (handlersParentPosition.left - nodePosition.left);
+
+  return {
+    top: round(nodePosition.top - handlersParentPosition.top + nodePosition.height - handlerSize),
+    left: round(left),
+    cursor: "nwse-resize",
+    height: round(handlerSize),
+    width: round(handlerSize),
+    background: "blue",
+  } as React.CSSProperties;
+};
+
+export const bottomLeftHandlerStyle: HandleStyleFnType = ({
+  nodePosition,
+  handlerPos,
+  handlersParentPosition,
+  handlerSize,
+}) => {
+  if (!nodePosition || !handlerPos || !handlersParentPosition) return {};
+  return {
+    top: nodePosition.height + -handlerSize + nodePosition.top - handlersParentPosition.top,
+    left: nodePosition.left - handlersParentPosition.left,
+    cursor: "nesw-resize",
+    height: handlerSize,
+    width: handlerSize,
+    background: "blue",
+  } as React.CSSProperties;
+};
+export const topRightHandlerStyle: HandleStyleFnType = ({
+  nodePosition,
+  handlerPos,
+  handlersParentPosition,
+  handlerSize,
+}) => {
+  if (!nodePosition || !handlerPos || !handlersParentPosition) return {};
+  let left = nodePosition.width - handlerSize - (handlersParentPosition.left - nodePosition.left);
+
+  return {
+    top: round(nodePosition.top - handlersParentPosition.top),
+    left: round(left),
+    cursor: "nesw-resize",
+    height: round(handlerSize),
+    width: round(handlerSize),
+    background: "red",
+  };
+};
+export const topLeftHandlerStyle: HandleStyleFnType = ({
+  nodePosition,
+  handlerPos,
+  handlersParentPosition,
+  handlerSize,
+}) => {
+  if (!nodePosition || !handlerPos || !handlersParentPosition) return {};
+
+  return {
+    top: round(nodePosition.top - handlersParentPosition.top),
+    left: round(nodePosition.left - handlersParentPosition.left),
+    cursor: "nwse-resize",
+    height: round(handlerSize),
+    width: round(handlerSize),
+    background: "purple",
+  };
+};
+
 export const defaultHandlersFn = {
   top: topHandlerStyle,
   left: leftHandlerStyle,
   bottom: bottomHandlerStyle,
-  right: useRightHandlerStyle,
+  right: rightHandlerStyle,
+  bottomRight: bottomRightHandlerStyle,
+  bottomLeft: bottomLeftHandlerStyle,
+  topRight: topRightHandlerStyle,
+  topLeft: topLeftHandlerStyle,
 } as const;

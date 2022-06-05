@@ -18,7 +18,7 @@ export interface HandlerProps {
   delayRenders?: number;
 }
 
-export const Handle: React.FC<HandlerProps> = React.forwardRef(
+export const Handle = React.forwardRef(
   (
     {
       nodeRef,
@@ -31,7 +31,7 @@ export const Handle: React.FC<HandlerProps> = React.forwardRef(
       handlerOptions,
       handlersOptions,
       ResizableProps,
-    },
+    }: HandlerProps,
     ref
   ) => {
     const render = useRerender();
@@ -78,26 +78,28 @@ export const Handle: React.FC<HandlerProps> = React.forwardRef(
     };
     const onPointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
       if (isDragging) {
-        const dragDir = handlerOptions.reverseDrag ? -1 : 1;
-        if (handlerOptions.allowResize.includes("vertical")) {
+        if ("vertical" in handlerOptions.allowResize) {
+          const dragDirVertical = handlerOptions.allowResize["vertical"]?.reverseDrag ? -1 : 1;
+          console.log(dragDirVertical);
           let height =
             initialDraggingElementSize.height - //  move relative to the elements size
             // change position relative to the pointer position
-            (initialDraggingPointerPos.y - event.clientY) * dragDir;
+            (initialDraggingPointerPos.y - event.clientY) * dragDirVertical;
           if (grid)
             // snap to grid with initial grid offset
-            height -= ((event.clientY % grid) - (initialDraggingPointerPos.y % grid)) * dragDir;
+            height -= ((event.clientY % grid) - (initialDraggingPointerPos.y % grid)) * dragDirVertical;
           if (ResizableProps.minHeight && height < ResizableProps.minHeight) height = ResizableProps.minHeight;
           setCalculatedHeight(height);
         }
-        if (handlerOptions.allowResize.includes("horizontal")) {
+        if ("horizontal" in handlerOptions.allowResize) {
+          const dragDirHorizontal = handlerOptions.allowResize["horizontal"]?.reverseDrag ? -1 : 1;
           let width =
             initialDraggingElementSize.width - //  move relative to the elements size
             // change position relative to the pointer position
-            (initialDraggingPointerPos.x - event.clientX) * dragDir;
+            (initialDraggingPointerPos.x - event.clientX) * dragDirHorizontal;
           if (grid)
             // snap to grid with initial grid offset
-            width -= ((event.clientX % grid) - (initialDraggingPointerPos.x % grid)) * dragDir;
+            width -= ((event.clientX % grid) - (initialDraggingPointerPos.x % grid)) * dragDirHorizontal;
           if (ResizableProps.minWidth && width < ResizableProps.minWidth) width = ResizableProps.minWidth;
 
           setCalculatedWidth(width);

@@ -10,6 +10,7 @@ const BoxStyle = {
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
+  overflow: "hidden",
 } as const;
 
 export default function HomepageFeatures() {
@@ -18,7 +19,8 @@ export default function HomepageFeatures() {
     setBoxex(boxes.filter((box) => box.id !== id));
   };
   const addBox = () => {
-    setBoxex([...boxes, { id: Math.max(...boxes.map((box) => box.id)) + 1 }]);
+    let nextId = (boxes.length && Math.max(...boxes.map((box) => box.id)) + 1) || 0;
+    setBoxex([...boxes, { id: nextId }]);
   };
   return (
     <section style={{ textAlign: "center" }}>
