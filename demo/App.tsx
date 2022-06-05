@@ -34,7 +34,7 @@ export const ResizableExample = () => {
 
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", position: "relative" }}>
         root Resizable
-        <ResizableProd onResize={reredner} allHandlerOptions={{ style: { background: "red" } }}>
+        <ResizableProd onResizeEffect={reredner} allHandlerOptions={{ style: { background: "red" } }}>
           <div style={{ border: "20px grey solid", overflow: "hidden" }}>
             <div style={{ height: 200, border: "dashed 1px", marginBottom: 16 }}>
               with relative size
@@ -54,9 +54,9 @@ export const ResizableExample = () => {
             </div>
             <ResizableProd
               grid={20}
-              handlers={["top", "bottom"]}
+              handles={["top", "bottom"]}
               allHandlerOptions={{ style: { background: "blue" } }}
-              onResize={reredner}
+              onResizeEffect={reredner}
             >
               <Box style={{ border: "2px solid black", padding: 8, margin: 16 }}>
                 resizable only vertically with grid 20
@@ -66,10 +66,10 @@ export const ResizableExample = () => {
             <div style={{ border: "dashed 1px" }}>
               display: flex; justify-content: center;
               <div style={{ display: "flex", justifyContent: "center" }}>
-                <ResizableProd allHandlerOptions={{ style: {} }} grid={10} minHeight={80} onResize={reredner}>
+                <ResizableProd allHandlerOptions={{ style: {} }} grid={10} minHeight={80} onResizeEffect={reredner}>
                   <Box sx={{ border: "2px solid black", p: 1, height: 100 }}>Box1</Box>
                 </ResizableProd>
-                <ResizableProd allHandlerOptions={{ style: {} }} grid={10} minHeight={80} onResize={reredner}>
+                <ResizableProd allHandlerOptions={{ style: {} }} grid={10} minHeight={80} onResizeEffect={reredner}>
                   <Box sx={{ border: "2px solid black", p: 1, height: 100 }}>Box2</Box>
                 </ResizableProd>
               </div>
