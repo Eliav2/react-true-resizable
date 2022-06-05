@@ -6,7 +6,7 @@ import { Box, Paper } from "@mui/material";
 
 const ResizableMuiBottomBar = () => {
   return (
-    <ResizableProd handlers={["top"]} allHandlerOptions={{ style: { background: "blue" } }}>
+    <ResizableProd handles={["top"]} allHandlerOptions={{ style: { background: "blue" } }}>
       <Paper
         sx={{
           height: 80,
