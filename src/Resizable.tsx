@@ -25,6 +25,9 @@ export interface ResizableProps {
   minHeight?: number;
   minWidth?: number;
   nodeRef?: React.RefObject<any>;
+
+  controlHeight?: boolean;
+  controlWidth?: boolean;
 }
 
 const Resizable: React.FC<ResizableProps> = React.forwardRef((props: ResizableProps, ref) => {
@@ -33,10 +36,11 @@ const Resizable: React.FC<ResizableProps> = React.forwardRef((props: ResizablePr
     grid,
     children,
     onResizeEffect,
-    // renderRef,
     handles = Object.keys(defaultHandlersFn) as handleNameType[],
     allHandlerOptions = {},
     handlersOptions = {},
+    controlHeight = true,
+    controlWidth = true,
   } = props;
   let mergedHandlersOptions = merge(cloneDeep(defaultHandlersOptions), handlersOptions);
   let mergedHandlerOptions = merge(cloneDeep(defaultHandlerOptions), allHandlerOptions);
@@ -68,10 +72,17 @@ const Resizable: React.FC<ResizableProps> = React.forwardRef((props: ResizablePr
     };
   }, []);
 
+  const [initialHeight, setInitialHeight] = useState();
+  const [initialWidth, setInitialWidth] = useState();
   useLayoutEffect(() => {
-    let { height, width } = nodeRef?.current?.getBoundingClientRect?.() ?? {};
-    setCalculatedHeight(height);
-    setCalculatedWidth(width);
+    if (nodeRef.current) {
+      let { height, width } = nodeRef?.current?.getBoundingClientRect?.() ?? {};
+      setCalculatedHeight(height);
+      setCalculatedWidth(width);
+
+      setInitialHeight(nodeRef?.current.style.height ?? null);
+      setInitialWidth(nodeRef?.current.style.width ?? null);
+    }
   }, [nodeRef.current]);
 
   useLayoutEffect(() => {
@@ -89,22 +100,26 @@ const Resizable: React.FC<ResizableProps> = React.forwardRef((props: ResizablePr
     }
   }
 
-  // const enableHorizontal = handlers.includes("left") || handlers.includes("right");
-  // const enableVertical = handlers.includes("top") || handlers.includes("bottom");
-  const enableHorizontal = handles.find((h) => h.toLowerCase().includes("left") || h.toLowerCase().includes("right"));
-  const enableVertical = handles.find((h) => h.toLowerCase().includes("top") || h.toLowerCase().includes("bottom"));
-  const height = enableVertical ? calculatedHeight ?? children?.props?.style?.height ?? undefined : undefined;
-  const width = enableHorizontal ? calculatedWidth ?? children?.props?.style?.width ?? undefined : undefined;
+  const enableHorizontal =
+    controlWidth && handles.find((h) => h.toLowerCase().includes("left") || h.toLowerCase().includes("right"));
+  const enableVertical =
+    controlHeight && handles.find((h) => h.toLowerCase().includes("top") || h.toLowerCase().includes("bottom"));
+  const height = enableVertical ? calculatedHeight ?? nodeRef?.current?.style?.height ?? undefined : undefined;
+  const width = enableHorizontal ? calculatedWidth ?? nodeRef?.current?.style?.width ?? undefined : undefined;
 
   // control the size of the node
   if (nodeRef?.current) {
-    if (height) nodeRef.current.style.height = height + "px";
-    if (width) nodeRef.current.style.width = width + "px";
+    nodeRef.current.style.height = height ? height + "px" : initialHeight;
+    nodeRef.current.style.width = width ? width + "px" : initialWidth;
   }
   // "border-box" sizing is required for correct positioning of handles
   useEffect(() => {
     if (nodeRef?.current) nodeRef.current.style.boxSizing = "border-box";
   }, [nodeRef.current]);
+
+  useEffect(() => {
+    render();
+  }, [props.handles]);
 
   return (
     <>

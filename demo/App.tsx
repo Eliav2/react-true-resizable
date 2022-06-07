@@ -1,8 +1,9 @@
 import React, { useRef, useState } from "react";
-import ResizableProd from "react-true-resizable";
+import ResizableProd, { handleNameType } from "react-true-resizable";
 import ResizableDev from "../src/Resizable";
 import useRerender from "shared/hooks/useRerender";
 import { Box, Paper } from "@mui/material";
+import "./App.css";
 
 const ResizableMuiBottomBar = () => {
   return (
@@ -22,6 +23,32 @@ const ResizableMuiBottomBar = () => {
         <Box>Mui Resizable Bottom bar</Box>
       </Paper>
     </ResizableProd>
+  );
+};
+
+const GridResizable = ({ reredner }) => {
+  const [allowHResize, setAllowHResize] = useState(false);
+  const [allowVResize, setAllowVResize] = useState(false);
+  const handles: handleNameType[] = [];
+  if (allowHResize) handles.push("left", "right");
+  if (allowVResize) handles.push("top", "bottom");
+  return (
+    <>
+      allow horizontal resize
+      <input type="checkbox" checked={allowHResize} onChange={() => setAllowHResize(!allowHResize)} />
+      allow vertical resize
+      <input type="checkbox" checked={allowVResize} onChange={() => setAllowVResize(!allowVResize)} />
+      <ResizableProd
+        grid={20}
+        handles={handles}
+        allHandlerOptions={{ style: { background: "blue" } }}
+        onResizeEffect={reredner}
+      >
+        <Box className={"grid-resizable"} style={{ border: "2px solid black", padding: 8, margin: 16, height: 200 }}>
+          resizable only vertically {allowHResize && "and horizontally"} with grid 20
+        </Box>
+      </ResizableProd>
+    </>
   );
 };
 
@@ -52,17 +79,7 @@ export const ResizableExample = () => {
                 </div>
               </ResizableProd>
             </div>
-            <ResizableProd
-              grid={20}
-              handles={["top", "bottom"]}
-              allHandlerOptions={{ style: { background: "blue" } }}
-              onResizeEffect={reredner}
-            >
-              <Box style={{ border: "2px solid black", padding: 8, margin: 16 }}>
-                resizable only vertically with grid 20
-              </Box>
-            </ResizableProd>
-
+            <GridResizable reredner={reredner} />
             <div style={{ border: "dashed 1px" }}>
               display: flex; justify-content: center;
               <div style={{ display: "flex", justifyContent: "center" }}>
@@ -77,6 +94,12 @@ export const ResizableExample = () => {
           </div>
         </ResizableProd>
       </div>
+      <ResizableProd>
+        <div style={{ border: "solid", margin: 16 }}>ResizableProd</div>
+      </ResizableProd>
+      <ResizableDev>
+        <div style={{ border: "solid", margin: 16 }}>ResizableDev</div>
+      </ResizableDev>
       <ResizableMuiBottomBar />
     </>
   );
@@ -131,16 +154,11 @@ function App() {
     <div style={{ textAlign: "center" }}>
       <button onClick={() => reredner()}>rerender</button>
 
+      {/*<GridResizable reredner={reredner} />*/}
+
       <ResizableExample />
 
-      <ResizableProd>
-        <div style={{ border: "solid", margin: 16 }}>ResizableProd</div>
-      </ResizableProd>
-      <ResizableDev>
-        <div style={{ border: "solid", margin: 16 }}>ResizableDev</div>
-      </ResizableDev>
-
-      <div style={{ border: "solid", margin: 16 }}>normal div</div>
+      {/*<div style={{ border: "solid", margin: 16 }}>normal div</div>*/}
 
       {/*<Resizable handlerOptions={{ style: { background: "red" } }} strategy={"dom-tree"} nodeRef={forwardDivRef} />*/}
       {/*<MyDiv passRef={forwardDivRef} />*/}
