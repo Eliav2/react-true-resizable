@@ -154,9 +154,9 @@ function App() {
     <div style={{ textAlign: "center" }}>
       <button onClick={() => reredner()}>rerender</button>
 
-      {/*<GridResizable reredner={reredner} />*/}
+      <GridResizable reredner={reredner} />
 
-      <ResizableExample />
+      {/*<ResizableExample />*/}
 
       {/*<div style={{ border: "solid", margin: 16 }}>normal div</div>*/}
 

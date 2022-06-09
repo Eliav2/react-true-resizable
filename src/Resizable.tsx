@@ -47,7 +47,7 @@ const Resizable: React.FC<ResizableProps> = React.forwardRef((props: ResizablePr
   const render = useRerender();
 
   // if the children passed a ref - copy its value instead of creating a new one
-  let nodeRef = usePassRef(children);
+  let nodeRef = usePassRef<HTMLElement>(children);
   if (props.nodeRef) nodeRef = props.nodeRef;
 
   // if Resizable would be wrapped with other components - the node ref would be passed to the wrapper
@@ -58,8 +58,8 @@ const Resizable: React.FC<ResizableProps> = React.forwardRef((props: ResizablePr
   const handlerParentRef = useRef(null);
   const handlesParentPosition = usePosition(handlerParentRef.current);
 
-  const [calculatedHeight, setCalculatedHeight] = useState<number | null>(null);
-  const [calculatedWidth, setCalculatedWidth] = useState<number | null>(null);
+  const [calculatedHeight, setCalculatedHeight] = useState<number | undefined>(undefined);
+  const [calculatedWidth, setCalculatedWidth] = useState<number | undefined>(undefined);
 
   // add event listeners to the window on mount
   useLayoutEffect(() => {
@@ -72,18 +72,19 @@ const Resizable: React.FC<ResizableProps> = React.forwardRef((props: ResizablePr
     };
   }, []);
 
-  const [initialHeight, setInitialHeight] = useState();
-  const [initialWidth, setInitialWidth] = useState();
+  const [initialHeight, setInitialHeight] = useState("");
+  const [initialWidth, setInitialWidth] = useState("");
   useLayoutEffect(() => {
     if (nodeRef.current) {
-      let { height, width } = nodeRef?.current?.getBoundingClientRect?.() ?? {};
+      let { height, width } = nodeRef.current?.getBoundingClientRect?.() ?? {};
       setCalculatedHeight(height);
       setCalculatedWidth(width);
-
-      setInitialHeight(nodeRef?.current.style.height ?? null);
-      setInitialWidth(nodeRef?.current.style.width ?? null);
+      setInitialHeight(nodeRef.current?.style.height);
+      setInitialWidth(nodeRef.current?.style.width);
+      console.log("Setting initial height", nodeRef.current?.style.height);
     }
   }, [nodeRef.current]);
+  console.log(initialHeight);
 
   useLayoutEffect(() => {
     onResizeEffect && onResizeEffect(nodePosition);
@@ -101,9 +102,26 @@ const Resizable: React.FC<ResizableProps> = React.forwardRef((props: ResizablePr
   }
 
   const enableHorizontal =
-    controlWidth && handles.find((h) => h.toLowerCase().includes("left") || h.toLowerCase().includes("right"));
+    controlWidth && !!handles.find((h) => h.toLowerCase().includes("left") || h.toLowerCase().includes("right"));
   const enableVertical =
-    controlHeight && handles.find((h) => h.toLowerCase().includes("top") || h.toLowerCase().includes("bottom"));
+    controlHeight && !!handles.find((h) => h.toLowerCase().includes("top") || h.toLowerCase().includes("bottom"));
+
+  // console.log(
+  //   controlHeight,
+  //   handles.find((h) => h.toLowerCase().includes("top") || h.toLowerCase().includes("bottom")),
+  //   handles,
+  //   enableVertical,
+  //   nodeRef?.current?.style.width
+  // );
+
+  // when disabling the control, the width/height should be reset to initial value
+  useLayoutEffect(() => {
+    if (nodeRef.current && !enableVertical) setCalculatedHeight(null);
+  }, [enableVertical]);
+  useLayoutEffect(() => {
+    if (nodeRef.current && !enableHorizontal) setCalculatedWidth(null);
+  }, [enableHorizontal]);
+
   const height = enableVertical ? calculatedHeight ?? nodeRef?.current?.style?.height ?? undefined : undefined;
   const width = enableHorizontal ? calculatedWidth ?? nodeRef?.current?.style?.width ?? undefined : undefined;
 
