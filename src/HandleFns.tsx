@@ -1,4 +1,4 @@
-import { round } from "./utils";
+import { round } from "./utils.js";
 import React from "react";
 import { positionType } from "shared/hooks/usePosition";
 import { handleNameType, handleOptionsType } from "./Resizable";

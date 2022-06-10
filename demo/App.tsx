@@ -4,6 +4,8 @@ import ResizableDev from "../src/Resizable";
 import useRerender from "shared/hooks/useRerender";
 import { Box, Paper } from "@mui/material";
 import "./App.css";
+import Draggable from "react-draggable";
+import { height } from "@mui/system";
 
 const ResizableMuiBottomBar = () => {
   return (
@@ -154,7 +156,22 @@ function App() {
     <div style={{ textAlign: "center" }}>
       <button onClick={() => reredner()}>rerender</button>
 
-      <GridResizable reredner={reredner} />
+      {/*<GridResizable reredner={reredner} />*/}
+
+      {/*/!* nested components that need to access the dom node*!/*/}
+      {/*<ResizableDev nodeRef={divRef} />*/}
+      {/*<ResizableDev disableHeightControl disableWidthControl>*/}
+      {/*  <div style={{ border: "2px solid black", height: 50 }} ref={divRef}>*/}
+      {/*    test*/}
+      {/*  </div>*/}
+      {/*</ResizableDev>*/}
+
+      <ResizableDev nodeRef={divRef} handles={["right", "bottom", "bottomRight"]} />
+      <Draggable nodeRef={divRef}>
+        <div style={{ border: "2px solid black", height: 50 }} ref={divRef}>
+          test
+        </div>
+      </Draggable>
 
       {/*<ResizableExample />*/}
 

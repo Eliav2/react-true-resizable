@@ -8,8 +8,8 @@ export interface HandleProps {
   ResizableProps: ResizableProps;
   nodePosition: positionType;
   nodeRef: React.RefObject<any>;
-  setCalculatedHeight: React.Dispatch<React.SetStateAction<number | null>>;
-  setCalculatedWidth: React.Dispatch<React.SetStateAction<number | null>>;
+  setCalculatedHeight: React.Dispatch<React.SetStateAction<number | null | undefined>>;
+  setCalculatedWidth: React.Dispatch<React.SetStateAction<number | null | undefined>>;
   grid: number | undefined;
   HandleStyleFn: HandleStyleFnType;
   handlesParentPosition: positionType;
@@ -18,118 +18,116 @@ export interface HandleProps {
   delayRenders?: number;
 }
 
-export const Handle = React.forwardRef(
-  (
-    {
-      nodeRef,
-      nodePosition,
-      setCalculatedHeight,
-      setCalculatedWidth,
-      grid,
-      HandleStyleFn,
-      handlesParentPosition,
-      handleOptions,
-      handlesOptions,
-      ResizableProps,
-    }: HandleProps,
-    ref
-  ) => {
-    const render = useRerender();
+export const HandleForward = React.forwardRef(function Handle(
+  {
+    nodeRef,
+    nodePosition,
+    setCalculatedHeight,
+    setCalculatedWidth,
+    grid,
+    HandleStyleFn,
+    handlesParentPosition,
+    handleOptions,
+    handlesOptions,
+    ResizableProps,
+  }: HandleProps,
+  ref
+) {
+  const render = useRerender();
 
-    const [initialDraggingElementSize, setInitialDraggingElementSize] = useState({
-      height: 0,
-      width: 0,
+  const [initialDraggingElementSize, setInitialDraggingElementSize] = useState({
+    height: 0,
+    width: 0,
+  });
+  const [initialDraggingPointerPos, setInitialDraggingPointerPos] = useState({
+    y: 0,
+    x: 0,
+  });
+
+  // useLayoutEffect(() => {
+  //   window.addEventListener("resize", (e) => {
+  //     render();
+  //   });
+  // }, []);
+
+  const [isDragging, setIsDragging] = useState(false);
+  const [pointerId, setPointerId] = useState<number>(0);
+
+  const handlerRef = useRef<HTMLDivElement>(null);
+  // we get only the initial position, and we are confident that the element is not moving relative to its parent
+  const handlerPos = usePosition(handlerRef.current);
+
+  const onPointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
+    setIsDragging(true);
+    handlerRef.current?.setPointerCapture(event.pointerId);
+    setPointerId(event.pointerId);
+    const dims = nodeRef?.current?.getBoundingClientRect();
+    setInitialDraggingElementSize({
+      width: dims.width,
+      height: dims.height,
     });
-    const [initialDraggingPointerPos, setInitialDraggingPointerPos] = useState({
-      y: 0,
-      x: 0,
+    setInitialDraggingPointerPos({
+      x: event.clientX,
+      y: event.clientY,
     });
-
-    // useLayoutEffect(() => {
-    //   window.addEventListener("resize", (e) => {
-    //     render();
-    //   });
-    // }, []);
-
-    const [isDragging, setIsDragging] = useState(false);
-    const [pointerId, setPointerId] = useState<number>(0);
-
-    const handlerRef = useRef<HTMLDivElement>(null);
-    // we get only the initial position, and we are confident that the element is not moving relative to its parent
-    const handlerPos = usePosition(handlerRef.current);
-
-    const onPointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
-      setIsDragging(true);
-      handlerRef.current?.setPointerCapture(event.pointerId);
-      setPointerId(event.pointerId);
-      const dims = nodeRef?.current?.getBoundingClientRect();
-      setInitialDraggingElementSize({
-        width: dims.width,
-        height: dims.height,
-      });
-      setInitialDraggingPointerPos({
-        x: event.clientX,
-        y: event.clientY,
-      });
-    };
-    const onPointerUp = (event: React.PointerEvent<HTMLDivElement>) => {
-      setIsDragging(false);
-      handlerRef.current?.releasePointerCapture(pointerId);
-    };
-    const onPointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
-      if (isDragging) {
-        if ("vertical" in handleOptions.allowResize) {
-          const dragDirVertical = handleOptions.allowResize["vertical"]?.reverseDrag ? -1 : 1;
-          let height =
-            initialDraggingElementSize.height - //  move relative to the elements size
-            // change position relative to the pointer position
-            (initialDraggingPointerPos.y - event.clientY) * dragDirVertical;
-          if (grid)
-            // snap to grid with initial grid offset
-            height -= ((event.clientY % grid) - (initialDraggingPointerPos.y % grid)) * dragDirVertical;
-          if (ResizableProps.minHeight && height < ResizableProps.minHeight) height = ResizableProps.minHeight;
-          setCalculatedHeight(height);
-        }
-        if ("horizontal" in handleOptions.allowResize) {
-          const dragDirHorizontal = handleOptions.allowResize["horizontal"]?.reverseDrag ? -1 : 1;
-          let width =
-            initialDraggingElementSize.width - //  move relative to the elements size
-            // change position relative to the pointer position
-            (initialDraggingPointerPos.x - event.clientX) * dragDirHorizontal;
-          if (grid)
-            // snap to grid with initial grid offset
-            width -= ((event.clientX % grid) - (initialDraggingPointerPos.x % grid)) * dragDirHorizontal;
-          if (ResizableProps.minWidth && width < ResizableProps.minWidth) width = ResizableProps.minWidth;
-
-          setCalculatedWidth(width);
-        }
+  };
+  const onPointerUp = (event: React.PointerEvent<HTMLDivElement>) => {
+    setIsDragging(false);
+    handlerRef.current?.releasePointerCapture(pointerId);
+  };
+  const onPointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (isDragging) {
+      if ("vertical" in handleOptions.allowResize) {
+        const dragDirVertical = handleOptions.allowResize["vertical"]?.reverseDrag ? -1 : 1;
+        let height =
+          initialDraggingElementSize.height - //  move relative to the elements size
+          // change position relative to the pointer position
+          (initialDraggingPointerPos.y - event.clientY) * dragDirVertical;
+        if (grid)
+          // snap to grid with initial grid offset
+          height -= ((event.clientY % grid) - (initialDraggingPointerPos.y % grid)) * dragDirVertical;
+        if (ResizableProps.minHeight && height < ResizableProps.minHeight) height = ResizableProps.minHeight;
+        setCalculatedHeight(height);
       }
-    };
+      if ("horizontal" in handleOptions.allowResize) {
+        const dragDirHorizontal = handleOptions.allowResize["horizontal"]?.reverseDrag ? -1 : 1;
+        let width =
+          initialDraggingElementSize.width - //  move relative to the elements size
+          // change position relative to the pointer position
+          (initialDraggingPointerPos.x - event.clientX) * dragDirHorizontal;
+        if (grid)
+          // snap to grid with initial grid offset
+          width -= ((event.clientX % grid) - (initialDraggingPointerPos.x % grid)) * dragDirHorizontal;
+        if (ResizableProps.minWidth && width < ResizableProps.minWidth) width = ResizableProps.minWidth;
 
-    const style = HandleStyleFn({
-      nodePosition,
-      handlerPos,
-      handlesParentPosition,
-      handlerSize: handleOptions.size,
-      handlesOptions: handlesOptions,
-    });
+        setCalculatedWidth(width);
+      }
+    }
+  };
 
-    return (
-      <div
-        ref={handlerRef}
-        style={{
-          // background: "green",
-          position: "absolute",
-          ...style,
-          ...handleOptions.style,
-        }}
-        onPointerMove={onPointerMove}
-        onPointerDown={onPointerDown}
-        onPointerUp={onPointerUp}
-      />
-    );
-  }
-);
+  const style = HandleStyleFn({
+    nodePosition,
+    handlerPos,
+    handlesParentPosition,
+    handlerSize: handleOptions.size,
+    handlesOptions: handlesOptions,
+  });
+
+  return (
+    <div
+      ref={handlerRef}
+      style={{
+        // background: "green",
+        position: "absolute",
+        ...style,
+        ...handleOptions.style,
+      }}
+      onPointerMove={onPointerMove}
+      onPointerDown={onPointerDown}
+      onPointerUp={onPointerUp}
+    />
+  );
+});
 
 // const useGetHandlerStyle = ({
 //   nodePosition,
