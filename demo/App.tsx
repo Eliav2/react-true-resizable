@@ -28,9 +28,15 @@ function App() {
             position: "relative",
             border: "2px solid black",
             height: 200,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+
             // minHeight: 100,
           }}
-        ></div>
+        >
+          enableRelativeOffset
+        </div>
       </ResizableDev>
 
       {/*<GridResizable />*/}

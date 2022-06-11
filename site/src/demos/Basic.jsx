@@ -4,8 +4,7 @@ import Resizable from "react-true-resizable";
 export const BoxStyle = {
   border: "solid",
   borderRadius: 12,
-  padding: 8,
-  margin: 2,
+  width: 120,
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
