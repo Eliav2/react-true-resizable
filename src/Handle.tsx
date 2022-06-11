@@ -15,8 +15,9 @@ export interface HandleProps {
   handlesParentPosition: positionType;
   handleOptions: handleOptionsType;
   handlesOptions: { [key in handleNameType]: handleOptionsType };
-  delayRenders?: number;
 }
+
+export type ExposedHandleProps = Pick<HandleProps, "grid">;
 
 export const HandleForward = React.forwardRef(function Handle(
   {
@@ -86,7 +87,7 @@ export const HandleForward = React.forwardRef(function Handle(
         if (grid)
           // snap to grid with initial grid offset
           height -= ((event.clientY % grid) - (initialDraggingPointerPos.y % grid)) * dragDirVertical;
-        if (ResizableProps.minHeight && height < ResizableProps.minHeight) height = ResizableProps.minHeight;
+        // if (ResizableProps.minHeight && height < ResizableProps.minHeight) height = ResizableProps.minHeight; @toRemove
         setCalculatedHeight(height);
       }
       if ("horizontal" in handleOptions.allowResize) {
@@ -98,7 +99,7 @@ export const HandleForward = React.forwardRef(function Handle(
         if (grid)
           // snap to grid with initial grid offset
           width -= ((event.clientX % grid) - (initialDraggingPointerPos.x % grid)) * dragDirHorizontal;
-        if (ResizableProps.minWidth && width < ResizableProps.minWidth) width = ResizableProps.minWidth;
+        // if (ResizableProps.minWidth && width < ResizableProps.minWidth) width = ResizableProps.minWidth; @toRemove
 
         setCalculatedWidth(width);
       }

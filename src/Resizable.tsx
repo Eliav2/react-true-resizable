@@ -15,7 +15,7 @@ export interface ResizableProps {
   grid?: number;
 
   // An array handlers to enable
-  handles?: handleNameType[];
+  enabledHandles?: handleNameType[];
   // options that will be passed to all handles
   allHandlerOptions?: Partial<Partial<handleOptionsType>>;
   handlersOptions?: { [key in handleNameType]?: Partial<handleOptionsType> };
@@ -47,7 +47,7 @@ const ResizableForward: React.FC<ResizableProps> = React.forwardRef(function Res
     grid,
     children,
     onResizeEffect,
-    handles = Object.keys(defaultHandlersFn) as handleNameType[],
+    enabledHandles = Object.keys(defaultHandlersFn) as handleNameType[],
     allHandlerOptions = {},
     handlersOptions = {},
     disableHeightControl = false,
@@ -58,6 +58,8 @@ const ResizableForward: React.FC<ResizableProps> = React.forwardRef(function Res
   } = props;
   let mergedHandlersOptions = merge(cloneDeep(defaultHandlersOptions), handlersOptions);
   let mergedHandlerOptions = merge(cloneDeep(defaultHandlerOptions), allHandlerOptions);
+  let mergedHandlesStyle = handlesStyle;
+  let mergedHandleStyle = handleStyle;
   const render = useRerender();
 
   // if the children passed a ref - copy its value instead of creating a new one
@@ -106,8 +108,9 @@ const ResizableForward: React.FC<ResizableProps> = React.forwardRef(function Res
   if (!process.env.NODE_ENV || process.env.NODE_ENV !== "production") checkProps(props);
 
   let finalHandlersOptions = {} as { [key in handleNameType]: handleOptionsType };
+
   // fill up empty handles sizes
-  for (const handle of handles) {
+  for (const handle of enabledHandles) {
     if (handle in mergedHandlersOptions) {
       finalHandlersOptions[handle] = merge(cloneDeep(mergedHandlerOptions), mergedHandlersOptions[handle]);
     }
@@ -115,10 +118,10 @@ const ResizableForward: React.FC<ResizableProps> = React.forwardRef(function Res
 
   const enableHorizontal =
     !disableWidthControl &&
-    !!handles.find((h) => h.toLowerCase().includes("left") || h.toLowerCase().includes("right"));
+    !!enabledHandles.find((h) => h.toLowerCase().includes("left") || h.toLowerCase().includes("right"));
   const enableVertical =
     !disableHeightControl &&
-    !!handles.find((h) => h.toLowerCase().includes("top") || h.toLowerCase().includes("bottom"));
+    !!enabledHandles.find((h) => h.toLowerCase().includes("top") || h.toLowerCase().includes("bottom"));
 
   // when disabling the control, the width/height should be reset to initial value
   useLayoutEffect(() => {
@@ -143,7 +146,7 @@ const ResizableForward: React.FC<ResizableProps> = React.forwardRef(function Res
 
   useEffect(() => {
     render();
-  }, [props.handles]);
+  }, [props.enabledHandles, disableHeightControl, disableWidthControl]);
 
   // todo
   // useImperativeHandle(ref, () => ({
@@ -153,10 +156,10 @@ const ResizableForward: React.FC<ResizableProps> = React.forwardRef(function Res
   // }));
 
   // remove unnecessary handles
-  if (disableHeightControl) handles = omitItems(handles, ["top", "bottom"]);
-  if (disableWidthControl) handles = omitItems(handles, ["left", "right"]);
+  if (disableHeightControl) enabledHandles = omitItems(enabledHandles, ["top", "bottom"]);
+  if (disableWidthControl) enabledHandles = omitItems(enabledHandles, ["left", "right"]);
   const controlDisabled = disableHeightControl && disableWidthControl;
-  if (controlDisabled) handles = [];
+  if (controlDisabled) enabledHandles = [];
 
   return (
     <>
@@ -188,7 +191,7 @@ const ResizableForward: React.FC<ResizableProps> = React.forwardRef(function Res
           <div style={{ position: "absolute" }} ref={handlerParentRef} key={"ResizableHandlerParent"}>
             {/*handles*/}
             {nodePosition &&
-              handles.map((handlerName) => {
+              enabledHandles.map((handlerName) => {
                 // console.log(handlerName);
                 return (
                   <HandleForward
@@ -246,7 +249,6 @@ type allowResizeType = "horizontal" | "vertical";
 export type handleOptionsType = {
   allowResize: { [key in allowResizeType]?: { reverseDrag: boolean } };
   size: number;
-  style: React.CSSProperties;
 };
 
 const defaultHandlerOptions: Partial<handleOptionsType> = {
@@ -267,7 +269,7 @@ const defaultHandlersOptions: { [key in handleNameType]: Partial<handleOptionsTy
 export type handleNameType = keyof typeof defaultHandlersFn;
 
 ResizableForward.defaultProps = {
-  handles: Object.keys(defaultHandlersFn) as handleNameType[],
+  enabledHandles: Object.keys(defaultHandlersFn) as handleNameType[],
 };
 
 // export default DelayedResizable;

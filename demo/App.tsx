@@ -5,7 +5,49 @@ import useRerender from "shared/hooks/useRerender";
 import { Box, Paper } from "@mui/material";
 import "./App.css";
 import Draggable from "react-draggable";
-import { height } from "@mui/system";
+
+function App() {
+  console.log("App rendered");
+  const reredner = useRerender();
+
+  const divRef = useRef<HTMLDivElement>(null);
+  const forwardDivRef = useRef<HTMLDivElement>(null);
+  // console.log("divRef", divRef.current);
+
+  return (
+    <div style={{ textAlign: "center" }}>
+      <button onClick={() => reredner()}>rerender</button>
+
+      <GridResizable reredner={reredner} />
+
+      {/*/!* nested components that need to access the dom node*!/*/}
+
+      {/*<Examples.WithDraggable />*/}
+      <Examples.NestedResizeable />
+
+      {/*<ResizableExample />*/}
+
+      {/*<div style={{ border: "solid", margin: 16 }}>normal div</div>*/}
+
+      {/*<Resizable handlerOptions={{ style: { background: "red" } }} strategy={"dom-tree"} nodeRef={forwardDivRef} />*/}
+      {/*<MyDiv passRef={forwardDivRef} />*/}
+
+      {/*function component */}
+      {/*<Resizable handlerOptions={{ style: { background: "red" } }} grid={10}>*/}
+      {/*  <MyDivForward>asd</MyDivForward>*/}
+      {/*</Resizable>*/}
+
+      {/* class component */}
+      {/*<Resizable handlerOptions={{ style: { background: "red" } }}>*/}
+      {/*  <MyClassDivForward>Class</MyClassDivForward>*/}
+      {/*</Resizable>*/}
+
+      {/*<Resizable handlerOptions={{ style: { background: "red" } }}>*/}
+      {/*  <Box style={{ border: "solid", margin: 16 }}>asd</Box>*/}
+      {/*</Resizable>*/}
+    </div>
+  );
+}
 
 const ResizableMuiBottomBar = () => {
   return (
@@ -42,7 +84,9 @@ const GridResizable = ({ reredner }) => {
       <input type="checkbox" checked={allowVResize} onChange={() => setAllowVResize(!allowVResize)} />
       <ResizableProd
         grid={20}
-        handles={handles}
+        enabledHandles={handles}
+        disableHeightControl={!allowVResize}
+        disableWidthControl={!allowHResize}
         allHandlerOptions={{ style: { background: "blue" } }}
         onResizeEffect={reredner}
       >
@@ -85,10 +129,10 @@ export const ResizableExample = () => {
             <div style={{ border: "dashed 1px" }}>
               display: flex; justify-content: center;
               <div style={{ display: "flex", justifyContent: "center" }}>
-                <ResizableProd allHandlerOptions={{ style: {} }} grid={10} minHeight={80} onResizeEffect={reredner}>
+                <ResizableProd allHandlerOptions={{ style: {} }} grid={10} onResizeEffect={reredner}>
                   <Box sx={{ border: "2px solid black", p: 1, height: 100 }}>Box1</Box>
                 </ResizableProd>
-                <ResizableProd allHandlerOptions={{ style: {} }} grid={10} minHeight={80} onResizeEffect={reredner}>
+                <ResizableProd allHandlerOptions={{ style: {} }} grid={10} onResizeEffect={reredner}>
                   <Box sx={{ border: "2px solid black", p: 1, height: 100 }}>Box2</Box>
                 </ResizableProd>
               </div>
@@ -144,57 +188,35 @@ const Div3 = React.forwardRef<any, any>((props, ref) => (
   </div>
 ));
 
-function App() {
-  console.log("App rendered");
-  const reredner = useRerender();
-
-  const divRef = useRef<HTMLDivElement>(null);
-  const forwardDivRef = useRef<HTMLDivElement>(null);
-  // console.log("divRef", divRef.current);
-
-  return (
-    <div style={{ textAlign: "center" }}>
-      <button onClick={() => reredner()}>rerender</button>
-
-      {/*<GridResizable reredner={reredner} />*/}
-
-      {/*/!* nested components that need to access the dom node*!/*/}
-      {/*<ResizableDev nodeRef={divRef} />*/}
-      {/*<ResizableDev disableHeightControl disableWidthControl>*/}
-      {/*  <div style={{ border: "2px solid black", height: 50 }} ref={divRef}>*/}
-      {/*    test*/}
-      {/*  </div>*/}
-      {/*</ResizableDev>*/}
-
-      <ResizableDev nodeRef={divRef} handles={["right", "bottom", "bottomRight"]} />
-      <Draggable nodeRef={divRef}>
-        <div style={{ border: "2px solid black", height: 50 }} ref={divRef}>
-          test
-        </div>
-      </Draggable>
-
-      {/*<ResizableExample />*/}
-
-      {/*<div style={{ border: "solid", margin: 16 }}>normal div</div>*/}
-
-      {/*<Resizable handlerOptions={{ style: { background: "red" } }} strategy={"dom-tree"} nodeRef={forwardDivRef} />*/}
-      {/*<MyDiv passRef={forwardDivRef} />*/}
-
-      {/*function component */}
-      {/*<Resizable handlerOptions={{ style: { background: "red" } }} grid={10}>*/}
-      {/*  <MyDivForward>asd</MyDivForward>*/}
-      {/*</Resizable>*/}
-
-      {/* class component */}
-      {/*<Resizable handlerOptions={{ style: { background: "red" } }}>*/}
-      {/*  <MyClassDivForward>Class</MyClassDivForward>*/}
-      {/*</Resizable>*/}
-
-      {/*<Resizable handlerOptions={{ style: { background: "red" } }}>*/}
-      {/*  <Box style={{ border: "solid", margin: 16 }}>asd</Box>*/}
-      {/*</Resizable>*/}
-    </div>
-  );
-}
+const Examples = {
+  WithDraggable: () => {
+    const divRef = useRef<HTMLDivElement>(null);
+    return (
+      <>
+        <ResizableDev nodeRef={divRef} enabledHandles={["right", "bottom", "bottomRight"]} />
+        <Draggable nodeRef={divRef}>
+          <div style={{ border: "2px solid black", height: 50 }} ref={divRef}>
+            resizable with draggable
+          </div>
+        </Draggable>
+      </>
+    );
+  },
+  NestedResizeable: () => {
+    const divRef = useRef<HTMLDivElement>(null);
+    return (
+      <>
+        {/*<ResizableDev nodeRef={divRef} />*/}
+        <ResizableDev>
+          <ResizableDev disableHeightControl disableWidthControl>
+            <div style={{ border: "2px solid black", height: 50 }} ref={divRef}>
+              test
+            </div>
+          </ResizableDev>
+        </ResizableDev>
+      </>
+    );
+  },
+};
 
 export default App;
