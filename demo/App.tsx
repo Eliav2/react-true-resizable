@@ -18,10 +18,19 @@ function App() {
     <div style={{ textAlign: "center" }}>
       <button onClick={() => reredner()}>rerender</button>
 
-      <ResizableDev enableRelativeOffset allHandlerOptions={{ style: { background: "red" } }}>
-        <Box style={{ position: "relative", border: "2px solid black", padding: 8, margin: 16, height: 100 }}>
-          resizable naturally all directions
-        </Box>
+      <ResizableDev
+        enableRelativeOffset
+        // grid={20}
+        // allHandlerOptions={{ style: { background: "red" } }}
+      >
+        <div
+          style={{
+            position: "relative",
+            border: "2px solid black",
+            height: 200,
+            // minHeight: 100,
+          }}
+        ></div>
       </ResizableDev>
 
       {/*<GridResizable />*/}
@@ -90,7 +99,7 @@ const GridResizable = ({ reredner = () => {} }) => {
       <input type="checkbox" checked={allowHResize} onChange={() => setAllowHResize(!allowHResize)} />
       allow vertical resize
       <input type="checkbox" checked={allowVResize} onChange={() => setAllowVResize(!allowVResize)} />
-      <button onClick={() => ResizableRef.current?.rest()}>rest resizable</button>
+      <button onClick={() => ResizableRef.current?.restControl()}>rest resizable</button>
       <ResizableProd
         ResizableRef={ResizableRef}
         grid={20}
@@ -100,7 +109,7 @@ const GridResizable = ({ reredner = () => {} }) => {
         allHandlerOptions={{ style: { background: "blue" } }}
         onResizeEffect={reredner}
       >
-        <Box className={"grid-resizable"} style={{ border: "2px solid black", padding: 8, margin: 16, height: 200 }}>
+        <Box className={"grid-resizable"} style={{ border: "2px solid black", height: 200 }}>
           resizable only vertically {allowHResize && "and horizontally"} with grid 20
         </Box>
       </ResizableProd>

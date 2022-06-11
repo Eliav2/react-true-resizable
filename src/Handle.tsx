@@ -10,6 +10,8 @@ export interface HandleProps {
   nodeRef: React.RefObject<any>;
   setCalculatedHeight: React.Dispatch<React.SetStateAction<number | null | undefined>>;
   setCalculatedWidth: React.Dispatch<React.SetStateAction<number | null | undefined>>;
+  calculatedHeight: number | null | undefined;
+  calculatedWidth: number | null | undefined;
   setCalculatedLeft: React.Dispatch<React.SetStateAction<number | null | undefined>>;
   setCalculatedTop: React.Dispatch<React.SetStateAction<number | null | undefined>>;
   setEndDraggingOffsetTop: React.Dispatch<React.SetStateAction<number>>;
@@ -29,6 +31,8 @@ export const HandleForward = React.forwardRef(function Handle(
     setCalculatedHeight,
     setCalculatedWidth,
     setCalculatedLeft,
+    calculatedHeight,
+    calculatedWidth,
     setCalculatedTop,
     HandleStyleFn,
     handlesParentPosition,
@@ -70,12 +74,14 @@ export const HandleForward = React.forwardRef(function Handle(
 
   const getEnableRelativeOffsetTop = (event) => {
     let top = event.clientY - initialDraggingPointerPos.y;
-    if (ResizableProps.grid) top -= (event.clientY - initialDraggingPointerPos.y) % ResizableProps.grid;
+    if (ResizableProps.grid)
+      top -= (event.clientY % ResizableProps.grid) - (initialDraggingPointerPos.y % ResizableProps.grid);
     return top;
   };
   const getEnableRelativeOffsetLeft = (event) => {
     let left = event.clientX - initialDraggingPointerPos.x;
-    if (ResizableProps.grid) left -= (event.clientX - initialDraggingPointerPos.x) % ResizableProps.grid;
+    if (ResizableProps.grid)
+      left -= (event.clientX % ResizableProps.grid) - (initialDraggingPointerPos.x % ResizableProps.grid);
     return left;
   };
 
@@ -96,8 +102,16 @@ export const HandleForward = React.forwardRef(function Handle(
   const onPointerUp = (event: React.PointerEvent<HTMLDivElement>) => {
     handlerRef.current?.releasePointerCapture(pointerId);
     setIsDragging(false);
-    if (reverseVerticalDrag) setEndDraggingOffsetTop(getEnableRelativeOffsetTop(event) + endDraggingOffsetTop);
-    if (reverseHorizontalDrag) setEndDraggingOffsetLeft(getEnableRelativeOffsetLeft(event) + endDraggingOffsetLeft);
+    if (reverseVerticalDrag) {
+      let top = getEnableRelativeOffsetTop(event) + endDraggingOffsetTop;
+      if (calculatedHeight && calculatedHeight < 0) top += calculatedHeight;
+      setEndDraggingOffsetTop(top);
+    }
+    if (reverseHorizontalDrag) {
+      let left = getEnableRelativeOffsetLeft(event) + endDraggingOffsetLeft;
+      if (calculatedWidth && calculatedWidth < 0) left += calculatedWidth;
+      setEndDraggingOffsetLeft(left);
+    }
   };
   const onPointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
     if (isDragging) {
@@ -114,7 +128,7 @@ export const HandleForward = React.forwardRef(function Handle(
             dragDirVertical;
         // enable natural resize of top handle
         if (ResizableProps.enableRelativeOffset && dragDirVertical === -1) {
-          setCalculatedTop(getEnableRelativeOffsetTop(event) + endDraggingOffsetTop);
+          if (height > 0) setCalculatedTop(getEnableRelativeOffsetTop(event) + endDraggingOffsetTop);
         }
 
         setCalculatedHeight(height);
@@ -132,7 +146,7 @@ export const HandleForward = React.forwardRef(function Handle(
             dragDirHorizontal;
         // enable natural resize of left handle
         if (ResizableProps.enableRelativeOffset && dragDirHorizontal === -1) {
-          setCalculatedLeft(getEnableRelativeOffsetLeft(event) + endDraggingOffsetLeft);
+          if (width > 0) setCalculatedLeft(getEnableRelativeOffsetLeft(event) + endDraggingOffsetLeft);
         }
 
         setCalculatedWidth(width);

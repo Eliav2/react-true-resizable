@@ -48,7 +48,7 @@ export interface ResizableProps {
 }
 
 export interface ResizableHandle {
-  rest: (resetHeight?: boolean, resetWidth?: boolean) => void;
+  restControl: (resetHeight?: boolean, resetWidth?: boolean) => void;
 }
 
 const ResizableForward = React.forwardRef<HTMLElement, ResizableProps>(function Resizable(
@@ -98,6 +98,8 @@ const ResizableForward = React.forwardRef<HTMLElement, ResizableProps>(function 
   const [endDraggingOffsetTop, setEndDraggingOffsetTop] = useState(0);
   const [endDraggingOffsetLeft, setEndDraggingOffsetLeft] = useState(0);
 
+  // console.log(calculatedTop, calculatedHeight);
+
   // strip away checks in production build
   if (!process.env.NODE_ENV || process.env.NODE_ENV !== "production") checkProps(props);
 
@@ -131,7 +133,7 @@ const ResizableForward = React.forwardRef<HTMLElement, ResizableProps>(function 
 
   // allow imperative reset of height/width
   useImperativeHandle(props.ResizableRef, () => ({
-    rest: (resetHeight = true, resetWidth = true) => {
+    restControl: (resetHeight = true, resetWidth = true) => {
       if (nodeRef.current && resetHeight) {
         setCalculatedHeight(null);
         nodeRef.current.style.height = initialHeight;
@@ -234,6 +236,8 @@ const ResizableForward = React.forwardRef<HTMLElement, ResizableProps>(function 
                       nodePosition,
                       setCalculatedHeight,
                       setCalculatedWidth,
+                      calculatedHeight,
+                      calculatedWidth,
                       setCalculatedLeft,
                       setCalculatedTop,
                       setEndDraggingOffsetTop,
