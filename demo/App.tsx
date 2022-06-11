@@ -78,7 +78,6 @@ const GridResizable = ({ reredner = () => {} }) => {
   if (allowVResize) handles.push("top", "bottom");
 
   const ResizableRef = useRef<ResizableHandle>(null);
-  console.log(ResizableRef.current);
   return (
     <div style={{ border: "solid" }}>
       allow horizontal resize
@@ -95,7 +94,10 @@ const GridResizable = ({ reredner = () => {} }) => {
         allHandlerOptions={{ style: { background: "blue" } }}
         onResizeEffect={reredner}
       >
-        <Box className={"grid-resizable"} style={{ border: "2px solid black", padding: 8, margin: 16, height: 200 }}>
+        <Box
+          className={"grid-resizable"}
+          style={{ position: "relative", left: 20, border: "2px solid black", padding: 8, margin: 16, height: 200 }}
+        >
           resizable only vertically {allowHResize && "and horizontally"} with grid 20
         </Box>
       </ResizableProd>

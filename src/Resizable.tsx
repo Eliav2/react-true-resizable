@@ -83,35 +83,10 @@ const ResizableForward = React.forwardRef<HTMLElement, ResizableProps>(function 
   const handlerParentRef = useRef(null);
   const handlesParentPosition = usePosition(handlerParentRef.current);
 
-  const [calculatedHeight, setCalculatedHeight] = useState<number | null | undefined>(undefined);
-  const [calculatedWidth, setCalculatedWidth] = useState<number | null | undefined>(undefined);
-
-  // add event listeners to the window on mount
-  useLayoutEffect(() => {
-    // if (renderRef)
-    //   // @ts-ignore
-    //   renderRef.current = render;
-    window.addEventListener("resize", render);
-    return () => {
-      window.removeEventListener("resize", render);
-    };
-  }, []);
-
   const [initialHeight, setInitialHeight] = useState("");
   const [initialWidth, setInitialWidth] = useState("");
-  useLayoutEffect(() => {
-    if (nodeRef.current) {
-      let { height, width } = nodeRef.current?.getBoundingClientRect?.() ?? {};
-      setCalculatedHeight(height);
-      setCalculatedWidth(width);
-      setInitialHeight(nodeRef.current?.style.height);
-      setInitialWidth(nodeRef.current?.style.width);
-    }
-  }, [nodeRef.current]);
-
-  useLayoutEffect(() => {
-    onResizeEffect && onResizeEffect(nodePosition);
-  }, [calculatedHeight, calculatedWidth]);
+  const [calculatedHeight, setCalculatedHeight] = useState<number | null | undefined>(undefined);
+  const [calculatedWidth, setCalculatedWidth] = useState<number | null | undefined>(undefined);
 
   // strip away checks in production build
   if (!process.env.NODE_ENV || process.env.NODE_ENV !== "production") checkProps(props);
@@ -141,7 +116,7 @@ const ResizableForward = React.forwardRef<HTMLElement, ResizableProps>(function 
   useLayoutEffect(() => {
     if (nodeRef.current && !enableHorizontal) setCalculatedWidth(null);
     // after first render
-    if (nodeRef.current && calculatedHeight) nodeRef.current.style.width = initialWidth;
+    if (nodeRef.current && calculatedWidth) nodeRef.current.style.width = initialWidth;
   }, [enableHorizontal]);
 
   // allow imperative reset of height/width
@@ -157,6 +132,28 @@ const ResizableForward = React.forwardRef<HTMLElement, ResizableProps>(function 
       }
     },
   }));
+
+  // add event listeners to the window on mount
+  useLayoutEffect(() => {
+    window.addEventListener("resize", render);
+    return () => {
+      window.removeEventListener("resize", render);
+    };
+  }, []);
+
+  useLayoutEffect(() => {
+    if (nodeRef.current) {
+      let { height, width } = nodeRef.current?.getBoundingClientRect?.() ?? {};
+      setCalculatedHeight(height);
+      setCalculatedWidth(width);
+      setInitialHeight(nodeRef.current?.style.height);
+      setInitialWidth(nodeRef.current?.style.width);
+    }
+  }, [nodeRef.current]);
+
+  useLayoutEffect(() => {
+    onResizeEffect && onResizeEffect(nodePosition);
+  }, [calculatedHeight, calculatedWidth]);
 
   // control and update the size of the node on each render
   const height = enableVertical ? calculatedHeight ?? nodeRef?.current?.style?.height ?? undefined : undefined;

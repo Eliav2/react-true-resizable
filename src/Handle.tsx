@@ -17,8 +17,6 @@ export interface HandleProps {
   handlesOptions: { [key in handleNameType]: handleOptionsType };
 }
 
-export type ExposedHandleProps = Pick<HandleProps, "grid">;
-
 export const HandleForward = React.forwardRef(function Handle(
   {
     nodeRef,
