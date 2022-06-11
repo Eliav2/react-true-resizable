@@ -41,6 +41,10 @@ export interface ResizableProps {
   onResizeEffect?: ((dims: positionType) => void) | null;
 
   ResizableRef?: React.RefObject<ResizableHandle>;
+
+  // will set style position:relative on the element and will offset the element to make the resize feel more natural
+  // affects left and top handles
+  enableRelativeOffset?: boolean;
 }
 
 export interface ResizableHandle {
@@ -87,6 +91,12 @@ const ResizableForward = React.forwardRef<HTMLElement, ResizableProps>(function 
   const [initialWidth, setInitialWidth] = useState("");
   const [calculatedHeight, setCalculatedHeight] = useState<number | null | undefined>(undefined);
   const [calculatedWidth, setCalculatedWidth] = useState<number | null | undefined>(undefined);
+
+  const [calculatedLeft, setCalculatedLeft] = useState<number | null | undefined>(0);
+  const [calculatedTop, setCalculatedTop] = useState<number | null | undefined>(0);
+
+  const [endDraggingOffsetTop, setEndDraggingOffsetTop] = useState(0);
+  const [endDraggingOffsetLeft, setEndDraggingOffsetLeft] = useState(0);
 
   // strip away checks in production build
   if (!process.env.NODE_ENV || process.env.NODE_ENV !== "production") checkProps(props);
@@ -159,8 +169,14 @@ const ResizableForward = React.forwardRef<HTMLElement, ResizableProps>(function 
   const height = enableVertical ? calculatedHeight ?? nodeRef?.current?.style?.height ?? undefined : undefined;
   const width = enableHorizontal ? calculatedWidth ?? nodeRef?.current?.style?.width ?? undefined : undefined;
   if (nodeRef?.current) {
-    if (!disableHeightControl && !!height) nodeRef.current.style.height = height + "px";
-    if (!disableWidthControl && !!width) nodeRef.current.style.width = width + "px";
+    if (!disableHeightControl && !!height) {
+      nodeRef.current.style.height = height + "px";
+      if (props.enableRelativeOffset) nodeRef.current.style.top = calculatedTop + "px";
+    }
+    if (!disableWidthControl && !!width) {
+      nodeRef.current.style.width = width + "px";
+      if (props.enableRelativeOffset) nodeRef.current.style.left = calculatedLeft + "px";
+    }
   }
   // "border-box" sizing is required for correct positioning of handles
   useEffect(() => {
@@ -218,7 +234,14 @@ const ResizableForward = React.forwardRef<HTMLElement, ResizableProps>(function 
                       nodePosition,
                       setCalculatedHeight,
                       setCalculatedWidth,
-                      grid,
+                      setCalculatedLeft,
+                      setCalculatedTop,
+                      setEndDraggingOffsetTop,
+                      setEndDraggingOffsetLeft,
+                      endDraggingOffsetTop,
+                      endDraggingOffsetLeft,
+                      calculatedLeft,
+                      calculatedTop,
                       HandleStyleFn: defaultHandlersFn[handlerName],
                       handlesParentPosition,
                       handleOptions: finalHandlersOptions[handlerName],

@@ -10,7 +10,12 @@ export interface HandleProps {
   nodeRef: React.RefObject<any>;
   setCalculatedHeight: React.Dispatch<React.SetStateAction<number | null | undefined>>;
   setCalculatedWidth: React.Dispatch<React.SetStateAction<number | null | undefined>>;
-  grid: number | undefined;
+  setCalculatedLeft: React.Dispatch<React.SetStateAction<number | null | undefined>>;
+  setCalculatedTop: React.Dispatch<React.SetStateAction<number | null | undefined>>;
+  setEndDraggingOffsetTop: React.Dispatch<React.SetStateAction<number>>;
+  setEndDraggingOffsetLeft: React.Dispatch<React.SetStateAction<number>>;
+  endDraggingOffsetTop: number;
+  endDraggingOffsetLeft: number;
   HandleStyleFn: HandleStyleFnType;
   handlesParentPosition: positionType;
   handleOptions: handleOptionsType;
@@ -23,12 +28,17 @@ export const HandleForward = React.forwardRef(function Handle(
     nodePosition,
     setCalculatedHeight,
     setCalculatedWidth,
-    grid,
+    setCalculatedLeft,
+    setCalculatedTop,
     HandleStyleFn,
     handlesParentPosition,
     handleOptions,
     handlesOptions,
     ResizableProps,
+    setEndDraggingOffsetTop,
+    setEndDraggingOffsetLeft,
+    endDraggingOffsetTop,
+    endDraggingOffsetLeft,
   }: HandleProps,
   ref
 ) {
@@ -48,6 +58,8 @@ export const HandleForward = React.forwardRef(function Handle(
   //     render();
   //   });
   // }, []);
+  const reverseVerticalDrag = handleOptions.allowResize["vertical"]?.reverseDrag;
+  const reverseHorizontalDrag = handleOptions.allowResize["horizontal"]?.reverseDrag;
 
   const [isDragging, setIsDragging] = useState(false);
   const [pointerId, setPointerId] = useState<number>(0);
@@ -55,6 +67,17 @@ export const HandleForward = React.forwardRef(function Handle(
   const handlerRef = useRef<HTMLDivElement>(null);
   // we get only the initial position, and we are confident that the element is not moving relative to its parent
   const handlerPos = usePosition(handlerRef.current);
+
+  const getEnableRelativeOffsetTop = (event) => {
+    let top = event.clientY - initialDraggingPointerPos.y;
+    if (ResizableProps.grid) top -= (event.clientY - initialDraggingPointerPos.y) % ResizableProps.grid;
+    return top;
+  };
+  const getEnableRelativeOffsetLeft = (event) => {
+    let left = event.clientX - initialDraggingPointerPos.x;
+    if (ResizableProps.grid) left -= (event.clientX - initialDraggingPointerPos.x) % ResizableProps.grid;
+    return left;
+  };
 
   const onPointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
     setIsDragging(true);
@@ -71,33 +94,46 @@ export const HandleForward = React.forwardRef(function Handle(
     });
   };
   const onPointerUp = (event: React.PointerEvent<HTMLDivElement>) => {
-    setIsDragging(false);
     handlerRef.current?.releasePointerCapture(pointerId);
+    setIsDragging(false);
+    if (reverseVerticalDrag) setEndDraggingOffsetTop(getEnableRelativeOffsetTop(event) + endDraggingOffsetTop);
+    if (reverseHorizontalDrag) setEndDraggingOffsetLeft(getEnableRelativeOffsetLeft(event) + endDraggingOffsetLeft);
   };
   const onPointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
     if (isDragging) {
       if ("vertical" in handleOptions.allowResize) {
-        const dragDirVertical = handleOptions.allowResize["vertical"]?.reverseDrag ? -1 : 1;
+        const dragDirVertical = reverseVerticalDrag ? -1 : 1;
         let height =
           initialDraggingElementSize.height - //  move relative to the elements size
           // change position relative to the pointer position
           (initialDraggingPointerPos.y - event.clientY) * dragDirVertical;
-        if (grid)
+        if (ResizableProps.grid)
           // snap to grid with initial grid offset
-          height -= ((event.clientY % grid) - (initialDraggingPointerPos.y % grid)) * dragDirVertical;
-        // if (ResizableProps.minHeight && height < ResizableProps.minHeight) height = ResizableProps.minHeight; @toRemove
+          height -=
+            ((event.clientY % ResizableProps.grid) - (initialDraggingPointerPos.y % ResizableProps.grid)) *
+            dragDirVertical;
+        // enable natural resize of top handle
+        if (ResizableProps.enableRelativeOffset && dragDirVertical === -1) {
+          setCalculatedTop(getEnableRelativeOffsetTop(event) + endDraggingOffsetTop);
+        }
+
         setCalculatedHeight(height);
       }
       if ("horizontal" in handleOptions.allowResize) {
-        const dragDirHorizontal = handleOptions.allowResize["horizontal"]?.reverseDrag ? -1 : 1;
+        const dragDirHorizontal = reverseHorizontalDrag ? -1 : 1;
         let width =
           initialDraggingElementSize.width - //  move relative to the elements size
           // change position relative to the pointer position
           (initialDraggingPointerPos.x - event.clientX) * dragDirHorizontal;
-        if (grid)
-          // snap to grid with initial grid offset
-          width -= ((event.clientX % grid) - (initialDraggingPointerPos.x % grid)) * dragDirHorizontal;
-        // if (ResizableProps.minWidth && width < ResizableProps.minWidth) width = ResizableProps.minWidth; @toRemove
+        if (ResizableProps.grid)
+          // snap to ResizableProps.grid with initial ResizableProps.grid offset
+          width -=
+            ((event.clientX % ResizableProps.grid) - (initialDraggingPointerPos.x % ResizableProps.grid)) *
+            dragDirHorizontal;
+        // enable natural resize of left handle
+        if (ResizableProps.enableRelativeOffset && dragDirHorizontal === -1) {
+          setCalculatedLeft(getEnableRelativeOffsetLeft(event) + endDraggingOffsetLeft);
+        }
 
         setCalculatedWidth(width);
       }

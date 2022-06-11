@@ -18,7 +18,13 @@ function App() {
     <div style={{ textAlign: "center" }}>
       <button onClick={() => reredner()}>rerender</button>
 
-      <GridResizable />
+      <ResizableDev enableRelativeOffset allHandlerOptions={{ style: { background: "red" } }}>
+        <Box style={{ position: "relative", border: "2px solid black", padding: 8, margin: 16, height: 100 }}>
+          resizable naturally all directions
+        </Box>
+      </ResizableDev>
+
+      {/*<GridResizable />*/}
 
       {/*/!* nested components that need to access the dom node*!/*/}
 
@@ -94,10 +100,7 @@ const GridResizable = ({ reredner = () => {} }) => {
         allHandlerOptions={{ style: { background: "blue" } }}
         onResizeEffect={reredner}
       >
-        <Box
-          className={"grid-resizable"}
-          style={{ position: "relative", left: 20, border: "2px solid black", padding: 8, margin: 16, height: 200 }}
-        >
+        <Box className={"grid-resizable"} style={{ border: "2px solid black", padding: 8, margin: 16, height: 200 }}>
           resizable only vertically {allowHResize && "and horizontally"} with grid 20
         </Box>
       </ResizableProd>
