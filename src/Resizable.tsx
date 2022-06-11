@@ -126,9 +126,13 @@ const ResizableForward: React.FC<ResizableProps> = React.forwardRef(function Res
   // when disabling the control, the width/height should be reset to initial value
   useLayoutEffect(() => {
     if (nodeRef.current && !enableVertical) setCalculatedHeight(null);
+    // after first render
+    if (nodeRef.current && calculatedHeight) nodeRef.current.style.height = initialHeight;
   }, [enableVertical]);
   useLayoutEffect(() => {
     if (nodeRef.current && !enableHorizontal) setCalculatedWidth(null);
+    // after first render
+    if (nodeRef.current && calculatedHeight) nodeRef.current.style.width = initialWidth;
   }, [enableHorizontal]);
 
   const height = enableVertical ? calculatedHeight ?? nodeRef?.current?.style?.height ?? undefined : undefined;
@@ -136,8 +140,8 @@ const ResizableForward: React.FC<ResizableProps> = React.forwardRef(function Res
 
   // control the size of the node
   if (nodeRef?.current) {
-    if (!disableHeightControl) nodeRef.current.style.height = height ? height + "px" : initialHeight;
-    if (!disableWidthControl) nodeRef.current.style.width = width ? width + "px" : initialWidth;
+    if (!disableHeightControl && !!height) nodeRef.current.style.height = height + "px";
+    if (!disableWidthControl && !!width) nodeRef.current.style.width = width + "px";
   }
   // "border-box" sizing is required for correct positioning of handles
   useEffect(() => {
