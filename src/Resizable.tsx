@@ -39,9 +39,18 @@ export interface ResizableProps {
 
   // a callback that is called after resize ended and the DOM element is updated
   onResizeEffect?: ((dims: positionType) => void) | null;
+
+  ResizableRef?: React.RefObject<ResizableHandle>;
 }
 
-const ResizableForward: React.FC<ResizableProps> = React.forwardRef(function Resizable(props: ResizableProps, ref) {
+export interface ResizableHandle {
+  rest: (resetHeight?: boolean, resetWidth?: boolean) => void;
+}
+
+const ResizableForward = React.forwardRef<HTMLElement, ResizableProps>(function Resizable(
+  props: ResizableProps,
+  forwardedRef
+) {
   // console.log("Resizable");
   let {
     grid,
@@ -67,7 +76,7 @@ const ResizableForward: React.FC<ResizableProps> = React.forwardRef(function Res
   if (props.nodeRef) nodeRef = props.nodeRef;
 
   // if Resizable would be wrapped with other components - the node ref would be passed to the wrapper
-  if (ref && typeof ref == "object" && nodeRef) ref.current = nodeRef.current;
+  if (forwardedRef && typeof forwardedRef == "object" && nodeRef) forwardedRef.current = nodeRef.current;
 
   const nodePosition = usePosition(nodeRef.current);
 
@@ -135,10 +144,23 @@ const ResizableForward: React.FC<ResizableProps> = React.forwardRef(function Res
     if (nodeRef.current && calculatedHeight) nodeRef.current.style.width = initialWidth;
   }, [enableHorizontal]);
 
+  // allow imperative reset of height/width
+  useImperativeHandle(props.ResizableRef, () => ({
+    rest: (resetHeight = true, resetWidth = true) => {
+      if (nodeRef.current && resetHeight) {
+        setCalculatedHeight(null);
+        nodeRef.current.style.height = initialHeight;
+      }
+      if (nodeRef.current && resetWidth) {
+        setCalculatedWidth(null);
+        nodeRef.current.style.width = initialWidth;
+      }
+    },
+  }));
+
+  // control and update the size of the node on each render
   const height = enableVertical ? calculatedHeight ?? nodeRef?.current?.style?.height ?? undefined : undefined;
   const width = enableHorizontal ? calculatedWidth ?? nodeRef?.current?.style?.width ?? undefined : undefined;
-
-  // control the size of the node
   if (nodeRef?.current) {
     if (!disableHeightControl && !!height) nodeRef.current.style.height = height + "px";
     if (!disableWidthControl && !!width) nodeRef.current.style.width = width + "px";
@@ -148,16 +170,10 @@ const ResizableForward: React.FC<ResizableProps> = React.forwardRef(function Res
     if (nodeRef?.current) nodeRef.current.style.boxSizing = "border-box";
   }, [nodeRef.current]);
 
+  // another render is required when adding or removing a handle
   useEffect(() => {
     render();
   }, [props.enabledHandles, disableHeightControl, disableWidthControl]);
-
-  // todo
-  // useImperativeHandle(ref, () => ({
-  //   focus: () => {
-  //     inputRef.current.focus();
-  //   },
-  // }));
 
   // remove unnecessary handles
   if (disableHeightControl) enabledHandles = omitItems(enabledHandles, ["top", "bottom"]);

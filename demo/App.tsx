@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import ResizableProd, { handleNameType } from "react-true-resizable";
-import ResizableDev from "../src/Resizable";
+import ResizableDev, { ResizableHandle } from "../src/Resizable";
 import useRerender from "shared/hooks/useRerender";
 import { Box, Paper } from "@mui/material";
 import "./App.css";
@@ -18,12 +18,12 @@ function App() {
     <div style={{ textAlign: "center" }}>
       <button onClick={() => reredner()}>rerender</button>
 
-      <GridResizable reredner={reredner} />
+      <GridResizable />
 
       {/*/!* nested components that need to access the dom node*!/*/}
 
       {/*<Examples.WithDraggable />*/}
-      <Examples.NestedResizeable />
+      {/*<Examples.NestedResizeable />*/}
 
       {/*<ResizableExample />*/}
 
@@ -70,19 +70,24 @@ const ResizableMuiBottomBar = () => {
   );
 };
 
-const GridResizable = ({ reredner }) => {
+const GridResizable = ({ reredner = () => {} }) => {
   const [allowHResize, setAllowHResize] = useState(false);
   const [allowVResize, setAllowVResize] = useState(false);
   const handles: handleNameType[] = [];
   if (allowHResize) handles.push("left", "right");
   if (allowVResize) handles.push("top", "bottom");
+
+  const ResizableRef = useRef<ResizableHandle>(null);
+  console.log(ResizableRef.current);
   return (
-    <>
+    <div style={{ border: "solid" }}>
       allow horizontal resize
       <input type="checkbox" checked={allowHResize} onChange={() => setAllowHResize(!allowHResize)} />
       allow vertical resize
       <input type="checkbox" checked={allowVResize} onChange={() => setAllowVResize(!allowVResize)} />
+      <button onClick={() => ResizableRef.current?.rest()}>rest resizable</button>
       <ResizableProd
+        ResizableRef={ResizableRef}
         grid={20}
         enabledHandles={handles}
         disableHeightControl={!allowVResize}
@@ -94,7 +99,7 @@ const GridResizable = ({ reredner }) => {
           resizable only vertically {allowHResize && "and horizontally"} with grid 20
         </Box>
       </ResizableProd>
-    </>
+    </div>
   );
 };
 
@@ -206,14 +211,14 @@ const Examples = {
     const divRef = useRef<HTMLDivElement>(null);
     return (
       <>
-        {/*<ResizableDev nodeRef={divRef} />*/}
-        <ResizableDev>
-          <ResizableDev disableHeightControl disableWidthControl>
-            <div style={{ border: "2px solid black", height: 50 }} ref={divRef}>
-              test
-            </div>
-          </ResizableDev>
+        <ResizableDev nodeRef={divRef} />
+        {/*<ResizableDev>*/}
+        <ResizableDev disableHeightControl disableWidthControl>
+          <div style={{ border: "2px solid black", height: 50 }} ref={divRef}>
+            test
+          </div>
         </ResizableDev>
+        {/*</ResizableDev>*/}
       </>
     );
   },
