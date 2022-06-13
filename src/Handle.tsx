@@ -22,6 +22,7 @@ export interface HandleProps {
   handlesParentPosition: positionType;
   handleOptions: handleOptionsType;
   handlesOptions: { [key in handleNameType]: handleOptionsType };
+  handleStyle: { [key in handleNameType]: React.CSSProperties };
 }
 
 export const HandleForward = React.forwardRef(function Handle(
@@ -43,6 +44,7 @@ export const HandleForward = React.forwardRef(function Handle(
     setEndDraggingOffsetLeft,
     endDraggingOffsetTop,
     endDraggingOffsetLeft,
+    handleStyle,
   }: HandleProps,
   ref
 ) {
@@ -169,7 +171,7 @@ export const HandleForward = React.forwardRef(function Handle(
         // background: "green",
         position: "absolute",
         ...style,
-        ...handleOptions.style,
+        ...handleStyle,
       }}
       onPointerMove={onPointerMove}
       onPointerDown={onPointerDown}

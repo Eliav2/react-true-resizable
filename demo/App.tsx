@@ -20,6 +20,8 @@ function App() {
 
       <ResizableDev
         enableRelativeOffset
+        handleStyle={{ background: "red" }}
+        handlesStyle={{ top: { background: "blue" } }}
         // grid={20}
         // allHandlerOptions={{ style: { background: "red" } }}
       >

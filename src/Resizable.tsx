@@ -103,14 +103,20 @@ const ResizableForward = React.forwardRef<HTMLElement, ResizableProps>(function 
   // strip away checks in production build
   if (!process.env.NODE_ENV || process.env.NODE_ENV !== "production") checkProps(props);
 
-  let finalHandlersOptions = {} as { [key in handleNameType]: handleOptionsType };
+  let finalHandlesOptions = {} as { [key in handleNameType]: handleOptionsType };
 
   // fill up empty handles sizes
   for (const handle of enabledHandles) {
     if (handle in mergedHandlersOptions) {
-      finalHandlersOptions[handle] = merge(cloneDeep(mergedHandlerOptions), mergedHandlersOptions[handle]);
+      finalHandlesOptions[handle] = merge(cloneDeep(mergedHandlerOptions), mergedHandlersOptions[handle]);
     }
   }
+  let finalHandlesStyle = {} as { [key in handleNameType]: React.CSSProperties };
+  for (const handle of enabledHandles) {
+    finalHandlesStyle[handle] = merge(cloneDeep(handleStyle), handlesStyle?.[handle] ?? {});
+  }
+  console.log(handleStyle, handlesStyle);
+  console.log(finalHandlesStyle);
 
   const enableHorizontal =
     !disableWidthControl &&
@@ -248,8 +254,9 @@ const ResizableForward = React.forwardRef<HTMLElement, ResizableProps>(function 
                       calculatedTop,
                       HandleStyleFn: defaultHandlersFn[handlerName],
                       handlesParentPosition,
-                      handleOptions: finalHandlersOptions[handlerName],
-                      handlesOptions: finalHandlersOptions,
+                      handleOptions: finalHandlesOptions[handlerName],
+                      handlesOptions: finalHandlesOptions,
+                      handleStyle: finalHandlesStyle[handlerName],
                     }}
                     ResizableProps={props}
                   />
