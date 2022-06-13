@@ -1,0 +1,7 @@
+{
+  "entryPoints": [
+    "../src/Resizable.tsx"
+  ],
+  "out": "typeDocs",
+  "tsconfig": "../tsconfig.dev.json"
+}

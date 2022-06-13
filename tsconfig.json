@@ -17,6 +17,7 @@
     "jsx": "react-jsx",
     "noImplicitAny": false,
     "declaration": true,
+
   },
   "include": ["src","./vite.config.ts"],
   "exclude": ["node_modules"],

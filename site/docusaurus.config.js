@@ -3,8 +3,9 @@
 
 const lightCodeTheme = require("prism-react-renderer/themes/github");
 const darkCodeTheme = require("prism-react-renderer/themes/dracula");
+const path = require("path");
 
-/** @type {import('@docusaurus/types').Config} */
+/** @type {import("@docusaurus/types").Config} */
 const config = {
   title: "react-true-resizable",
   tagline: "A modern Resizable React Component",
@@ -20,6 +21,32 @@ const config = {
   organizationName: "eliav2", // Usually your GitHub org/user name.
   projectName: "my-react-components", // Usually your repo name.
 
+  plugins: [
+    "my-loaders", // loader required for html
+    [
+      "docusaurus-plugin-react-docgen-typescript",
+      {
+        // pass in a single string or an array of strings
+        // src: ["src/**/*.tsx"],
+        src: ["../src/**/*.ts?(x)"],
+        // global: true,
+        tsConfig: path.resolve(__dirname, "..", "tsconfig.dev.json"),
+        parserOptions: {
+          // pass parserOptions to react-docgen-typescript
+          // here is a good starting point which filters out all
+          // types from react
+          propFilter: (prop, component) => {
+            if (prop.parent) {
+              return !prop.parent.fileName.includes("@types/react");
+            }
+
+            return true;
+          },
+        },
+      },
+    ],
+  ],
+
   // Even if you don't use internalization, you can use this field to set useful
   // metadata like html lang. For example, if your site is Chinese, you may want
   // to replace "en" with "zh-Hans".
@@ -32,7 +59,7 @@ const config = {
   presets: [
     [
       "classic",
-      /** @type {import('@docusaurus/preset-classic').Options} */
+      /** @type {import("@docusaurus/preset-classic").Options} */
       ({
         docs: {
           sidebarPath: require.resolve("./sidebars.js"),
@@ -54,7 +81,7 @@ const config = {
   ],
 
   themeConfig:
-    /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
+    /** @type {import("@docusaurus/preset-classic").ThemeConfig} */
     ({
       navbar: {
         title: "react-true-resizable",
