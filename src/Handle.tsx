@@ -22,7 +22,7 @@ export interface HandleProps {
   handlesParentPosition: positionType;
   handleOptions: handleOptionsType;
   handlesOptions: { [key in handleNameType]: handleOptionsType };
-  handleStyle: { [key in handleNameType]: React.CSSProperties };
+  handleStyle: React.CSSProperties;
 }
 
 export const HandleForward = React.forwardRef(function Handle(
