@@ -4,13 +4,17 @@ sidebar_position: 2
 
 # Usage
 
+## Implementation Notes
+
 `react-true-resizable` is a React components that is written with modern React techniques and uses modern web API.
 
-`react-true-resizable` does not mutate the style of DOM node is wrapped around except for the `width` and `height` properties
-in order to make the node resizable, and `box-sizing` property is set to `border-box` (in order to place the handles correctly).
+`react-true-resizable` does not mutate the style of the target DOM node except for the `width` and `height` properties
+(in order to make the node resizable), and `box-sizing` property is set to `border-box` (in order to place the handles correctly).
 
-the `position` property does not change. therefore it will work as expected no matter what the position of the node is.
-also, no DOM node is created and wrapped around the target node, so the surrounding layout won't be affected.
+the `position` property does not being mutated, and no DOM node is created and wrapped around the target node therefore the layout
+of the target DOM node will not be affected.
+
 other resizable solutions are setting the `position` property to `relative` or `absolute` in order to place the handles correctly,
 this lib uses different approach to place the handles and using [getBoundingClientRect](https://developer.mozilla.org/en-US/docs/Web/API/Element/getBoundingClientRect) in
-order to calculate the actual position of the handles.
+order to calculate the wanted position of the handles, and placing them relative to their absolute positioned parent which will
+be injected as a children of the target DOM node using ReactPortal.

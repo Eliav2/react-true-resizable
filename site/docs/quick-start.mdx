@@ -2,23 +2,76 @@
 sidebar_position: 1
 ---
 
+
 # Quick Start
 
 ## Install
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+[//]: # (@formatter:off)
+
+<Tabs>
+  <TabItem value="yarn" label="yarn">
+
+```bash
+yarn add react-true-resizable
+```
+
+  </TabItem>
+  <TabItem value="pnpm" label="pnpm">
+
+```bash
+pnpm add react-true-resizable
+```
+
+  </TabItem>
+  <TabItem value="npm" label="npm">
 
 ```bash
 npm install react-true-resizable
 ```
 
-[//]: # (import CodeBlock from '@theme/CodeBlock';)
+  </TabItem>
+</Tabs>
+
+[//]: # (temp-prettier bug)
+[//]: # (@formatter:on)
+
+
 import CodeBlock from '@site/src/components/CodeBlock';
 import BasicSource from '!!raw-loader!@site/src/demos/Basic';
 import Basic from '@site/src/demos/Basic';
 
-import BasicSimpleSource from '!!raw-loader!@site/src/demos/Basic.simple';
+import BasicSimpleSource from '!!raw-loader!@site/src/demos/Basic/Simple';
 
 ## Basic Usage
-<Basic/>
 
-<CodeBlock simpleSource={BasicSimpleSource} fullSource={BasicSource}/>
+<Basic />
+<CodeBlock
+  simpleSource={BasicSimpleSource}
+  fullSource={BasicSource}
+/>
+
+
+## Live Edit
+```jsx live
+function Live () {
+  const BoxStyle = {
+    border: "solid",
+    borderRadius: 12,
+    width: 120,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+  };
+  return (
+    <Resizable>
+      <div style={BoxStyle}>Resizable</div>
+    </Resizable>
+  );
+}
+```
 
