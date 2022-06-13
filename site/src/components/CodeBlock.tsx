@@ -9,8 +9,8 @@ import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 interface CodeBlockProps {
   simpleSource?: string;
   fullSource?: string;
-  live?: string;
-  extraTabs?: { title: string; elem: JSX.Element }[];
+  // live?: string;
+  // extraTabs?: { title: string; elem: JSX.Element }[];
 }
 
 import Tabs from "@theme/Tabs";
@@ -49,28 +49,28 @@ const CodeBlock: FC<CodeBlockProps> = (props) => {
     </TabItem>,
   ];
   // @formatter:off
-  if (props.live) {
-    tabs.push(
-      <TabItem
-        key="live"
-        value="live"
-        // @ts-ignore
-        label={
-          <Tooltip title="Live Edit">
-            <PlayArrowIcon />
-          </Tooltip>
-        }
-      ></TabItem>
-    );
-  }
-  if (props.extraTabs)
-    tabs.push(
-      ...props.extraTabs.map((tab, i) => (
-        <TabItem value={tab.title} key={tab.title}>
-          {tab.elem}
-        </TabItem>
-      ))
-    );
+  // if (props.live) {
+  //   tabs.push(
+  //     <TabItem
+  //       key="live"
+  //       value="live"
+  //       // @ts-ignore
+  //       label={
+  //         <Tooltip title="Live Edit">
+  //           <PlayArrowIcon />
+  //         </Tooltip>
+  //       }
+  //     ></TabItem>
+  //   );
+  // }
+  // if (props.extraTabs)
+  //   tabs.push(
+  //     ...props.extraTabs.map((tab, i) => (
+  //       <TabItem value={tab.title} key={tab.title}>
+  //         {tab.elem}
+  //       </TabItem>
+  //     ))
+  //   );
   // @formatter:on
   return (
     <Box sx={{ my: 2 }}>
