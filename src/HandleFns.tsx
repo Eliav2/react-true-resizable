@@ -1,7 +1,7 @@
-import { round } from "./utils.js";
 import React from "react";
 import { positionType } from "shared/hooks/usePosition";
-import { handleNameType, handleOptionsType } from "./Resizable";
+import { handlesOptionsType } from "./Handle";
+import { round } from "./utils.js";
 
 // this is possible hook or possibly normal function
 export type HandleStyleFnType = (arg: {
@@ -9,7 +9,7 @@ export type HandleStyleFnType = (arg: {
   handlerPos: positionType;
   handlesParentPosition: positionType;
   handlerSize: number;
-  handlesOptions: { [key in handleNameType]?: handleOptionsType };
+  handlesOptions: handlesOptionsType;
 }) => React.CSSProperties | undefined;
 
 /**

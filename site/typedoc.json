@@ -1,7 +1,21 @@
 {
+  "$schema": "https://typedoc.org/schema.json",
   "entryPoints": [
-    "../src/Resizable.tsx"
+    "../src/Resizable.tsx",
+    "../src/Handle.tsx",
+    "../src/HandleFns.tsx",
+    "../../shared/hooks/usePosition.ts"
   ],
-  "out": "typeDocs",
-  "tsconfig": "../tsconfig.dev.json"
+  "out": "./static/typeDocs",
+  "json": "typeDocsGeneratedTypes.json",
+  "tsconfig": "../tsconfig.base.json",
+  "compilerOptions": {
+    "emitDeclarationOnly": true,
+    "declaration": true,
+    "strictNullChecks": false
+  },
+  "cleanOutputDir": true,
+  "includes": "../..",
+  "readme": null,
+  "sort": ["source-order"]
 }

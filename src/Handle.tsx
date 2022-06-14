@@ -1,8 +1,16 @@
 import React, { useRef, useState } from "react";
 import usePosition, { positionType } from "shared/hooks/usePosition";
-import { handleNameType, handleOptionsType, ResizableProps } from "./Resizable";
+import { handleNameType, ResizableProps } from "./Resizable";
 import useRerender from "shared/hooks/useRerender";
 import { HandleStyleFnType } from "./HandleFns";
+
+export type allowResizeType = "horizontal" | "vertical";
+export type handleOptionsType = {
+  allowResize: { [key in allowResizeType]?: { reverseDrag: boolean } };
+  size: number;
+};
+
+export type handlesOptionsType = { [key in handleNameType]?: Partial<handleOptionsType> };
 
 export interface HandleProps {
   ResizableProps: ResizableProps;
@@ -21,11 +29,11 @@ export interface HandleProps {
   HandleStyleFn: HandleStyleFnType;
   handlesParentPosition: positionType;
   handleOptions: handleOptionsType;
-  handlesOptions: { [key in handleNameType]: handleOptionsType };
+  handlesOptions: handlesOptionsType;
   handleStyle: React.CSSProperties;
 }
 
-export const HandleForward = React.forwardRef(function Handle(
+export const Handle = React.forwardRef(function HandleForward(
   {
     nodeRef,
     nodePosition,

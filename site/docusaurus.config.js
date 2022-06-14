@@ -22,29 +22,41 @@ const config = {
   projectName: "my-react-components", // Usually your repo name.
 
   plugins: [
-    "my-loaders", // loader required for html
-    [
-      "docusaurus-plugin-react-docgen-typescript",
-      {
-        // pass in a single string or an array of strings
-        // src: ["src/**/*.tsx"],
-        src: ["../src/**/*.ts?(x)"],
-        // global: true,
-        tsConfig: path.resolve(__dirname, "..", "tsconfig.dev.json"),
-        parserOptions: {
-          // pass parserOptions to react-docgen-typescript
-          // here is a good starting point which filters out all
-          // types from react
-          propFilter: (prop, component) => {
-            if (prop.parent) {
-              return !prop.parent.fileName.includes("@types/react");
-            }
-
-            return true;
-          },
-        },
-      },
-    ],
+    // "my-loaders", // loader required for html
+    // [
+    //   "docusaurus-plugin-react-docgen",
+    //   {
+    //     // src: ["../src/**/*.ts?(x)"],
+    //     src: ["../dist/types/**/*.d.*"],
+    //     route: {
+    //       path: "/docs/api/resizable",
+    //       component: require.resolve("../dist/react-true-resizable.es.js"),
+    //       // component: require.resolve("../src/Resizable.tsx"),
+    //       exact: true,
+    //     },
+    //   },
+    // ],
+    // [
+    //   "docusaurus-plugin-react-docgen-typescript",
+    //   {
+    //     src: ["../src/**/*.ts?(x)"],
+    //     // src: ["../dist/types/**/*.d.*"],
+    //     global: true,
+    //     tsConfig: path.resolve(__dirname, "..", "tsconfig.dev.json"),
+    //     parserOptions: {
+    //       // pass parserOptions to react-docgen-typescript
+    //       // here is a good starting point which filters out all
+    //       // types from react
+    //       propFilter: (prop, component) => {
+    //         if (prop.parent) {
+    //           return !prop.parent.fileName.includes("@types/react");
+    //         }
+    //
+    //         return true;
+    //       },
+    //     },
+    //   },
+    // ],
   ],
 
   // Even if you don't use internalization, you can use this field to set useful
@@ -83,6 +95,12 @@ const config = {
   themeConfig:
     /** @type {import("@docusaurus/preset-classic").ThemeConfig} */
     ({
+      docs: {
+        sidebar: {
+          autoCollapseCategories: true,
+          hideable: true,
+        },
+      },
       navbar: {
         title: "react-true-resizable",
         items: [

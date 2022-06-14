@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 4
 ---
 
 # Other solutions
@@ -34,7 +34,7 @@ export const Comparison = (props) => {
           </td>
           <td style={{ width: 140 }}>
             <ReactRnd>
-              <div style={BoxStyle}>ReactResizable</div>
+              <div style={BoxStyle}>ReactRnd</div>
             </ReactRnd>
           </td>
           <td>
@@ -73,6 +73,12 @@ the next behavior would present:
 
 <Comparison />
 
+:::note
+The elements are interactive, play with them!
+:::
+
+as we can see, react-true-resizable is the only one that works as expected. explained next:
+
 ### react-true-resizable
 
 export const WorkingTrueResizable = () => (
@@ -96,7 +102,7 @@ the only component that work as expected is react-true-resizable, because it's t
 (the `div`) height and width. also, react-true-resizable does not mutate position style.
 
 the other solutions create wrapper around the div and controls the wrapper dimensions and positioning style, which directly changes
-the children layout.
+the children layout. [learn more](/docs/implementation-notes)
 
 ### re-resizable
 

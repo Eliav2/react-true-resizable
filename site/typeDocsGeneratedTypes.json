@@ -1,0 +1,7318 @@
+{
+	"id": 0,
+	"name": "my-react-components",
+	"kind": 1,
+	"flags": {},
+	"originalName": "",
+	"children": [
+		{
+			"id": 51,
+			"name": "react-true-resizable/src/Handle",
+			"kind": 2,
+			"kindString": "Module",
+			"flags": {},
+			"children": [
+				{
+					"id": 52,
+					"name": "allowResizeType",
+					"kind": 4194304,
+					"kindString": "Type alias",
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "react-true-resizable/src/Handle.tsx",
+							"line": 7,
+							"character": 12
+						}
+					],
+					"type": {
+						"type": "union",
+						"types": [
+							{
+								"type": "literal",
+								"value": "horizontal"
+							},
+							{
+								"type": "literal",
+								"value": "vertical"
+							}
+						]
+					}
+				},
+				{
+					"id": 53,
+					"name": "handleOptionsType",
+					"kind": 4194304,
+					"kindString": "Type alias",
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "react-true-resizable/src/Handle.tsx",
+							"line": 8,
+							"character": 12
+						}
+					],
+					"type": {
+						"type": "reflection",
+						"declaration": {
+							"id": 54,
+							"name": "__type",
+							"kind": 65536,
+							"kindString": "Type literal",
+							"flags": {},
+							"children": [
+								{
+									"id": 55,
+									"name": "allowResize",
+									"kind": 1024,
+									"kindString": "Property",
+									"flags": {},
+									"sources": [
+										{
+											"fileName": "react-true-resizable/src/Handle.tsx",
+											"line": 9,
+											"character": 2
+										}
+									],
+									"type": {
+										"type": "mapped",
+										"parameter": "key",
+										"parameterType": {
+											"type": "reference",
+											"id": 52,
+											"name": "allowResizeType"
+										},
+										"templateType": {
+											"type": "reflection",
+											"declaration": {
+												"id": 56,
+												"name": "__type",
+												"kind": 65536,
+												"kindString": "Type literal",
+												"flags": {},
+												"children": [
+													{
+														"id": 57,
+														"name": "reverseDrag",
+														"kind": 1024,
+														"kindString": "Property",
+														"flags": {},
+														"sources": [
+															{
+																"fileName": "react-true-resizable/src/Handle.tsx",
+																"line": 9,
+																"character": 46
+															}
+														],
+														"type": {
+															"type": "intrinsic",
+															"name": "boolean"
+														}
+													}
+												],
+												"groups": [
+													{
+														"title": "Properties",
+														"kind": 1024,
+														"children": [
+															57
+														]
+													}
+												],
+												"sources": [
+													{
+														"fileName": "react-true-resizable/src/Handle.tsx",
+														"line": 9,
+														"character": 44
+													}
+												]
+											}
+										},
+										"optionalModifier": "+"
+									}
+								},
+								{
+									"id": 58,
+									"name": "size",
+									"kind": 1024,
+									"kindString": "Property",
+									"flags": {},
+									"sources": [
+										{
+											"fileName": "react-true-resizable/src/Handle.tsx",
+											"line": 10,
+											"character": 2
+										}
+									],
+									"type": {
+										"type": "intrinsic",
+										"name": "number"
+									}
+								}
+							],
+							"groups": [
+								{
+									"title": "Properties",
+									"kind": 1024,
+									"children": [
+										55,
+										58
+									]
+								}
+							],
+							"sources": [
+								{
+									"fileName": "react-true-resizable/src/Handle.tsx",
+									"line": 8,
+									"character": 32
+								}
+							]
+						}
+					}
+				},
+				{
+					"id": 59,
+					"name": "handlesOptionsType",
+					"kind": 4194304,
+					"kindString": "Type alias",
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "react-true-resizable/src/Handle.tsx",
+							"line": 13,
+							"character": 12
+						}
+					],
+					"type": {
+						"type": "mapped",
+						"parameter": "key",
+						"parameterType": {
+							"type": "reference",
+							"id": 49,
+							"name": "handleNameType"
+						},
+						"templateType": {
+							"type": "reference",
+							"typeArguments": [
+								{
+									"type": "reference",
+									"id": 53,
+									"name": "handleOptionsType"
+								}
+							],
+							"qualifiedName": "Partial",
+							"package": ".pnpm",
+							"name": "Partial"
+						},
+						"optionalModifier": "+"
+					}
+				},
+				{
+					"id": 60,
+					"name": "HandleProps",
+					"kind": 256,
+					"kindString": "Interface",
+					"flags": {},
+					"children": [
+						{
+							"id": 61,
+							"name": "ResizableProps",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"sources": [
+								{
+									"fileName": "react-true-resizable/src/Handle.tsx",
+									"line": 16,
+									"character": 2
+								}
+							],
+							"type": {
+								"type": "reference",
+								"id": 2,
+								"name": "ResizableProps"
+							}
+						},
+						{
+							"id": 62,
+							"name": "nodePosition",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"sources": [
+								{
+									"fileName": "react-true-resizable/src/Handle.tsx",
+									"line": 17,
+									"character": 2
+								}
+							],
+							"type": {
+								"type": "reflection",
+								"declaration": {
+									"id": 63,
+									"name": "__type",
+									"kind": 65536,
+									"kindString": "Type literal",
+									"flags": {},
+									"children": [
+										{
+											"id": 64,
+											"name": "left",
+											"kind": 1024,
+											"kindString": "Property",
+											"flags": {},
+											"sources": [
+												{
+													"fileName": "shared/hooks/usePosition.ts",
+													"line": 5,
+													"character": 2
+												}
+											],
+											"type": {
+												"type": "intrinsic",
+												"name": "number"
+											}
+										},
+										{
+											"id": 65,
+											"name": "top",
+											"kind": 1024,
+											"kindString": "Property",
+											"flags": {},
+											"sources": [
+												{
+													"fileName": "shared/hooks/usePosition.ts",
+													"line": 6,
+													"character": 2
+												}
+											],
+											"type": {
+												"type": "intrinsic",
+												"name": "number"
+											}
+										},
+										{
+											"id": 66,
+											"name": "right",
+											"kind": 1024,
+											"kindString": "Property",
+											"flags": {},
+											"sources": [
+												{
+													"fileName": "shared/hooks/usePosition.ts",
+													"line": 7,
+													"character": 2
+												}
+											],
+											"type": {
+												"type": "intrinsic",
+												"name": "number"
+											}
+										},
+										{
+											"id": 67,
+											"name": "bottom",
+											"kind": 1024,
+											"kindString": "Property",
+											"flags": {},
+											"sources": [
+												{
+													"fileName": "shared/hooks/usePosition.ts",
+													"line": 8,
+													"character": 2
+												}
+											],
+											"type": {
+												"type": "intrinsic",
+												"name": "number"
+											}
+										},
+										{
+											"id": 68,
+											"name": "width",
+											"kind": 1024,
+											"kindString": "Property",
+											"flags": {},
+											"sources": [
+												{
+													"fileName": "shared/hooks/usePosition.ts",
+													"line": 9,
+													"character": 2
+												}
+											],
+											"type": {
+												"type": "intrinsic",
+												"name": "number"
+											}
+										},
+										{
+											"id": 69,
+											"name": "height",
+											"kind": 1024,
+											"kindString": "Property",
+											"flags": {},
+											"sources": [
+												{
+													"fileName": "shared/hooks/usePosition.ts",
+													"line": 10,
+													"character": 2
+												}
+											],
+											"type": {
+												"type": "intrinsic",
+												"name": "number"
+											}
+										}
+									],
+									"groups": [
+										{
+											"title": "Properties",
+											"kind": 1024,
+											"children": [
+												64,
+												65,
+												66,
+												67,
+												68,
+												69
+											]
+										}
+									]
+								}
+							}
+						},
+						{
+							"id": 70,
+							"name": "nodeRef",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"sources": [
+								{
+									"fileName": "react-true-resizable/src/Handle.tsx",
+									"line": 18,
+									"character": 2
+								}
+							],
+							"type": {
+								"type": "reference",
+								"typeArguments": [
+									{
+										"type": "intrinsic",
+										"name": "any"
+									}
+								],
+								"qualifiedName": "React.RefObject",
+								"package": ".pnpm",
+								"name": "RefObject"
+							}
+						},
+						{
+							"id": 71,
+							"name": "setCalculatedHeight",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"sources": [
+								{
+									"fileName": "react-true-resizable/src/Handle.tsx",
+									"line": 19,
+									"character": 2
+								}
+							],
+							"type": {
+								"type": "reference",
+								"typeArguments": [
+									{
+										"type": "reference",
+										"typeArguments": [
+											{
+												"type": "intrinsic",
+												"name": "number"
+											}
+										],
+										"qualifiedName": "React.SetStateAction",
+										"package": ".pnpm",
+										"name": "SetStateAction"
+									}
+								],
+								"qualifiedName": "React.Dispatch",
+								"package": ".pnpm",
+								"name": "Dispatch"
+							}
+						},
+						{
+							"id": 72,
+							"name": "setCalculatedWidth",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"sources": [
+								{
+									"fileName": "react-true-resizable/src/Handle.tsx",
+									"line": 20,
+									"character": 2
+								}
+							],
+							"type": {
+								"type": "reference",
+								"typeArguments": [
+									{
+										"type": "reference",
+										"typeArguments": [
+											{
+												"type": "intrinsic",
+												"name": "number"
+											}
+										],
+										"qualifiedName": "React.SetStateAction",
+										"package": ".pnpm",
+										"name": "SetStateAction"
+									}
+								],
+								"qualifiedName": "React.Dispatch",
+								"package": ".pnpm",
+								"name": "Dispatch"
+							}
+						},
+						{
+							"id": 73,
+							"name": "calculatedHeight",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"sources": [
+								{
+									"fileName": "react-true-resizable/src/Handle.tsx",
+									"line": 21,
+									"character": 2
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							}
+						},
+						{
+							"id": 74,
+							"name": "calculatedWidth",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"sources": [
+								{
+									"fileName": "react-true-resizable/src/Handle.tsx",
+									"line": 22,
+									"character": 2
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							}
+						},
+						{
+							"id": 75,
+							"name": "setCalculatedLeft",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"sources": [
+								{
+									"fileName": "react-true-resizable/src/Handle.tsx",
+									"line": 23,
+									"character": 2
+								}
+							],
+							"type": {
+								"type": "reference",
+								"typeArguments": [
+									{
+										"type": "reference",
+										"typeArguments": [
+											{
+												"type": "intrinsic",
+												"name": "number"
+											}
+										],
+										"qualifiedName": "React.SetStateAction",
+										"package": ".pnpm",
+										"name": "SetStateAction"
+									}
+								],
+								"qualifiedName": "React.Dispatch",
+								"package": ".pnpm",
+								"name": "Dispatch"
+							}
+						},
+						{
+							"id": 76,
+							"name": "setCalculatedTop",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"sources": [
+								{
+									"fileName": "react-true-resizable/src/Handle.tsx",
+									"line": 24,
+									"character": 2
+								}
+							],
+							"type": {
+								"type": "reference",
+								"typeArguments": [
+									{
+										"type": "reference",
+										"typeArguments": [
+											{
+												"type": "intrinsic",
+												"name": "number"
+											}
+										],
+										"qualifiedName": "React.SetStateAction",
+										"package": ".pnpm",
+										"name": "SetStateAction"
+									}
+								],
+								"qualifiedName": "React.Dispatch",
+								"package": ".pnpm",
+								"name": "Dispatch"
+							}
+						},
+						{
+							"id": 77,
+							"name": "setEndDraggingOffsetTop",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"sources": [
+								{
+									"fileName": "react-true-resizable/src/Handle.tsx",
+									"line": 25,
+									"character": 2
+								}
+							],
+							"type": {
+								"type": "reference",
+								"typeArguments": [
+									{
+										"type": "reference",
+										"typeArguments": [
+											{
+												"type": "intrinsic",
+												"name": "number"
+											}
+										],
+										"qualifiedName": "React.SetStateAction",
+										"package": ".pnpm",
+										"name": "SetStateAction"
+									}
+								],
+								"qualifiedName": "React.Dispatch",
+								"package": ".pnpm",
+								"name": "Dispatch"
+							}
+						},
+						{
+							"id": 78,
+							"name": "setEndDraggingOffsetLeft",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"sources": [
+								{
+									"fileName": "react-true-resizable/src/Handle.tsx",
+									"line": 26,
+									"character": 2
+								}
+							],
+							"type": {
+								"type": "reference",
+								"typeArguments": [
+									{
+										"type": "reference",
+										"typeArguments": [
+											{
+												"type": "intrinsic",
+												"name": "number"
+											}
+										],
+										"qualifiedName": "React.SetStateAction",
+										"package": ".pnpm",
+										"name": "SetStateAction"
+									}
+								],
+								"qualifiedName": "React.Dispatch",
+								"package": ".pnpm",
+								"name": "Dispatch"
+							}
+						},
+						{
+							"id": 79,
+							"name": "endDraggingOffsetTop",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"sources": [
+								{
+									"fileName": "react-true-resizable/src/Handle.tsx",
+									"line": 27,
+									"character": 2
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							}
+						},
+						{
+							"id": 80,
+							"name": "endDraggingOffsetLeft",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"sources": [
+								{
+									"fileName": "react-true-resizable/src/Handle.tsx",
+									"line": 28,
+									"character": 2
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							}
+						},
+						{
+							"id": 81,
+							"name": "HandleStyleFn",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"sources": [
+								{
+									"fileName": "react-true-resizable/src/Handle.tsx",
+									"line": 29,
+									"character": 2
+								}
+							],
+							"type": {
+								"type": "reference",
+								"id": 95,
+								"name": "HandleStyleFnType"
+							}
+						},
+						{
+							"id": 82,
+							"name": "handlesParentPosition",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"sources": [
+								{
+									"fileName": "react-true-resizable/src/Handle.tsx",
+									"line": 30,
+									"character": 2
+								}
+							],
+							"type": {
+								"type": "reflection",
+								"declaration": {
+									"id": 83,
+									"name": "__type",
+									"kind": 65536,
+									"kindString": "Type literal",
+									"flags": {},
+									"children": [
+										{
+											"id": 84,
+											"name": "left",
+											"kind": 1024,
+											"kindString": "Property",
+											"flags": {},
+											"sources": [
+												{
+													"fileName": "shared/hooks/usePosition.ts",
+													"line": 5,
+													"character": 2
+												}
+											],
+											"type": {
+												"type": "intrinsic",
+												"name": "number"
+											}
+										},
+										{
+											"id": 85,
+											"name": "top",
+											"kind": 1024,
+											"kindString": "Property",
+											"flags": {},
+											"sources": [
+												{
+													"fileName": "shared/hooks/usePosition.ts",
+													"line": 6,
+													"character": 2
+												}
+											],
+											"type": {
+												"type": "intrinsic",
+												"name": "number"
+											}
+										},
+										{
+											"id": 86,
+											"name": "right",
+											"kind": 1024,
+											"kindString": "Property",
+											"flags": {},
+											"sources": [
+												{
+													"fileName": "shared/hooks/usePosition.ts",
+													"line": 7,
+													"character": 2
+												}
+											],
+											"type": {
+												"type": "intrinsic",
+												"name": "number"
+											}
+										},
+										{
+											"id": 87,
+											"name": "bottom",
+											"kind": 1024,
+											"kindString": "Property",
+											"flags": {},
+											"sources": [
+												{
+													"fileName": "shared/hooks/usePosition.ts",
+													"line": 8,
+													"character": 2
+												}
+											],
+											"type": {
+												"type": "intrinsic",
+												"name": "number"
+											}
+										},
+										{
+											"id": 88,
+											"name": "width",
+											"kind": 1024,
+											"kindString": "Property",
+											"flags": {},
+											"sources": [
+												{
+													"fileName": "shared/hooks/usePosition.ts",
+													"line": 9,
+													"character": 2
+												}
+											],
+											"type": {
+												"type": "intrinsic",
+												"name": "number"
+											}
+										},
+										{
+											"id": 89,
+											"name": "height",
+											"kind": 1024,
+											"kindString": "Property",
+											"flags": {},
+											"sources": [
+												{
+													"fileName": "shared/hooks/usePosition.ts",
+													"line": 10,
+													"character": 2
+												}
+											],
+											"type": {
+												"type": "intrinsic",
+												"name": "number"
+											}
+										}
+									],
+									"groups": [
+										{
+											"title": "Properties",
+											"kind": 1024,
+											"children": [
+												84,
+												85,
+												86,
+												87,
+												88,
+												89
+											]
+										}
+									]
+								}
+							}
+						},
+						{
+							"id": 90,
+							"name": "handleOptions",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"sources": [
+								{
+									"fileName": "react-true-resizable/src/Handle.tsx",
+									"line": 31,
+									"character": 2
+								}
+							],
+							"type": {
+								"type": "reference",
+								"id": 53,
+								"name": "handleOptionsType"
+							}
+						},
+						{
+							"id": 91,
+							"name": "handlesOptions",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"sources": [
+								{
+									"fileName": "react-true-resizable/src/Handle.tsx",
+									"line": 32,
+									"character": 2
+								}
+							],
+							"type": {
+								"type": "reference",
+								"id": 59,
+								"name": "handlesOptionsType"
+							}
+						},
+						{
+							"id": 92,
+							"name": "handleStyle",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"sources": [
+								{
+									"fileName": "react-true-resizable/src/Handle.tsx",
+									"line": 33,
+									"character": 2
+								}
+							],
+							"type": {
+								"type": "reference",
+								"qualifiedName": "React.CSSProperties",
+								"package": ".pnpm",
+								"name": "CSSProperties"
+							}
+						}
+					],
+					"groups": [
+						{
+							"title": "Properties",
+							"kind": 1024,
+							"children": [
+								61,
+								62,
+								70,
+								71,
+								72,
+								73,
+								74,
+								75,
+								76,
+								77,
+								78,
+								79,
+								80,
+								81,
+								82,
+								90,
+								91,
+								92
+							]
+						}
+					],
+					"sources": [
+						{
+							"fileName": "react-true-resizable/src/Handle.tsx",
+							"line": 15,
+							"character": 17
+						}
+					]
+				},
+				{
+					"id": 93,
+					"name": "Handle",
+					"kind": 32,
+					"kindString": "Variable",
+					"flags": {
+						"isConst": true
+					},
+					"sources": [
+						{
+							"fileName": "react-true-resizable/src/Handle.tsx",
+							"line": 36,
+							"character": 13
+						}
+					],
+					"type": {
+						"type": "reference",
+						"typeArguments": [
+							{
+								"type": "intersection",
+								"types": [
+									{
+										"type": "reference",
+										"id": 60,
+										"name": "HandleProps"
+									},
+									{
+										"type": "reference",
+										"typeArguments": [
+											{
+												"type": "intrinsic",
+												"name": "unknown"
+											}
+										],
+										"qualifiedName": "React.RefAttributes",
+										"package": ".pnpm",
+										"name": "RefAttributes"
+									}
+								]
+							}
+						],
+						"qualifiedName": "React.ForwardRefExoticComponent",
+						"package": ".pnpm",
+						"name": "ForwardRefExoticComponent"
+					},
+					"defaultValue": "..."
+				}
+			],
+			"groups": [
+				{
+					"title": "Type Aliases",
+					"kind": 4194304,
+					"children": [
+						52,
+						53,
+						59
+					]
+				},
+				{
+					"title": "Interfaces",
+					"kind": 256,
+					"children": [
+						60
+					]
+				},
+				{
+					"title": "Variables",
+					"kind": 32,
+					"children": [
+						93
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "react-true-resizable/src/Handle.tsx",
+					"line": 1,
+					"character": 0
+				}
+			]
+		},
+		{
+			"id": 94,
+			"name": "react-true-resizable/src/HandleFns",
+			"kind": 2,
+			"kindString": "Module",
+			"flags": {},
+			"children": [
+				{
+					"id": 95,
+					"name": "HandleStyleFnType",
+					"kind": 4194304,
+					"kindString": "Type alias",
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "react-true-resizable/src/HandleFns.tsx",
+							"line": 7,
+							"character": 12
+						}
+					],
+					"type": {
+						"type": "reflection",
+						"declaration": {
+							"id": 96,
+							"name": "__type",
+							"kind": 65536,
+							"kindString": "Type literal",
+							"flags": {},
+							"sources": [
+								{
+									"fileName": "react-true-resizable/src/HandleFns.tsx",
+									"line": 7,
+									"character": 32
+								}
+							],
+							"signatures": [
+								{
+									"id": 97,
+									"name": "__type",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {},
+									"parameters": [
+										{
+											"id": 98,
+											"name": "arg",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"type": {
+												"type": "reflection",
+												"declaration": {
+													"id": 99,
+													"name": "__type",
+													"kind": 65536,
+													"kindString": "Type literal",
+													"flags": {},
+													"children": [
+														{
+															"id": 100,
+															"name": "nodePosition",
+															"kind": 1024,
+															"kindString": "Property",
+															"flags": {},
+															"sources": [
+																{
+																	"fileName": "react-true-resizable/src/HandleFns.tsx",
+																	"line": 8,
+																	"character": 2
+																}
+															],
+															"type": {
+																"type": "reference",
+																"id": 356,
+																"name": "positionType"
+															}
+														},
+														{
+															"id": 101,
+															"name": "handlerPos",
+															"kind": 1024,
+															"kindString": "Property",
+															"flags": {},
+															"sources": [
+																{
+																	"fileName": "react-true-resizable/src/HandleFns.tsx",
+																	"line": 9,
+																	"character": 2
+																}
+															],
+															"type": {
+																"type": "reference",
+																"id": 356,
+																"name": "positionType"
+															}
+														},
+														{
+															"id": 102,
+															"name": "handlesParentPosition",
+															"kind": 1024,
+															"kindString": "Property",
+															"flags": {},
+															"sources": [
+																{
+																	"fileName": "react-true-resizable/src/HandleFns.tsx",
+																	"line": 10,
+																	"character": 2
+																}
+															],
+															"type": {
+																"type": "reference",
+																"id": 356,
+																"name": "positionType"
+															}
+														},
+														{
+															"id": 103,
+															"name": "handlerSize",
+															"kind": 1024,
+															"kindString": "Property",
+															"flags": {},
+															"sources": [
+																{
+																	"fileName": "react-true-resizable/src/HandleFns.tsx",
+																	"line": 11,
+																	"character": 2
+																}
+															],
+															"type": {
+																"type": "intrinsic",
+																"name": "number"
+															}
+														},
+														{
+															"id": 104,
+															"name": "handlesOptions",
+															"kind": 1024,
+															"kindString": "Property",
+															"flags": {},
+															"sources": [
+																{
+																	"fileName": "react-true-resizable/src/HandleFns.tsx",
+																	"line": 12,
+																	"character": 2
+																}
+															],
+															"type": {
+																"type": "reference",
+																"id": 59,
+																"name": "handlesOptionsType"
+															}
+														}
+													],
+													"groups": [
+														{
+															"title": "Properties",
+															"kind": 1024,
+															"children": [
+																100,
+																101,
+																102,
+																103,
+																104
+															]
+														}
+													],
+													"sources": [
+														{
+															"fileName": "react-true-resizable/src/HandleFns.tsx",
+															"line": 7,
+															"character": 38
+														}
+													]
+												}
+											}
+										}
+									],
+									"type": {
+										"type": "union",
+										"types": [
+											{
+												"type": "reference",
+												"qualifiedName": "React.CSSProperties",
+												"package": ".pnpm",
+												"name": "React.CSSProperties"
+											},
+											{
+												"type": "intrinsic",
+												"name": "undefined"
+											}
+										]
+									}
+								}
+							]
+						}
+					}
+				},
+				{
+					"id": 105,
+					"name": "topHandlerStyle",
+					"kind": 64,
+					"kindString": "Function",
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "react-true-resizable/src/HandleFns.tsx",
+							"line": 20,
+							"character": 13
+						}
+					],
+					"signatures": [
+						{
+							"id": 106,
+							"name": "topHandlerStyle",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"comment": {
+								"shortText": " Handles Styles"
+							},
+							"parameters": [
+								{
+									"id": 107,
+									"name": "arg",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "reflection",
+										"declaration": {
+											"id": 108,
+											"name": "__type",
+											"kind": 65536,
+											"kindString": "Type literal",
+											"flags": {},
+											"children": [
+												{
+													"id": 109,
+													"name": "nodePosition",
+													"kind": 1024,
+													"kindString": "Property",
+													"flags": {},
+													"sources": [
+														{
+															"fileName": "react-true-resizable/src/HandleFns.tsx",
+															"line": 8,
+															"character": 2
+														}
+													],
+													"type": {
+														"type": "reflection",
+														"declaration": {
+															"id": 110,
+															"name": "__type",
+															"kind": 65536,
+															"kindString": "Type literal",
+															"flags": {},
+															"children": [
+																{
+																	"id": 111,
+																	"name": "left",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 5,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 112,
+																	"name": "top",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 6,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 113,
+																	"name": "right",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 7,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 114,
+																	"name": "bottom",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 8,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 115,
+																	"name": "width",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 9,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 116,
+																	"name": "height",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 10,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																}
+															],
+															"groups": [
+																{
+																	"title": "Properties",
+																	"kind": 1024,
+																	"children": [
+																		111,
+																		112,
+																		113,
+																		114,
+																		115,
+																		116
+																	]
+																}
+															]
+														}
+													}
+												},
+												{
+													"id": 117,
+													"name": "handlerPos",
+													"kind": 1024,
+													"kindString": "Property",
+													"flags": {},
+													"sources": [
+														{
+															"fileName": "react-true-resizable/src/HandleFns.tsx",
+															"line": 9,
+															"character": 2
+														}
+													],
+													"type": {
+														"type": "reflection",
+														"declaration": {
+															"id": 118,
+															"name": "__type",
+															"kind": 65536,
+															"kindString": "Type literal",
+															"flags": {},
+															"children": [
+																{
+																	"id": 119,
+																	"name": "left",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 5,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 120,
+																	"name": "top",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 6,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 121,
+																	"name": "right",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 7,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 122,
+																	"name": "bottom",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 8,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 123,
+																	"name": "width",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 9,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 124,
+																	"name": "height",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 10,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																}
+															],
+															"groups": [
+																{
+																	"title": "Properties",
+																	"kind": 1024,
+																	"children": [
+																		119,
+																		120,
+																		121,
+																		122,
+																		123,
+																		124
+																	]
+																}
+															]
+														}
+													}
+												},
+												{
+													"id": 125,
+													"name": "handlesParentPosition",
+													"kind": 1024,
+													"kindString": "Property",
+													"flags": {},
+													"sources": [
+														{
+															"fileName": "react-true-resizable/src/HandleFns.tsx",
+															"line": 10,
+															"character": 2
+														}
+													],
+													"type": {
+														"type": "reflection",
+														"declaration": {
+															"id": 126,
+															"name": "__type",
+															"kind": 65536,
+															"kindString": "Type literal",
+															"flags": {},
+															"children": [
+																{
+																	"id": 127,
+																	"name": "left",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 5,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 128,
+																	"name": "top",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 6,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 129,
+																	"name": "right",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 7,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 130,
+																	"name": "bottom",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 8,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 131,
+																	"name": "width",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 9,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 132,
+																	"name": "height",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 10,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																}
+															],
+															"groups": [
+																{
+																	"title": "Properties",
+																	"kind": 1024,
+																	"children": [
+																		127,
+																		128,
+																		129,
+																		130,
+																		131,
+																		132
+																	]
+																}
+															]
+														}
+													}
+												},
+												{
+													"id": 133,
+													"name": "handlerSize",
+													"kind": 1024,
+													"kindString": "Property",
+													"flags": {},
+													"sources": [
+														{
+															"fileName": "react-true-resizable/src/HandleFns.tsx",
+															"line": 11,
+															"character": 2
+														}
+													],
+													"type": {
+														"type": "intrinsic",
+														"name": "number"
+													}
+												},
+												{
+													"id": 134,
+													"name": "handlesOptions",
+													"kind": 1024,
+													"kindString": "Property",
+													"flags": {},
+													"sources": [
+														{
+															"fileName": "react-true-resizable/src/HandleFns.tsx",
+															"line": 12,
+															"character": 2
+														}
+													],
+													"type": {
+														"type": "reference",
+														"id": 59,
+														"name": "handlesOptionsType"
+													}
+												}
+											],
+											"groups": [
+												{
+													"title": "Properties",
+													"kind": 1024,
+													"children": [
+														109,
+														117,
+														125,
+														133,
+														134
+													]
+												}
+											]
+										}
+									}
+								}
+							],
+							"type": {
+								"type": "reference",
+								"qualifiedName": "React.CSSProperties",
+								"package": ".pnpm",
+								"name": "CSSProperties"
+							}
+						}
+					]
+				},
+				{
+					"id": 135,
+					"name": "bottomHandlerStyle",
+					"kind": 64,
+					"kindString": "Function",
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "react-true-resizable/src/HandleFns.tsx",
+							"line": 38,
+							"character": 13
+						}
+					],
+					"signatures": [
+						{
+							"id": 136,
+							"name": "bottomHandlerStyle",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 137,
+									"name": "arg",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "reflection",
+										"declaration": {
+											"id": 138,
+											"name": "__type",
+											"kind": 65536,
+											"kindString": "Type literal",
+											"flags": {},
+											"children": [
+												{
+													"id": 139,
+													"name": "nodePosition",
+													"kind": 1024,
+													"kindString": "Property",
+													"flags": {},
+													"sources": [
+														{
+															"fileName": "react-true-resizable/src/HandleFns.tsx",
+															"line": 8,
+															"character": 2
+														}
+													],
+													"type": {
+														"type": "reflection",
+														"declaration": {
+															"id": 140,
+															"name": "__type",
+															"kind": 65536,
+															"kindString": "Type literal",
+															"flags": {},
+															"children": [
+																{
+																	"id": 141,
+																	"name": "left",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 5,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 142,
+																	"name": "top",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 6,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 143,
+																	"name": "right",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 7,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 144,
+																	"name": "bottom",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 8,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 145,
+																	"name": "width",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 9,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 146,
+																	"name": "height",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 10,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																}
+															],
+															"groups": [
+																{
+																	"title": "Properties",
+																	"kind": 1024,
+																	"children": [
+																		141,
+																		142,
+																		143,
+																		144,
+																		145,
+																		146
+																	]
+																}
+															]
+														}
+													}
+												},
+												{
+													"id": 147,
+													"name": "handlerPos",
+													"kind": 1024,
+													"kindString": "Property",
+													"flags": {},
+													"sources": [
+														{
+															"fileName": "react-true-resizable/src/HandleFns.tsx",
+															"line": 9,
+															"character": 2
+														}
+													],
+													"type": {
+														"type": "reflection",
+														"declaration": {
+															"id": 148,
+															"name": "__type",
+															"kind": 65536,
+															"kindString": "Type literal",
+															"flags": {},
+															"children": [
+																{
+																	"id": 149,
+																	"name": "left",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 5,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 150,
+																	"name": "top",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 6,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 151,
+																	"name": "right",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 7,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 152,
+																	"name": "bottom",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 8,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 153,
+																	"name": "width",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 9,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 154,
+																	"name": "height",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 10,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																}
+															],
+															"groups": [
+																{
+																	"title": "Properties",
+																	"kind": 1024,
+																	"children": [
+																		149,
+																		150,
+																		151,
+																		152,
+																		153,
+																		154
+																	]
+																}
+															]
+														}
+													}
+												},
+												{
+													"id": 155,
+													"name": "handlesParentPosition",
+													"kind": 1024,
+													"kindString": "Property",
+													"flags": {},
+													"sources": [
+														{
+															"fileName": "react-true-resizable/src/HandleFns.tsx",
+															"line": 10,
+															"character": 2
+														}
+													],
+													"type": {
+														"type": "reflection",
+														"declaration": {
+															"id": 156,
+															"name": "__type",
+															"kind": 65536,
+															"kindString": "Type literal",
+															"flags": {},
+															"children": [
+																{
+																	"id": 157,
+																	"name": "left",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 5,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 158,
+																	"name": "top",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 6,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 159,
+																	"name": "right",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 7,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 160,
+																	"name": "bottom",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 8,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 161,
+																	"name": "width",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 9,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 162,
+																	"name": "height",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 10,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																}
+															],
+															"groups": [
+																{
+																	"title": "Properties",
+																	"kind": 1024,
+																	"children": [
+																		157,
+																		158,
+																		159,
+																		160,
+																		161,
+																		162
+																	]
+																}
+															]
+														}
+													}
+												},
+												{
+													"id": 163,
+													"name": "handlerSize",
+													"kind": 1024,
+													"kindString": "Property",
+													"flags": {},
+													"sources": [
+														{
+															"fileName": "react-true-resizable/src/HandleFns.tsx",
+															"line": 11,
+															"character": 2
+														}
+													],
+													"type": {
+														"type": "intrinsic",
+														"name": "number"
+													}
+												},
+												{
+													"id": 164,
+													"name": "handlesOptions",
+													"kind": 1024,
+													"kindString": "Property",
+													"flags": {},
+													"sources": [
+														{
+															"fileName": "react-true-resizable/src/HandleFns.tsx",
+															"line": 12,
+															"character": 2
+														}
+													],
+													"type": {
+														"type": "reference",
+														"id": 59,
+														"name": "handlesOptionsType"
+													}
+												}
+											],
+											"groups": [
+												{
+													"title": "Properties",
+													"kind": 1024,
+													"children": [
+														139,
+														147,
+														155,
+														163,
+														164
+													]
+												}
+											]
+										}
+									}
+								}
+							],
+							"type": {
+								"type": "reference",
+								"qualifiedName": "React.CSSProperties",
+								"package": ".pnpm",
+								"name": "CSSProperties"
+							}
+						}
+					]
+				},
+				{
+					"id": 165,
+					"name": "leftHandlerStyle",
+					"kind": 64,
+					"kindString": "Function",
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "react-true-resizable/src/HandleFns.tsx",
+							"line": 56,
+							"character": 13
+						}
+					],
+					"signatures": [
+						{
+							"id": 166,
+							"name": "leftHandlerStyle",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 167,
+									"name": "arg",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "reflection",
+										"declaration": {
+											"id": 168,
+											"name": "__type",
+											"kind": 65536,
+											"kindString": "Type literal",
+											"flags": {},
+											"children": [
+												{
+													"id": 169,
+													"name": "nodePosition",
+													"kind": 1024,
+													"kindString": "Property",
+													"flags": {},
+													"sources": [
+														{
+															"fileName": "react-true-resizable/src/HandleFns.tsx",
+															"line": 8,
+															"character": 2
+														}
+													],
+													"type": {
+														"type": "reflection",
+														"declaration": {
+															"id": 170,
+															"name": "__type",
+															"kind": 65536,
+															"kindString": "Type literal",
+															"flags": {},
+															"children": [
+																{
+																	"id": 171,
+																	"name": "left",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 5,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 172,
+																	"name": "top",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 6,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 173,
+																	"name": "right",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 7,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 174,
+																	"name": "bottom",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 8,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 175,
+																	"name": "width",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 9,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 176,
+																	"name": "height",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 10,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																}
+															],
+															"groups": [
+																{
+																	"title": "Properties",
+																	"kind": 1024,
+																	"children": [
+																		171,
+																		172,
+																		173,
+																		174,
+																		175,
+																		176
+																	]
+																}
+															]
+														}
+													}
+												},
+												{
+													"id": 177,
+													"name": "handlerPos",
+													"kind": 1024,
+													"kindString": "Property",
+													"flags": {},
+													"sources": [
+														{
+															"fileName": "react-true-resizable/src/HandleFns.tsx",
+															"line": 9,
+															"character": 2
+														}
+													],
+													"type": {
+														"type": "reflection",
+														"declaration": {
+															"id": 178,
+															"name": "__type",
+															"kind": 65536,
+															"kindString": "Type literal",
+															"flags": {},
+															"children": [
+																{
+																	"id": 179,
+																	"name": "left",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 5,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 180,
+																	"name": "top",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 6,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 181,
+																	"name": "right",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 7,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 182,
+																	"name": "bottom",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 8,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 183,
+																	"name": "width",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 9,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 184,
+																	"name": "height",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 10,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																}
+															],
+															"groups": [
+																{
+																	"title": "Properties",
+																	"kind": 1024,
+																	"children": [
+																		179,
+																		180,
+																		181,
+																		182,
+																		183,
+																		184
+																	]
+																}
+															]
+														}
+													}
+												},
+												{
+													"id": 185,
+													"name": "handlesParentPosition",
+													"kind": 1024,
+													"kindString": "Property",
+													"flags": {},
+													"sources": [
+														{
+															"fileName": "react-true-resizable/src/HandleFns.tsx",
+															"line": 10,
+															"character": 2
+														}
+													],
+													"type": {
+														"type": "reflection",
+														"declaration": {
+															"id": 186,
+															"name": "__type",
+															"kind": 65536,
+															"kindString": "Type literal",
+															"flags": {},
+															"children": [
+																{
+																	"id": 187,
+																	"name": "left",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 5,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 188,
+																	"name": "top",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 6,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 189,
+																	"name": "right",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 7,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 190,
+																	"name": "bottom",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 8,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 191,
+																	"name": "width",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 9,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 192,
+																	"name": "height",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 10,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																}
+															],
+															"groups": [
+																{
+																	"title": "Properties",
+																	"kind": 1024,
+																	"children": [
+																		187,
+																		188,
+																		189,
+																		190,
+																		191,
+																		192
+																	]
+																}
+															]
+														}
+													}
+												},
+												{
+													"id": 193,
+													"name": "handlerSize",
+													"kind": 1024,
+													"kindString": "Property",
+													"flags": {},
+													"sources": [
+														{
+															"fileName": "react-true-resizable/src/HandleFns.tsx",
+															"line": 11,
+															"character": 2
+														}
+													],
+													"type": {
+														"type": "intrinsic",
+														"name": "number"
+													}
+												},
+												{
+													"id": 194,
+													"name": "handlesOptions",
+													"kind": 1024,
+													"kindString": "Property",
+													"flags": {},
+													"sources": [
+														{
+															"fileName": "react-true-resizable/src/HandleFns.tsx",
+															"line": 12,
+															"character": 2
+														}
+													],
+													"type": {
+														"type": "reference",
+														"id": 59,
+														"name": "handlesOptionsType"
+													}
+												}
+											],
+											"groups": [
+												{
+													"title": "Properties",
+													"kind": 1024,
+													"children": [
+														169,
+														177,
+														185,
+														193,
+														194
+													]
+												}
+											]
+										}
+									}
+								}
+							],
+							"type": {
+								"type": "reference",
+								"qualifiedName": "React.CSSProperties",
+								"package": ".pnpm",
+								"name": "CSSProperties"
+							}
+						}
+					]
+				},
+				{
+					"id": 195,
+					"name": "rightHandlerStyle",
+					"kind": 64,
+					"kindString": "Function",
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "react-true-resizable/src/HandleFns.tsx",
+							"line": 71,
+							"character": 13
+						}
+					],
+					"signatures": [
+						{
+							"id": 196,
+							"name": "rightHandlerStyle",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 197,
+									"name": "arg",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "reflection",
+										"declaration": {
+											"id": 198,
+											"name": "__type",
+											"kind": 65536,
+											"kindString": "Type literal",
+											"flags": {},
+											"children": [
+												{
+													"id": 199,
+													"name": "nodePosition",
+													"kind": 1024,
+													"kindString": "Property",
+													"flags": {},
+													"sources": [
+														{
+															"fileName": "react-true-resizable/src/HandleFns.tsx",
+															"line": 8,
+															"character": 2
+														}
+													],
+													"type": {
+														"type": "reflection",
+														"declaration": {
+															"id": 200,
+															"name": "__type",
+															"kind": 65536,
+															"kindString": "Type literal",
+															"flags": {},
+															"children": [
+																{
+																	"id": 201,
+																	"name": "left",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 5,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 202,
+																	"name": "top",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 6,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 203,
+																	"name": "right",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 7,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 204,
+																	"name": "bottom",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 8,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 205,
+																	"name": "width",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 9,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 206,
+																	"name": "height",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 10,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																}
+															],
+															"groups": [
+																{
+																	"title": "Properties",
+																	"kind": 1024,
+																	"children": [
+																		201,
+																		202,
+																		203,
+																		204,
+																		205,
+																		206
+																	]
+																}
+															]
+														}
+													}
+												},
+												{
+													"id": 207,
+													"name": "handlerPos",
+													"kind": 1024,
+													"kindString": "Property",
+													"flags": {},
+													"sources": [
+														{
+															"fileName": "react-true-resizable/src/HandleFns.tsx",
+															"line": 9,
+															"character": 2
+														}
+													],
+													"type": {
+														"type": "reflection",
+														"declaration": {
+															"id": 208,
+															"name": "__type",
+															"kind": 65536,
+															"kindString": "Type literal",
+															"flags": {},
+															"children": [
+																{
+																	"id": 209,
+																	"name": "left",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 5,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 210,
+																	"name": "top",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 6,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 211,
+																	"name": "right",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 7,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 212,
+																	"name": "bottom",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 8,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 213,
+																	"name": "width",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 9,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 214,
+																	"name": "height",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 10,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																}
+															],
+															"groups": [
+																{
+																	"title": "Properties",
+																	"kind": 1024,
+																	"children": [
+																		209,
+																		210,
+																		211,
+																		212,
+																		213,
+																		214
+																	]
+																}
+															]
+														}
+													}
+												},
+												{
+													"id": 215,
+													"name": "handlesParentPosition",
+													"kind": 1024,
+													"kindString": "Property",
+													"flags": {},
+													"sources": [
+														{
+															"fileName": "react-true-resizable/src/HandleFns.tsx",
+															"line": 10,
+															"character": 2
+														}
+													],
+													"type": {
+														"type": "reflection",
+														"declaration": {
+															"id": 216,
+															"name": "__type",
+															"kind": 65536,
+															"kindString": "Type literal",
+															"flags": {},
+															"children": [
+																{
+																	"id": 217,
+																	"name": "left",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 5,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 218,
+																	"name": "top",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 6,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 219,
+																	"name": "right",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 7,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 220,
+																	"name": "bottom",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 8,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 221,
+																	"name": "width",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 9,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 222,
+																	"name": "height",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 10,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																}
+															],
+															"groups": [
+																{
+																	"title": "Properties",
+																	"kind": 1024,
+																	"children": [
+																		217,
+																		218,
+																		219,
+																		220,
+																		221,
+																		222
+																	]
+																}
+															]
+														}
+													}
+												},
+												{
+													"id": 223,
+													"name": "handlerSize",
+													"kind": 1024,
+													"kindString": "Property",
+													"flags": {},
+													"sources": [
+														{
+															"fileName": "react-true-resizable/src/HandleFns.tsx",
+															"line": 11,
+															"character": 2
+														}
+													],
+													"type": {
+														"type": "intrinsic",
+														"name": "number"
+													}
+												},
+												{
+													"id": 224,
+													"name": "handlesOptions",
+													"kind": 1024,
+													"kindString": "Property",
+													"flags": {},
+													"sources": [
+														{
+															"fileName": "react-true-resizable/src/HandleFns.tsx",
+															"line": 12,
+															"character": 2
+														}
+													],
+													"type": {
+														"type": "reference",
+														"id": 59,
+														"name": "handlesOptionsType"
+													}
+												}
+											],
+											"groups": [
+												{
+													"title": "Properties",
+													"kind": 1024,
+													"children": [
+														199,
+														207,
+														215,
+														223,
+														224
+													]
+												}
+											]
+										}
+									}
+								}
+							],
+							"type": {
+								"type": "reference",
+								"qualifiedName": "React.CSSProperties",
+								"package": ".pnpm",
+								"name": "CSSProperties"
+							}
+						}
+					]
+				},
+				{
+					"id": 225,
+					"name": "bottomRightHandlerStyle",
+					"kind": 64,
+					"kindString": "Function",
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "react-true-resizable/src/HandleFns.tsx",
+							"line": 88,
+							"character": 13
+						}
+					],
+					"signatures": [
+						{
+							"id": 226,
+							"name": "bottomRightHandlerStyle",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 227,
+									"name": "arg",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "reflection",
+										"declaration": {
+											"id": 228,
+											"name": "__type",
+											"kind": 65536,
+											"kindString": "Type literal",
+											"flags": {},
+											"children": [
+												{
+													"id": 229,
+													"name": "nodePosition",
+													"kind": 1024,
+													"kindString": "Property",
+													"flags": {},
+													"sources": [
+														{
+															"fileName": "react-true-resizable/src/HandleFns.tsx",
+															"line": 8,
+															"character": 2
+														}
+													],
+													"type": {
+														"type": "reflection",
+														"declaration": {
+															"id": 230,
+															"name": "__type",
+															"kind": 65536,
+															"kindString": "Type literal",
+															"flags": {},
+															"children": [
+																{
+																	"id": 231,
+																	"name": "left",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 5,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 232,
+																	"name": "top",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 6,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 233,
+																	"name": "right",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 7,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 234,
+																	"name": "bottom",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 8,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 235,
+																	"name": "width",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 9,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 236,
+																	"name": "height",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 10,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																}
+															],
+															"groups": [
+																{
+																	"title": "Properties",
+																	"kind": 1024,
+																	"children": [
+																		231,
+																		232,
+																		233,
+																		234,
+																		235,
+																		236
+																	]
+																}
+															]
+														}
+													}
+												},
+												{
+													"id": 237,
+													"name": "handlerPos",
+													"kind": 1024,
+													"kindString": "Property",
+													"flags": {},
+													"sources": [
+														{
+															"fileName": "react-true-resizable/src/HandleFns.tsx",
+															"line": 9,
+															"character": 2
+														}
+													],
+													"type": {
+														"type": "reflection",
+														"declaration": {
+															"id": 238,
+															"name": "__type",
+															"kind": 65536,
+															"kindString": "Type literal",
+															"flags": {},
+															"children": [
+																{
+																	"id": 239,
+																	"name": "left",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 5,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 240,
+																	"name": "top",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 6,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 241,
+																	"name": "right",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 7,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 242,
+																	"name": "bottom",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 8,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 243,
+																	"name": "width",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 9,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 244,
+																	"name": "height",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 10,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																}
+															],
+															"groups": [
+																{
+																	"title": "Properties",
+																	"kind": 1024,
+																	"children": [
+																		239,
+																		240,
+																		241,
+																		242,
+																		243,
+																		244
+																	]
+																}
+															]
+														}
+													}
+												},
+												{
+													"id": 245,
+													"name": "handlesParentPosition",
+													"kind": 1024,
+													"kindString": "Property",
+													"flags": {},
+													"sources": [
+														{
+															"fileName": "react-true-resizable/src/HandleFns.tsx",
+															"line": 10,
+															"character": 2
+														}
+													],
+													"type": {
+														"type": "reflection",
+														"declaration": {
+															"id": 246,
+															"name": "__type",
+															"kind": 65536,
+															"kindString": "Type literal",
+															"flags": {},
+															"children": [
+																{
+																	"id": 247,
+																	"name": "left",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 5,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 248,
+																	"name": "top",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 6,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 249,
+																	"name": "right",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 7,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 250,
+																	"name": "bottom",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 8,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 251,
+																	"name": "width",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 9,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 252,
+																	"name": "height",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 10,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																}
+															],
+															"groups": [
+																{
+																	"title": "Properties",
+																	"kind": 1024,
+																	"children": [
+																		247,
+																		248,
+																		249,
+																		250,
+																		251,
+																		252
+																	]
+																}
+															]
+														}
+													}
+												},
+												{
+													"id": 253,
+													"name": "handlerSize",
+													"kind": 1024,
+													"kindString": "Property",
+													"flags": {},
+													"sources": [
+														{
+															"fileName": "react-true-resizable/src/HandleFns.tsx",
+															"line": 11,
+															"character": 2
+														}
+													],
+													"type": {
+														"type": "intrinsic",
+														"name": "number"
+													}
+												},
+												{
+													"id": 254,
+													"name": "handlesOptions",
+													"kind": 1024,
+													"kindString": "Property",
+													"flags": {},
+													"sources": [
+														{
+															"fileName": "react-true-resizable/src/HandleFns.tsx",
+															"line": 12,
+															"character": 2
+														}
+													],
+													"type": {
+														"type": "reference",
+														"id": 59,
+														"name": "handlesOptionsType"
+													}
+												}
+											],
+											"groups": [
+												{
+													"title": "Properties",
+													"kind": 1024,
+													"children": [
+														229,
+														237,
+														245,
+														253,
+														254
+													]
+												}
+											]
+										}
+									}
+								}
+							],
+							"type": {
+								"type": "reference",
+								"qualifiedName": "React.CSSProperties",
+								"package": ".pnpm",
+								"name": "CSSProperties"
+							}
+						}
+					]
+				},
+				{
+					"id": 255,
+					"name": "bottomLeftHandlerStyle",
+					"kind": 64,
+					"kindString": "Function",
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "react-true-resizable/src/HandleFns.tsx",
+							"line": 106,
+							"character": 13
+						}
+					],
+					"signatures": [
+						{
+							"id": 256,
+							"name": "bottomLeftHandlerStyle",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 257,
+									"name": "arg",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "reflection",
+										"declaration": {
+											"id": 258,
+											"name": "__type",
+											"kind": 65536,
+											"kindString": "Type literal",
+											"flags": {},
+											"children": [
+												{
+													"id": 259,
+													"name": "nodePosition",
+													"kind": 1024,
+													"kindString": "Property",
+													"flags": {},
+													"sources": [
+														{
+															"fileName": "react-true-resizable/src/HandleFns.tsx",
+															"line": 8,
+															"character": 2
+														}
+													],
+													"type": {
+														"type": "reflection",
+														"declaration": {
+															"id": 260,
+															"name": "__type",
+															"kind": 65536,
+															"kindString": "Type literal",
+															"flags": {},
+															"children": [
+																{
+																	"id": 261,
+																	"name": "left",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 5,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 262,
+																	"name": "top",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 6,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 263,
+																	"name": "right",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 7,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 264,
+																	"name": "bottom",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 8,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 265,
+																	"name": "width",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 9,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 266,
+																	"name": "height",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 10,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																}
+															],
+															"groups": [
+																{
+																	"title": "Properties",
+																	"kind": 1024,
+																	"children": [
+																		261,
+																		262,
+																		263,
+																		264,
+																		265,
+																		266
+																	]
+																}
+															]
+														}
+													}
+												},
+												{
+													"id": 267,
+													"name": "handlerPos",
+													"kind": 1024,
+													"kindString": "Property",
+													"flags": {},
+													"sources": [
+														{
+															"fileName": "react-true-resizable/src/HandleFns.tsx",
+															"line": 9,
+															"character": 2
+														}
+													],
+													"type": {
+														"type": "reflection",
+														"declaration": {
+															"id": 268,
+															"name": "__type",
+															"kind": 65536,
+															"kindString": "Type literal",
+															"flags": {},
+															"children": [
+																{
+																	"id": 269,
+																	"name": "left",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 5,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 270,
+																	"name": "top",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 6,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 271,
+																	"name": "right",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 7,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 272,
+																	"name": "bottom",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 8,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 273,
+																	"name": "width",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 9,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 274,
+																	"name": "height",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 10,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																}
+															],
+															"groups": [
+																{
+																	"title": "Properties",
+																	"kind": 1024,
+																	"children": [
+																		269,
+																		270,
+																		271,
+																		272,
+																		273,
+																		274
+																	]
+																}
+															]
+														}
+													}
+												},
+												{
+													"id": 275,
+													"name": "handlesParentPosition",
+													"kind": 1024,
+													"kindString": "Property",
+													"flags": {},
+													"sources": [
+														{
+															"fileName": "react-true-resizable/src/HandleFns.tsx",
+															"line": 10,
+															"character": 2
+														}
+													],
+													"type": {
+														"type": "reflection",
+														"declaration": {
+															"id": 276,
+															"name": "__type",
+															"kind": 65536,
+															"kindString": "Type literal",
+															"flags": {},
+															"children": [
+																{
+																	"id": 277,
+																	"name": "left",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 5,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 278,
+																	"name": "top",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 6,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 279,
+																	"name": "right",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 7,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 280,
+																	"name": "bottom",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 8,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 281,
+																	"name": "width",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 9,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 282,
+																	"name": "height",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 10,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																}
+															],
+															"groups": [
+																{
+																	"title": "Properties",
+																	"kind": 1024,
+																	"children": [
+																		277,
+																		278,
+																		279,
+																		280,
+																		281,
+																		282
+																	]
+																}
+															]
+														}
+													}
+												},
+												{
+													"id": 283,
+													"name": "handlerSize",
+													"kind": 1024,
+													"kindString": "Property",
+													"flags": {},
+													"sources": [
+														{
+															"fileName": "react-true-resizable/src/HandleFns.tsx",
+															"line": 11,
+															"character": 2
+														}
+													],
+													"type": {
+														"type": "intrinsic",
+														"name": "number"
+													}
+												},
+												{
+													"id": 284,
+													"name": "handlesOptions",
+													"kind": 1024,
+													"kindString": "Property",
+													"flags": {},
+													"sources": [
+														{
+															"fileName": "react-true-resizable/src/HandleFns.tsx",
+															"line": 12,
+															"character": 2
+														}
+													],
+													"type": {
+														"type": "reference",
+														"id": 59,
+														"name": "handlesOptionsType"
+													}
+												}
+											],
+											"groups": [
+												{
+													"title": "Properties",
+													"kind": 1024,
+													"children": [
+														259,
+														267,
+														275,
+														283,
+														284
+													]
+												}
+											]
+										}
+									}
+								}
+							],
+							"type": {
+								"type": "reference",
+								"qualifiedName": "React.CSSProperties",
+								"package": ".pnpm",
+								"name": "CSSProperties"
+							}
+						}
+					]
+				},
+				{
+					"id": 285,
+					"name": "topRightHandlerStyle",
+					"kind": 64,
+					"kindString": "Function",
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "react-true-resizable/src/HandleFns.tsx",
+							"line": 121,
+							"character": 13
+						}
+					],
+					"signatures": [
+						{
+							"id": 286,
+							"name": "topRightHandlerStyle",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 287,
+									"name": "arg",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "reflection",
+										"declaration": {
+											"id": 288,
+											"name": "__type",
+											"kind": 65536,
+											"kindString": "Type literal",
+											"flags": {},
+											"children": [
+												{
+													"id": 289,
+													"name": "nodePosition",
+													"kind": 1024,
+													"kindString": "Property",
+													"flags": {},
+													"sources": [
+														{
+															"fileName": "react-true-resizable/src/HandleFns.tsx",
+															"line": 8,
+															"character": 2
+														}
+													],
+													"type": {
+														"type": "reflection",
+														"declaration": {
+															"id": 290,
+															"name": "__type",
+															"kind": 65536,
+															"kindString": "Type literal",
+															"flags": {},
+															"children": [
+																{
+																	"id": 291,
+																	"name": "left",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 5,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 292,
+																	"name": "top",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 6,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 293,
+																	"name": "right",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 7,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 294,
+																	"name": "bottom",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 8,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 295,
+																	"name": "width",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 9,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 296,
+																	"name": "height",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 10,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																}
+															],
+															"groups": [
+																{
+																	"title": "Properties",
+																	"kind": 1024,
+																	"children": [
+																		291,
+																		292,
+																		293,
+																		294,
+																		295,
+																		296
+																	]
+																}
+															]
+														}
+													}
+												},
+												{
+													"id": 297,
+													"name": "handlerPos",
+													"kind": 1024,
+													"kindString": "Property",
+													"flags": {},
+													"sources": [
+														{
+															"fileName": "react-true-resizable/src/HandleFns.tsx",
+															"line": 9,
+															"character": 2
+														}
+													],
+													"type": {
+														"type": "reflection",
+														"declaration": {
+															"id": 298,
+															"name": "__type",
+															"kind": 65536,
+															"kindString": "Type literal",
+															"flags": {},
+															"children": [
+																{
+																	"id": 299,
+																	"name": "left",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 5,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 300,
+																	"name": "top",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 6,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 301,
+																	"name": "right",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 7,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 302,
+																	"name": "bottom",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 8,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 303,
+																	"name": "width",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 9,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 304,
+																	"name": "height",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 10,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																}
+															],
+															"groups": [
+																{
+																	"title": "Properties",
+																	"kind": 1024,
+																	"children": [
+																		299,
+																		300,
+																		301,
+																		302,
+																		303,
+																		304
+																	]
+																}
+															]
+														}
+													}
+												},
+												{
+													"id": 305,
+													"name": "handlesParentPosition",
+													"kind": 1024,
+													"kindString": "Property",
+													"flags": {},
+													"sources": [
+														{
+															"fileName": "react-true-resizable/src/HandleFns.tsx",
+															"line": 10,
+															"character": 2
+														}
+													],
+													"type": {
+														"type": "reflection",
+														"declaration": {
+															"id": 306,
+															"name": "__type",
+															"kind": 65536,
+															"kindString": "Type literal",
+															"flags": {},
+															"children": [
+																{
+																	"id": 307,
+																	"name": "left",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 5,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 308,
+																	"name": "top",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 6,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 309,
+																	"name": "right",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 7,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 310,
+																	"name": "bottom",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 8,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 311,
+																	"name": "width",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 9,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 312,
+																	"name": "height",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 10,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																}
+															],
+															"groups": [
+																{
+																	"title": "Properties",
+																	"kind": 1024,
+																	"children": [
+																		307,
+																		308,
+																		309,
+																		310,
+																		311,
+																		312
+																	]
+																}
+															]
+														}
+													}
+												},
+												{
+													"id": 313,
+													"name": "handlerSize",
+													"kind": 1024,
+													"kindString": "Property",
+													"flags": {},
+													"sources": [
+														{
+															"fileName": "react-true-resizable/src/HandleFns.tsx",
+															"line": 11,
+															"character": 2
+														}
+													],
+													"type": {
+														"type": "intrinsic",
+														"name": "number"
+													}
+												},
+												{
+													"id": 314,
+													"name": "handlesOptions",
+													"kind": 1024,
+													"kindString": "Property",
+													"flags": {},
+													"sources": [
+														{
+															"fileName": "react-true-resizable/src/HandleFns.tsx",
+															"line": 12,
+															"character": 2
+														}
+													],
+													"type": {
+														"type": "reference",
+														"id": 59,
+														"name": "handlesOptionsType"
+													}
+												}
+											],
+											"groups": [
+												{
+													"title": "Properties",
+													"kind": 1024,
+													"children": [
+														289,
+														297,
+														305,
+														313,
+														314
+													]
+												}
+											]
+										}
+									}
+								}
+							],
+							"type": {
+								"type": "reference",
+								"qualifiedName": "React.CSSProperties",
+								"package": ".pnpm",
+								"name": "CSSProperties"
+							}
+						}
+					]
+				},
+				{
+					"id": 315,
+					"name": "topLeftHandlerStyle",
+					"kind": 64,
+					"kindString": "Function",
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "react-true-resizable/src/HandleFns.tsx",
+							"line": 138,
+							"character": 13
+						}
+					],
+					"signatures": [
+						{
+							"id": 316,
+							"name": "topLeftHandlerStyle",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 317,
+									"name": "arg",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "reflection",
+										"declaration": {
+											"id": 318,
+											"name": "__type",
+											"kind": 65536,
+											"kindString": "Type literal",
+											"flags": {},
+											"children": [
+												{
+													"id": 319,
+													"name": "nodePosition",
+													"kind": 1024,
+													"kindString": "Property",
+													"flags": {},
+													"sources": [
+														{
+															"fileName": "react-true-resizable/src/HandleFns.tsx",
+															"line": 8,
+															"character": 2
+														}
+													],
+													"type": {
+														"type": "reflection",
+														"declaration": {
+															"id": 320,
+															"name": "__type",
+															"kind": 65536,
+															"kindString": "Type literal",
+															"flags": {},
+															"children": [
+																{
+																	"id": 321,
+																	"name": "left",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 5,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 322,
+																	"name": "top",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 6,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 323,
+																	"name": "right",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 7,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 324,
+																	"name": "bottom",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 8,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 325,
+																	"name": "width",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 9,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 326,
+																	"name": "height",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 10,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																}
+															],
+															"groups": [
+																{
+																	"title": "Properties",
+																	"kind": 1024,
+																	"children": [
+																		321,
+																		322,
+																		323,
+																		324,
+																		325,
+																		326
+																	]
+																}
+															]
+														}
+													}
+												},
+												{
+													"id": 327,
+													"name": "handlerPos",
+													"kind": 1024,
+													"kindString": "Property",
+													"flags": {},
+													"sources": [
+														{
+															"fileName": "react-true-resizable/src/HandleFns.tsx",
+															"line": 9,
+															"character": 2
+														}
+													],
+													"type": {
+														"type": "reflection",
+														"declaration": {
+															"id": 328,
+															"name": "__type",
+															"kind": 65536,
+															"kindString": "Type literal",
+															"flags": {},
+															"children": [
+																{
+																	"id": 329,
+																	"name": "left",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 5,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 330,
+																	"name": "top",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 6,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 331,
+																	"name": "right",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 7,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 332,
+																	"name": "bottom",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 8,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 333,
+																	"name": "width",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 9,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 334,
+																	"name": "height",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 10,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																}
+															],
+															"groups": [
+																{
+																	"title": "Properties",
+																	"kind": 1024,
+																	"children": [
+																		329,
+																		330,
+																		331,
+																		332,
+																		333,
+																		334
+																	]
+																}
+															]
+														}
+													}
+												},
+												{
+													"id": 335,
+													"name": "handlesParentPosition",
+													"kind": 1024,
+													"kindString": "Property",
+													"flags": {},
+													"sources": [
+														{
+															"fileName": "react-true-resizable/src/HandleFns.tsx",
+															"line": 10,
+															"character": 2
+														}
+													],
+													"type": {
+														"type": "reflection",
+														"declaration": {
+															"id": 336,
+															"name": "__type",
+															"kind": 65536,
+															"kindString": "Type literal",
+															"flags": {},
+															"children": [
+																{
+																	"id": 337,
+																	"name": "left",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 5,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 338,
+																	"name": "top",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 6,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 339,
+																	"name": "right",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 7,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 340,
+																	"name": "bottom",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 8,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 341,
+																	"name": "width",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 9,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 342,
+																	"name": "height",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 10,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																}
+															],
+															"groups": [
+																{
+																	"title": "Properties",
+																	"kind": 1024,
+																	"children": [
+																		337,
+																		338,
+																		339,
+																		340,
+																		341,
+																		342
+																	]
+																}
+															]
+														}
+													}
+												},
+												{
+													"id": 343,
+													"name": "handlerSize",
+													"kind": 1024,
+													"kindString": "Property",
+													"flags": {},
+													"sources": [
+														{
+															"fileName": "react-true-resizable/src/HandleFns.tsx",
+															"line": 11,
+															"character": 2
+														}
+													],
+													"type": {
+														"type": "intrinsic",
+														"name": "number"
+													}
+												},
+												{
+													"id": 344,
+													"name": "handlesOptions",
+													"kind": 1024,
+													"kindString": "Property",
+													"flags": {},
+													"sources": [
+														{
+															"fileName": "react-true-resizable/src/HandleFns.tsx",
+															"line": 12,
+															"character": 2
+														}
+													],
+													"type": {
+														"type": "reference",
+														"id": 59,
+														"name": "handlesOptionsType"
+													}
+												}
+											],
+											"groups": [
+												{
+													"title": "Properties",
+													"kind": 1024,
+													"children": [
+														319,
+														327,
+														335,
+														343,
+														344
+													]
+												}
+											]
+										}
+									}
+								}
+							],
+							"type": {
+								"type": "reference",
+								"qualifiedName": "React.CSSProperties",
+								"package": ".pnpm",
+								"name": "CSSProperties"
+							}
+						}
+					]
+				},
+				{
+					"id": 345,
+					"name": "defaultHandlersFn",
+					"kind": 32,
+					"kindString": "Variable",
+					"flags": {
+						"isConst": true
+					},
+					"sources": [
+						{
+							"fileName": "react-true-resizable/src/HandleFns.tsx",
+							"line": 155,
+							"character": 13
+						}
+					],
+					"type": {
+						"type": "reflection",
+						"declaration": {
+							"id": 346,
+							"name": "__type",
+							"kind": 65536,
+							"kindString": "Type literal",
+							"flags": {},
+							"children": [
+								{
+									"id": 347,
+									"name": "top",
+									"kind": 1024,
+									"kindString": "Property",
+									"flags": {},
+									"sources": [
+										{
+											"fileName": "react-true-resizable/src/HandleFns.tsx",
+											"line": 156,
+											"character": 2
+										}
+									],
+									"type": {
+										"type": "reference",
+										"id": 95,
+										"name": "HandleStyleFnType"
+									},
+									"defaultValue": "topHandlerStyle"
+								},
+								{
+									"id": 348,
+									"name": "left",
+									"kind": 1024,
+									"kindString": "Property",
+									"flags": {},
+									"sources": [
+										{
+											"fileName": "react-true-resizable/src/HandleFns.tsx",
+											"line": 157,
+											"character": 2
+										}
+									],
+									"type": {
+										"type": "reference",
+										"id": 95,
+										"name": "HandleStyleFnType"
+									},
+									"defaultValue": "leftHandlerStyle"
+								},
+								{
+									"id": 349,
+									"name": "bottom",
+									"kind": 1024,
+									"kindString": "Property",
+									"flags": {},
+									"sources": [
+										{
+											"fileName": "react-true-resizable/src/HandleFns.tsx",
+											"line": 158,
+											"character": 2
+										}
+									],
+									"type": {
+										"type": "reference",
+										"id": 95,
+										"name": "HandleStyleFnType"
+									},
+									"defaultValue": "bottomHandlerStyle"
+								},
+								{
+									"id": 350,
+									"name": "right",
+									"kind": 1024,
+									"kindString": "Property",
+									"flags": {},
+									"sources": [
+										{
+											"fileName": "react-true-resizable/src/HandleFns.tsx",
+											"line": 159,
+											"character": 2
+										}
+									],
+									"type": {
+										"type": "reference",
+										"id": 95,
+										"name": "HandleStyleFnType"
+									},
+									"defaultValue": "rightHandlerStyle"
+								},
+								{
+									"id": 351,
+									"name": "bottomRight",
+									"kind": 1024,
+									"kindString": "Property",
+									"flags": {},
+									"sources": [
+										{
+											"fileName": "react-true-resizable/src/HandleFns.tsx",
+											"line": 160,
+											"character": 2
+										}
+									],
+									"type": {
+										"type": "reference",
+										"id": 95,
+										"name": "HandleStyleFnType"
+									},
+									"defaultValue": "bottomRightHandlerStyle"
+								},
+								{
+									"id": 352,
+									"name": "bottomLeft",
+									"kind": 1024,
+									"kindString": "Property",
+									"flags": {},
+									"sources": [
+										{
+											"fileName": "react-true-resizable/src/HandleFns.tsx",
+											"line": 161,
+											"character": 2
+										}
+									],
+									"type": {
+										"type": "reference",
+										"id": 95,
+										"name": "HandleStyleFnType"
+									},
+									"defaultValue": "bottomLeftHandlerStyle"
+								},
+								{
+									"id": 353,
+									"name": "topRight",
+									"kind": 1024,
+									"kindString": "Property",
+									"flags": {},
+									"sources": [
+										{
+											"fileName": "react-true-resizable/src/HandleFns.tsx",
+											"line": 162,
+											"character": 2
+										}
+									],
+									"type": {
+										"type": "reference",
+										"id": 95,
+										"name": "HandleStyleFnType"
+									},
+									"defaultValue": "topRightHandlerStyle"
+								},
+								{
+									"id": 354,
+									"name": "topLeft",
+									"kind": 1024,
+									"kindString": "Property",
+									"flags": {},
+									"sources": [
+										{
+											"fileName": "react-true-resizable/src/HandleFns.tsx",
+											"line": 163,
+											"character": 2
+										}
+									],
+									"type": {
+										"type": "reference",
+										"id": 95,
+										"name": "HandleStyleFnType"
+									},
+									"defaultValue": "topLeftHandlerStyle"
+								}
+							],
+							"groups": [
+								{
+									"title": "Properties",
+									"kind": 1024,
+									"children": [
+										347,
+										348,
+										349,
+										350,
+										351,
+										352,
+										353,
+										354
+									]
+								}
+							]
+						}
+					},
+					"defaultValue": "..."
+				}
+			],
+			"groups": [
+				{
+					"title": "Type Aliases",
+					"kind": 4194304,
+					"children": [
+						95
+					]
+				},
+				{
+					"title": "Functions",
+					"kind": 64,
+					"children": [
+						105,
+						135,
+						165,
+						195,
+						225,
+						255,
+						285,
+						315
+					]
+				},
+				{
+					"title": "Variables",
+					"kind": 32,
+					"children": [
+						345
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "react-true-resizable/src/HandleFns.tsx",
+					"line": 1,
+					"character": 0
+				}
+			]
+		},
+		{
+			"id": 1,
+			"name": "react-true-resizable/src/Resizable",
+			"kind": 2,
+			"kindString": "Module",
+			"flags": {},
+			"children": [
+				{
+					"id": 2,
+					"name": "ResizableProps",
+					"kind": 256,
+					"kindString": "Interface",
+					"flags": {},
+					"children": [
+						{
+							"id": 3,
+							"name": "children",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isOptional": true
+							},
+							"comment": {
+								"shortText": "A simple React element(like div) or React forwardRef element(React element which passed down a ref to a DOM element)"
+							},
+							"sources": [
+								{
+									"fileName": "react-true-resizable/src/Resizable.tsx",
+									"line": 13,
+									"character": 2
+								}
+							],
+							"type": {
+								"type": "reference",
+								"typeArguments": [
+									{
+										"type": "intrinsic",
+										"name": "any"
+									},
+									{
+										"type": "union",
+										"types": [
+											{
+												"type": "intrinsic",
+												"name": "string"
+											},
+											{
+												"type": "reference",
+												"typeArguments": [
+													{
+														"type": "intrinsic",
+														"name": "any"
+													}
+												],
+												"qualifiedName": "React.JSXElementConstructor",
+												"package": ".pnpm",
+												"name": "JSXElementConstructor"
+											}
+										]
+									}
+								],
+								"qualifiedName": "React.ReactElement",
+								"package": ".pnpm",
+								"name": "ReactElement"
+							}
+						},
+						{
+							"id": 4,
+							"name": "nodeRef",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isOptional": true
+							},
+							"comment": {
+								"shortText": "a reference to the target DOM node. use this in cases you need more flexibility in your React Tree\noptional. this is alternative to passing children as a prop.\nif passed, children prop will be ignored."
+							},
+							"sources": [
+								{
+									"fileName": "react-true-resizable/src/Resizable.tsx",
+									"line": 18,
+									"character": 2
+								}
+							],
+							"type": {
+								"type": "reference",
+								"typeArguments": [
+									{
+										"type": "intrinsic",
+										"name": "any"
+									}
+								],
+								"qualifiedName": "React.RefObject",
+								"package": ".pnpm",
+								"name": "RefObject"
+							}
+						},
+						{
+							"id": 5,
+							"name": "grid",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isOptional": true
+							},
+							"comment": {
+								"shortText": "Allow resize with respect to a grid"
+							},
+							"sources": [
+								{
+									"fileName": "react-true-resizable/src/Resizable.tsx",
+									"line": 20,
+									"character": 2
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							}
+						},
+						{
+							"id": 6,
+							"name": "enabledHandles",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isOptional": true
+							},
+							"comment": {
+								"shortText": "An array handlers to enable"
+							},
+							"sources": [
+								{
+									"fileName": "react-true-resizable/src/Resizable.tsx",
+									"line": 23,
+									"character": 2
+								}
+							],
+							"type": {
+								"type": "array",
+								"elementType": {
+									"type": "union",
+									"types": [
+										{
+											"type": "literal",
+											"value": "top"
+										},
+										{
+											"type": "literal",
+											"value": "left"
+										},
+										{
+											"type": "literal",
+											"value": "bottom"
+										},
+										{
+											"type": "literal",
+											"value": "right"
+										},
+										{
+											"type": "literal",
+											"value": "bottomRight"
+										},
+										{
+											"type": "literal",
+											"value": "bottomLeft"
+										},
+										{
+											"type": "literal",
+											"value": "topRight"
+										},
+										{
+											"type": "literal",
+											"value": "topLeft"
+										}
+									]
+								}
+							}
+						},
+						{
+							"id": 7,
+							"name": "handlerOptions",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isOptional": true
+							},
+							"comment": {
+								"shortText": "options that will be passed to all handles"
+							},
+							"sources": [
+								{
+									"fileName": "react-true-resizable/src/Resizable.tsx",
+									"line": 25,
+									"character": 2
+								}
+							],
+							"type": {
+								"type": "reference",
+								"typeArguments": [
+									{
+										"type": "reference",
+										"id": 53,
+										"name": "handleOptionsType"
+									}
+								],
+								"qualifiedName": "Partial",
+								"package": ".pnpm",
+								"name": "Partial"
+							}
+						},
+						{
+							"id": 8,
+							"name": "handlersOptions",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isOptional": true
+							},
+							"comment": {
+								"shortText": "options that will be passed to specific handles. overrides handlerOptions"
+							},
+							"sources": [
+								{
+									"fileName": "react-true-resizable/src/Resizable.tsx",
+									"line": 27,
+									"character": 2
+								}
+							],
+							"type": {
+								"type": "reflection",
+								"declaration": {
+									"id": 9,
+									"name": "__type",
+									"kind": 65536,
+									"kindString": "Type literal",
+									"flags": {},
+									"children": [
+										{
+											"id": 10,
+											"name": "top",
+											"kind": 1024,
+											"kindString": "Property",
+											"flags": {},
+											"type": {
+												"type": "reference",
+												"typeArguments": [
+													{
+														"type": "reference",
+														"id": 53,
+														"name": "handleOptionsType"
+													}
+												],
+												"qualifiedName": "Partial",
+												"package": ".pnpm",
+												"name": "Partial"
+											}
+										},
+										{
+											"id": 11,
+											"name": "left",
+											"kind": 1024,
+											"kindString": "Property",
+											"flags": {},
+											"type": {
+												"type": "reference",
+												"typeArguments": [
+													{
+														"type": "reference",
+														"id": 53,
+														"name": "handleOptionsType"
+													}
+												],
+												"qualifiedName": "Partial",
+												"package": ".pnpm",
+												"name": "Partial"
+											}
+										},
+										{
+											"id": 12,
+											"name": "bottom",
+											"kind": 1024,
+											"kindString": "Property",
+											"flags": {},
+											"type": {
+												"type": "reference",
+												"typeArguments": [
+													{
+														"type": "reference",
+														"id": 53,
+														"name": "handleOptionsType"
+													}
+												],
+												"qualifiedName": "Partial",
+												"package": ".pnpm",
+												"name": "Partial"
+											}
+										},
+										{
+											"id": 13,
+											"name": "right",
+											"kind": 1024,
+											"kindString": "Property",
+											"flags": {},
+											"type": {
+												"type": "reference",
+												"typeArguments": [
+													{
+														"type": "reference",
+														"id": 53,
+														"name": "handleOptionsType"
+													}
+												],
+												"qualifiedName": "Partial",
+												"package": ".pnpm",
+												"name": "Partial"
+											}
+										},
+										{
+											"id": 14,
+											"name": "bottomRight",
+											"kind": 1024,
+											"kindString": "Property",
+											"flags": {},
+											"type": {
+												"type": "reference",
+												"typeArguments": [
+													{
+														"type": "reference",
+														"id": 53,
+														"name": "handleOptionsType"
+													}
+												],
+												"qualifiedName": "Partial",
+												"package": ".pnpm",
+												"name": "Partial"
+											}
+										},
+										{
+											"id": 15,
+											"name": "bottomLeft",
+											"kind": 1024,
+											"kindString": "Property",
+											"flags": {},
+											"type": {
+												"type": "reference",
+												"typeArguments": [
+													{
+														"type": "reference",
+														"id": 53,
+														"name": "handleOptionsType"
+													}
+												],
+												"qualifiedName": "Partial",
+												"package": ".pnpm",
+												"name": "Partial"
+											}
+										},
+										{
+											"id": 16,
+											"name": "topRight",
+											"kind": 1024,
+											"kindString": "Property",
+											"flags": {},
+											"type": {
+												"type": "reference",
+												"typeArguments": [
+													{
+														"type": "reference",
+														"id": 53,
+														"name": "handleOptionsType"
+													}
+												],
+												"qualifiedName": "Partial",
+												"package": ".pnpm",
+												"name": "Partial"
+											}
+										},
+										{
+											"id": 17,
+											"name": "topLeft",
+											"kind": 1024,
+											"kindString": "Property",
+											"flags": {},
+											"type": {
+												"type": "reference",
+												"typeArguments": [
+													{
+														"type": "reference",
+														"id": 53,
+														"name": "handleOptionsType"
+													}
+												],
+												"qualifiedName": "Partial",
+												"package": ".pnpm",
+												"name": "Partial"
+											}
+										}
+									],
+									"groups": [
+										{
+											"title": "Properties",
+											"kind": 1024,
+											"children": [
+												10,
+												11,
+												12,
+												13,
+												14,
+												15,
+												16,
+												17
+											]
+										}
+									]
+								}
+							}
+						},
+						{
+							"id": 18,
+							"name": "disableHeightControl",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isOptional": true
+							},
+							"comment": {
+								"shortText": "the height of target DOM node won't be controlled\nwhen set to false, initial height is restored"
+							},
+							"sources": [
+								{
+									"fileName": "react-true-resizable/src/Resizable.tsx",
+									"line": 30,
+									"character": 2
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "boolean"
+							}
+						},
+						{
+							"id": 19,
+							"name": "disableWidthControl",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isOptional": true
+							},
+							"comment": {
+								"shortText": "the width of target DOM node won't be controlled\nwhen set to false, initial width is restored"
+							},
+							"sources": [
+								{
+									"fileName": "react-true-resizable/src/Resizable.tsx",
+									"line": 33,
+									"character": 2
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "boolean"
+							}
+						},
+						{
+							"id": 20,
+							"name": "handleStyle",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isOptional": true
+							},
+							"comment": {
+								"shortText": "style that will be passed to all handles"
+							},
+							"sources": [
+								{
+									"fileName": "react-true-resizable/src/Resizable.tsx",
+									"line": 35,
+									"character": 2
+								}
+							],
+							"type": {
+								"type": "reference",
+								"qualifiedName": "React.CSSProperties",
+								"package": ".pnpm",
+								"name": "CSSProperties"
+							}
+						},
+						{
+							"id": 21,
+							"name": "handlesStyle",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isOptional": true
+							},
+							"comment": {
+								"shortText": "style that will be passed to specific handles. overrides handleStyle"
+							},
+							"sources": [
+								{
+									"fileName": "react-true-resizable/src/Resizable.tsx",
+									"line": 37,
+									"character": 2
+								}
+							],
+							"type": {
+								"type": "reflection",
+								"declaration": {
+									"id": 22,
+									"name": "__type",
+									"kind": 65536,
+									"kindString": "Type literal",
+									"flags": {},
+									"children": [
+										{
+											"id": 23,
+											"name": "top",
+											"kind": 1024,
+											"kindString": "Property",
+											"flags": {},
+											"type": {
+												"type": "reference",
+												"qualifiedName": "React.CSSProperties",
+												"package": ".pnpm",
+												"name": "CSSProperties"
+											}
+										},
+										{
+											"id": 24,
+											"name": "left",
+											"kind": 1024,
+											"kindString": "Property",
+											"flags": {},
+											"type": {
+												"type": "reference",
+												"qualifiedName": "React.CSSProperties",
+												"package": ".pnpm",
+												"name": "CSSProperties"
+											}
+										},
+										{
+											"id": 25,
+											"name": "bottom",
+											"kind": 1024,
+											"kindString": "Property",
+											"flags": {},
+											"type": {
+												"type": "reference",
+												"qualifiedName": "React.CSSProperties",
+												"package": ".pnpm",
+												"name": "CSSProperties"
+											}
+										},
+										{
+											"id": 26,
+											"name": "right",
+											"kind": 1024,
+											"kindString": "Property",
+											"flags": {},
+											"type": {
+												"type": "reference",
+												"qualifiedName": "React.CSSProperties",
+												"package": ".pnpm",
+												"name": "CSSProperties"
+											}
+										},
+										{
+											"id": 27,
+											"name": "bottomRight",
+											"kind": 1024,
+											"kindString": "Property",
+											"flags": {},
+											"type": {
+												"type": "reference",
+												"qualifiedName": "React.CSSProperties",
+												"package": ".pnpm",
+												"name": "CSSProperties"
+											}
+										},
+										{
+											"id": 28,
+											"name": "bottomLeft",
+											"kind": 1024,
+											"kindString": "Property",
+											"flags": {},
+											"type": {
+												"type": "reference",
+												"qualifiedName": "React.CSSProperties",
+												"package": ".pnpm",
+												"name": "CSSProperties"
+											}
+										},
+										{
+											"id": 29,
+											"name": "topRight",
+											"kind": 1024,
+											"kindString": "Property",
+											"flags": {},
+											"type": {
+												"type": "reference",
+												"qualifiedName": "React.CSSProperties",
+												"package": ".pnpm",
+												"name": "CSSProperties"
+											}
+										},
+										{
+											"id": 30,
+											"name": "topLeft",
+											"kind": 1024,
+											"kindString": "Property",
+											"flags": {},
+											"type": {
+												"type": "reference",
+												"qualifiedName": "React.CSSProperties",
+												"package": ".pnpm",
+												"name": "CSSProperties"
+											}
+										}
+									],
+									"groups": [
+										{
+											"title": "Properties",
+											"kind": 1024,
+											"children": [
+												23,
+												24,
+												25,
+												26,
+												27,
+												28,
+												29,
+												30
+											]
+										}
+									]
+								}
+							}
+						},
+						{
+							"id": 31,
+							"name": "onResizeEffect",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isOptional": true
+							},
+							"sources": [
+								{
+									"fileName": "react-true-resizable/src/Resizable.tsx",
+									"line": 51,
+									"character": 2
+								}
+							],
+							"type": {
+								"type": "reflection",
+								"declaration": {
+									"id": 32,
+									"name": "__type",
+									"kind": 65536,
+									"kindString": "Type literal",
+									"flags": {},
+									"signatures": [
+										{
+											"id": 33,
+											"name": "__type",
+											"kind": 4096,
+											"kindString": "Call signature",
+											"flags": {},
+											"comment": {
+												"shortText": "a callback that is called after resize ended and the DOM element is updated"
+											},
+											"parameters": [
+												{
+													"id": 34,
+													"name": "dims",
+													"kind": 32768,
+													"kindString": "Parameter",
+													"flags": {},
+													"type": {
+														"type": "reflection",
+														"declaration": {
+															"id": 35,
+															"name": "__type",
+															"kind": 65536,
+															"kindString": "Type literal",
+															"flags": {},
+															"children": [
+																{
+																	"id": 36,
+																	"name": "left",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 5,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 37,
+																	"name": "top",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 6,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 38,
+																	"name": "right",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 7,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 39,
+																	"name": "bottom",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 8,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 40,
+																	"name": "width",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 9,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																},
+																{
+																	"id": 41,
+																	"name": "height",
+																	"kind": 1024,
+																	"kindString": "Property",
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "shared/hooks/usePosition.ts",
+																			"line": 10,
+																			"character": 2
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																}
+															],
+															"groups": [
+																{
+																	"title": "Properties",
+																	"kind": 1024,
+																	"children": [
+																		36,
+																		37,
+																		38,
+																		39,
+																		40,
+																		41
+																	]
+																}
+															]
+														}
+													}
+												}
+											],
+											"type": {
+												"type": "intrinsic",
+												"name": "void"
+											}
+										}
+									]
+								}
+							}
+						},
+						{
+							"id": 42,
+							"name": "ResizableRef",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isOptional": true
+							},
+							"comment": {
+								"shortText": "an imperative ref to Resizable component. ca be used to imperatively trigger actions like height and width control reset"
+							},
+							"sources": [
+								{
+									"fileName": "react-true-resizable/src/Resizable.tsx",
+									"line": 54,
+									"character": 2
+								}
+							],
+							"type": {
+								"type": "reference",
+								"typeArguments": [
+									{
+										"type": "reference",
+										"id": 44,
+										"name": "ResizableHandle"
+									}
+								],
+								"qualifiedName": "React.RefObject",
+								"package": ".pnpm",
+								"name": "RefObject"
+							}
+						},
+						{
+							"id": 43,
+							"name": "enableRelativeOffset",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isOptional": true
+							},
+							"comment": {
+								"shortText": "will offset the element using style.left and style.top to make the resize feel more natural\naffects left and top handles\nNote: style.position must not be 'static' in order left and top take effect"
+							},
+							"sources": [
+								{
+									"fileName": "react-true-resizable/src/Resizable.tsx",
+									"line": 59,
+									"character": 2
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "boolean"
+							}
+						}
+					],
+					"groups": [
+						{
+							"title": "Properties",
+							"kind": 1024,
+							"children": [
+								3,
+								4,
+								5,
+								6,
+								7,
+								8,
+								18,
+								19,
+								20,
+								21,
+								31,
+								42,
+								43
+							]
+						}
+					],
+					"sources": [
+						{
+							"fileName": "react-true-resizable/src/Resizable.tsx",
+							"line": 11,
+							"character": 17
+						}
+					]
+				},
+				{
+					"id": 44,
+					"name": "ResizableHandle",
+					"kind": 256,
+					"kindString": "Interface",
+					"flags": {},
+					"children": [
+						{
+							"id": 45,
+							"name": "restControl",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {},
+							"sources": [
+								{
+									"fileName": "react-true-resizable/src/Resizable.tsx",
+									"line": 63,
+									"character": 2
+								}
+							],
+							"signatures": [
+								{
+									"id": 46,
+									"name": "restControl",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {},
+									"parameters": [
+										{
+											"id": 47,
+											"name": "resetHeight",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {
+												"isOptional": true
+											},
+											"type": {
+												"type": "intrinsic",
+												"name": "boolean"
+											}
+										},
+										{
+											"id": 48,
+											"name": "resetWidth",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {
+												"isOptional": true
+											},
+											"type": {
+												"type": "intrinsic",
+												"name": "boolean"
+											}
+										}
+									],
+									"type": {
+										"type": "intrinsic",
+										"name": "void"
+									}
+								}
+							]
+						}
+					],
+					"groups": [
+						{
+							"title": "Methods",
+							"kind": 2048,
+							"children": [
+								45
+							]
+						}
+					],
+					"sources": [
+						{
+							"fileName": "react-true-resizable/src/Resizable.tsx",
+							"line": 62,
+							"character": 17
+						}
+					]
+				},
+				{
+					"id": 50,
+					"name": "default",
+					"kind": 32,
+					"kindString": "Variable",
+					"flags": {
+						"isConst": true
+					},
+					"sources": [
+						{
+							"fileName": "react-true-resizable/src/Resizable.tsx",
+							"line": 66,
+							"character": 6
+						}
+					],
+					"type": {
+						"type": "reference",
+						"typeArguments": [
+							{
+								"type": "intersection",
+								"types": [
+									{
+										"type": "reference",
+										"id": 2,
+										"name": "ResizableProps"
+									},
+									{
+										"type": "reference",
+										"typeArguments": [
+											{
+												"type": "reference",
+												"qualifiedName": "HTMLElement",
+												"package": ".pnpm",
+												"name": "HTMLElement"
+											}
+										],
+										"qualifiedName": "React.RefAttributes",
+										"package": ".pnpm",
+										"name": "RefAttributes"
+									}
+								]
+							}
+						],
+						"qualifiedName": "React.ForwardRefExoticComponent",
+						"package": ".pnpm",
+						"name": "ForwardRefExoticComponent"
+					},
+					"defaultValue": "..."
+				},
+				{
+					"id": 49,
+					"name": "handleNameType",
+					"kind": 4194304,
+					"kindString": "Type alias",
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "react-true-resizable/src/Resizable.tsx",
+							"line": 324,
+							"character": 12
+						}
+					],
+					"type": {
+						"type": "typeOperator",
+						"operator": "keyof",
+						"target": {
+							"type": "query",
+							"queryType": {
+								"type": "reference",
+								"id": 345,
+								"name": "defaultHandlersFn"
+							}
+						}
+					}
+				}
+			],
+			"groups": [
+				{
+					"title": "Interfaces",
+					"kind": 256,
+					"children": [
+						2,
+						44
+					]
+				},
+				{
+					"title": "Variables",
+					"kind": 32,
+					"children": [
+						50
+					]
+				},
+				{
+					"title": "Type Aliases",
+					"kind": 4194304,
+					"children": [
+						49
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "react-true-resizable/src/Resizable.tsx",
+					"line": 1,
+					"character": 0
+				}
+			]
+		},
+		{
+			"id": 355,
+			"name": "shared/hooks/usePosition",
+			"kind": 2,
+			"kindString": "Module",
+			"flags": {},
+			"children": [
+				{
+					"id": 356,
+					"name": "positionType",
+					"kind": 4194304,
+					"kindString": "Type alias",
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "shared/hooks/usePosition.ts",
+							"line": 4,
+							"character": 12
+						}
+					],
+					"type": {
+						"type": "union",
+						"types": [
+							{
+								"type": "reflection",
+								"declaration": {
+									"id": 357,
+									"name": "__type",
+									"kind": 65536,
+									"kindString": "Type literal",
+									"flags": {},
+									"children": [
+										{
+											"id": 358,
+											"name": "left",
+											"kind": 1024,
+											"kindString": "Property",
+											"flags": {},
+											"sources": [
+												{
+													"fileName": "shared/hooks/usePosition.ts",
+													"line": 5,
+													"character": 2
+												}
+											],
+											"type": {
+												"type": "intrinsic",
+												"name": "number"
+											}
+										},
+										{
+											"id": 359,
+											"name": "top",
+											"kind": 1024,
+											"kindString": "Property",
+											"flags": {},
+											"sources": [
+												{
+													"fileName": "shared/hooks/usePosition.ts",
+													"line": 6,
+													"character": 2
+												}
+											],
+											"type": {
+												"type": "intrinsic",
+												"name": "number"
+											}
+										},
+										{
+											"id": 360,
+											"name": "right",
+											"kind": 1024,
+											"kindString": "Property",
+											"flags": {},
+											"sources": [
+												{
+													"fileName": "shared/hooks/usePosition.ts",
+													"line": 7,
+													"character": 2
+												}
+											],
+											"type": {
+												"type": "intrinsic",
+												"name": "number"
+											}
+										},
+										{
+											"id": 361,
+											"name": "bottom",
+											"kind": 1024,
+											"kindString": "Property",
+											"flags": {},
+											"sources": [
+												{
+													"fileName": "shared/hooks/usePosition.ts",
+													"line": 8,
+													"character": 2
+												}
+											],
+											"type": {
+												"type": "intrinsic",
+												"name": "number"
+											}
+										},
+										{
+											"id": 362,
+											"name": "width",
+											"kind": 1024,
+											"kindString": "Property",
+											"flags": {},
+											"sources": [
+												{
+													"fileName": "shared/hooks/usePosition.ts",
+													"line": 9,
+													"character": 2
+												}
+											],
+											"type": {
+												"type": "intrinsic",
+												"name": "number"
+											}
+										},
+										{
+											"id": 363,
+											"name": "height",
+											"kind": 1024,
+											"kindString": "Property",
+											"flags": {},
+											"sources": [
+												{
+													"fileName": "shared/hooks/usePosition.ts",
+													"line": 10,
+													"character": 2
+												}
+											],
+											"type": {
+												"type": "intrinsic",
+												"name": "number"
+											}
+										}
+									],
+									"groups": [
+										{
+											"title": "Properties",
+											"kind": 1024,
+											"children": [
+												358,
+												359,
+												360,
+												361,
+												362,
+												363
+											]
+										}
+									],
+									"sources": [
+										{
+											"fileName": "shared/hooks/usePosition.ts",
+											"line": 4,
+											"character": 27
+										}
+									]
+								}
+							},
+							{
+								"type": "literal",
+								"value": null
+							}
+						]
+					}
+				},
+				{
+					"id": 364,
+					"name": "default",
+					"kind": 64,
+					"kindString": "Function",
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "shared/hooks/usePosition.ts",
+							"line": 17,
+							"character": 6
+						}
+					],
+					"signatures": [
+						{
+							"id": 365,
+							"name": "default",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"comment": {
+								"shortText": "returns position of an element along with a reference to the element\nalso - return the last remembered position of the element if it's not in the DOM"
+							},
+							"parameters": [
+								{
+									"id": 366,
+									"name": "elementRef",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "reference",
+										"qualifiedName": "HTMLElement",
+										"package": ".pnpm",
+										"name": "HTMLElement"
+									}
+								},
+								{
+									"id": 367,
+									"name": "dependencies",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {
+										"isOptional": true
+									},
+									"type": {
+										"type": "intrinsic",
+										"name": "any"
+									}
+								}
+							],
+							"type": {
+								"type": "reflection",
+								"declaration": {
+									"id": 368,
+									"name": "__type",
+									"kind": 65536,
+									"kindString": "Type literal",
+									"flags": {},
+									"children": [
+										{
+											"id": 369,
+											"name": "left",
+											"kind": 1024,
+											"kindString": "Property",
+											"flags": {},
+											"sources": [
+												{
+													"fileName": "shared/hooks/usePosition.ts",
+													"line": 5,
+													"character": 2
+												}
+											],
+											"type": {
+												"type": "intrinsic",
+												"name": "number"
+											}
+										},
+										{
+											"id": 370,
+											"name": "top",
+											"kind": 1024,
+											"kindString": "Property",
+											"flags": {},
+											"sources": [
+												{
+													"fileName": "shared/hooks/usePosition.ts",
+													"line": 6,
+													"character": 2
+												}
+											],
+											"type": {
+												"type": "intrinsic",
+												"name": "number"
+											}
+										},
+										{
+											"id": 371,
+											"name": "right",
+											"kind": 1024,
+											"kindString": "Property",
+											"flags": {},
+											"sources": [
+												{
+													"fileName": "shared/hooks/usePosition.ts",
+													"line": 7,
+													"character": 2
+												}
+											],
+											"type": {
+												"type": "intrinsic",
+												"name": "number"
+											}
+										},
+										{
+											"id": 372,
+											"name": "bottom",
+											"kind": 1024,
+											"kindString": "Property",
+											"flags": {},
+											"sources": [
+												{
+													"fileName": "shared/hooks/usePosition.ts",
+													"line": 8,
+													"character": 2
+												}
+											],
+											"type": {
+												"type": "intrinsic",
+												"name": "number"
+											}
+										},
+										{
+											"id": 373,
+											"name": "width",
+											"kind": 1024,
+											"kindString": "Property",
+											"flags": {},
+											"sources": [
+												{
+													"fileName": "shared/hooks/usePosition.ts",
+													"line": 9,
+													"character": 2
+												}
+											],
+											"type": {
+												"type": "intrinsic",
+												"name": "number"
+											}
+										},
+										{
+											"id": 374,
+											"name": "height",
+											"kind": 1024,
+											"kindString": "Property",
+											"flags": {},
+											"sources": [
+												{
+													"fileName": "shared/hooks/usePosition.ts",
+													"line": 10,
+													"character": 2
+												}
+											],
+											"type": {
+												"type": "intrinsic",
+												"name": "number"
+											}
+										}
+									],
+									"groups": [
+										{
+											"title": "Properties",
+											"kind": 1024,
+											"children": [
+												369,
+												370,
+												371,
+												372,
+												373,
+												374
+											]
+										}
+									]
+								}
+							}
+						}
+					]
+				}
+			],
+			"groups": [
+				{
+					"title": "Type Aliases",
+					"kind": 4194304,
+					"children": [
+						356
+					]
+				},
+				{
+					"title": "Functions",
+					"kind": 64,
+					"children": [
+						364
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "shared/hooks/usePosition.ts",
+					"line": 1,
+					"character": 0
+				}
+			]
+		}
+	],
+	"groups": [
+		{
+			"title": "Modules",
+			"kind": 2,
+			"children": [
+				51,
+				94,
+				1,
+				355
+			]
+		}
+	]
+}
