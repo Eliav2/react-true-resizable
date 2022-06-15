@@ -10,7 +10,7 @@ const config = {
   title: "react-true-resizable",
   tagline: "A modern Resizable React Component",
   // tagline: "Resizeable Components for React that work as you would expect",
-  url: "https://your-docusaurus-test-site.com",
+  url: "https://eliav2.github.io",
   baseUrl: "/react-true-resizable/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
