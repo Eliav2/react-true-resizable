@@ -14,7 +14,6 @@
   "author": "eliav2",
   "license": "ISC",
   "dependencies": {
-    "lodash": "^4.17.21",
     "react-fast-compare": "^3.2.0"
   },
   "peerDependencies": {
