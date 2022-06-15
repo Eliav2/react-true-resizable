@@ -11,12 +11,10 @@ export default defineConfig({
     outDir: path.join(__dirname, "dist"),
     lib: {
       entry: path.join(__dirname, "src", "index.tsx"),
-      formats: ["cjs", "es"]
+      formats: ["cjs", "es"],
     },
     rollupOptions: {
-      external: ["react", "react-dom", "lodash", "react-fast-compare"]
-
+      external: ["react", "react-dom", "react-fast-compare"],
     },
-
-  }
+  },
 });
