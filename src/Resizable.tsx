@@ -1,9 +1,9 @@
 import React, { useEffect, useImperativeHandle, useLayoutEffect, useRef, useState } from "react";
 import usePassRef from "shared/hooks/usePassRef";
 import useRerender from "shared/hooks/useRerender";
+import { cloneDeepNoFunction, mergeRecursive } from "shared/utils";
 import { Handle, handleOptionsType, handlesOptionsType } from "./Handle";
 import usePosition, { positionType } from "shared/hooks/usePosition";
-import { cloneDeep, merge } from "lodash";
 import ReactDOM from "react-dom";
 import { defaultHandlersFn } from "./HandleFns";
 import { omitItems } from "./utils";
@@ -78,11 +78,11 @@ const Resizable = React.forwardRef<HTMLElement, ResizableProps>(function Resizab
     disableHeightControl = false,
     disableWidthControl = false,
 
-    handleStyle,
-    handlesStyle,
+    handleStyle = {},
+    handlesStyle = {},
   } = props;
-  let mergedHandlersOptions = merge(cloneDeep(defaultHandlersOptions), handlersOptions);
-  let mergedHandlerOptions = merge(cloneDeep(defaultHandlerOptions), handlerOptions);
+  let mergedHandlersOptions = mergeRecursive(cloneDeepNoFunction(defaultHandlersOptions), handlersOptions);
+  let mergedHandlerOptions = mergeRecursive(cloneDeepNoFunction(defaultHandlerOptions), handlerOptions);
   let mergedHandlesStyle = handlesStyle;
   let mergedHandleStyle = handleStyle;
   const render = useRerender();
@@ -120,12 +120,15 @@ const Resizable = React.forwardRef<HTMLElement, ResizableProps>(function Resizab
   // fill up empty handles sizes
   for (const handle of enabledHandles) {
     if (handle in mergedHandlersOptions) {
-      finalHandlesOptions[handle] = merge(cloneDeep(mergedHandlerOptions), mergedHandlersOptions[handle]);
+      finalHandlesOptions[handle] = mergeRecursive(
+        cloneDeepNoFunction(mergedHandlerOptions),
+        mergedHandlersOptions[handle]
+      );
     }
   }
   let finalHandlesStyle = {} as { [key in handleNameType]?: React.CSSProperties };
   for (const handle of enabledHandles) {
-    finalHandlesStyle[handle] = merge(cloneDeep(handleStyle), handlesStyle?.[handle] ?? {});
+    finalHandlesStyle[handle] = mergeRecursive(cloneDeepNoFunction(handleStyle), handlesStyle?.[handle] ?? {});
   }
 
   const enableHorizontal =

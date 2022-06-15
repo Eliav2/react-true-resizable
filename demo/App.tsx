@@ -41,14 +41,14 @@ function App() {
         </div>
       </ResizableDev>
 
-      {/*<GridResizable />*/}
+      <GridResizable />
 
       {/*/!* nested components that need to access the dom node*!/*/}
 
       {/*<Examples.WithDraggable />*/}
       {/*<Examples.NestedResizeable />*/}
 
-      {/*<ResizableExample />*/}
+      <ResizableExample />
 
       {/*<div style={{ border: "solid", margin: 16 }}>normal div</div>*/}
 
@@ -74,7 +74,7 @@ function App() {
 
 const ResizableMuiBottomBar = () => {
   return (
-    <ResizableProd handles={["top"]} allHandlerOptions={{ style: { background: "blue" } }}>
+    <ResizableProd enabledHandles={["top"]} handleStyle={{ background: "blue" }}>
       <Paper
         sx={{
           height: 80,
@@ -114,7 +114,7 @@ const GridResizable = ({ reredner = () => {} }) => {
         enabledHandles={handles}
         disableHeightControl={!allowVResize}
         disableWidthControl={!allowHResize}
-        allHandlerOptions={{ style: { background: "blue" } }}
+        handleStyle={{ background: "blue" }}
         onResizeEffect={reredner}
       >
         <Box className={"grid-resizable"} style={{ border: "2px solid black", height: 200 }}>
@@ -134,12 +134,12 @@ export const ResizableExample = () => {
 
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", position: "relative" }}>
         root Resizable
-        <ResizableProd onResizeEffect={reredner} allHandlerOptions={{ style: { background: "red" } }}>
+        <ResizableProd onResizeEffect={reredner} handleStyle={{ background: "red" }}>
           <div style={{ border: "20px grey solid", overflow: "hidden" }}>
             <div style={{ height: 200, border: "dashed 1px", marginBottom: 16 }}>
               with relative size
               <ResizableProd
-                allHandlerOptions={{ style: { background: "red" } }}
+                handleStyle={{ background: "red" }}
                 handlersOptions={{ left: { size: 24 }, top: { size: 4 } }}
               >
                 <div style={{ border: "solid", height: "50%" }}>
@@ -156,10 +156,10 @@ export const ResizableExample = () => {
             <div style={{ border: "dashed 1px" }}>
               display: flex; justify-content: center;
               <div style={{ display: "flex", justifyContent: "center" }}>
-                <ResizableProd allHandlerOptions={{ style: {} }} grid={10} onResizeEffect={reredner}>
+                <ResizableProd grid={10} onResizeEffect={reredner}>
                   <Box sx={{ border: "2px solid black", p: 1, height: 100 }}>Box1</Box>
                 </ResizableProd>
-                <ResizableProd allHandlerOptions={{ style: {} }} grid={10} onResizeEffect={reredner}>
+                <ResizableProd grid={10} onResizeEffect={reredner}>
                   <Box sx={{ border: "2px solid black", p: 1, height: 100 }}>Box2</Box>
                 </ResizableProd>
               </div>
