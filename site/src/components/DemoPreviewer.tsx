@@ -72,7 +72,7 @@ const DemoPreviewer: FC<DemoPreviewerProps> = (props) => {
       >
         reset
       </div>
-      <props.Comp />
+      {!shouldReset && <props.Comp />}
       <CodeBlock simpleSource={rawSimple} fullSource={raw} />
     </Paper>
   );

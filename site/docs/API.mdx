@@ -16,4 +16,17 @@ You can also explore the types using your favorite IDE, this library types are e
 
 :::
 
-<iframe width={"100%"} height={"1000px"} src={'/typedocs/interfaces/react_true_resizable_src_Resizable.ResizableProps.html'} />
+import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
+
+export const ApiFrame = () => {
+  const { siteConfig } = useDocusaurusContext()
+  return (
+    <iframe
+      width={"100%"}
+      height={"1000px"}
+      src={`${siteConfig.baseUrl}typedocs/interfaces/react_true_resizable_src_Resizable.ResizableProps.html`} />
+  )
+}
+
+<ApiFrame/>
+
