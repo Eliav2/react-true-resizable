@@ -11,7 +11,7 @@ const config = {
   tagline: "A modern Resizable React Component",
   // tagline: "Resizeable Components for React that work as you would expect",
   url: "https://your-docusaurus-test-site.com",
-  baseUrl: "/",
+  baseUrl: "/react-true-resizable/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
   favicon: "img/favicon.ico",

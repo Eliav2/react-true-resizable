@@ -7,7 +7,7 @@
     "start": "docusaurus start --no-open",
     "build": "docusaurus build --out-dir ../docs",
     "swizzle": "docusaurus swizzle",
-    "deploy": "docusaurus deploy",
+    "deploy": "set GIT_USER=eliva2&&docusaurus deploy",
     "clear": "docusaurus clear",
     "serve": "docusaurus serve",
     "write-translations": "docusaurus write-translations",
