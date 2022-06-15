@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunksite=self.webpackChunksite||[]).push([[195],{2195:function(e,i,n){n.r(i),i.default="<div style={{ height: 50 }}>\n  <Resizable nodeRef={divRef} />\n  <Draggable>\n    <div style={BoxStyle} ref={divRef}>\n      Resizable\n    </div>\n  </Draggable>\n</div>;\n"}}]);
