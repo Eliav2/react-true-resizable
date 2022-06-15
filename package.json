@@ -1,6 +1,6 @@
 {
   "name": "react-true-resizable",
-  "version": "0.2.0-dev.1",
+  "version": "0.2.1",
   "description": "",
   "main": "dist/react-true-resizable.cjs.js",
   "module": "dist/react-true-resizable.es.js",
