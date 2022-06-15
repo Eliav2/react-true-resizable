@@ -1,6 +1,6 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import path from "path";
+// import path from "path";
 
 import defaultViteConfig from "./vite.config";
 
@@ -9,8 +9,10 @@ export default defineConfig({
   ...defaultViteConfig,
   build: {
     ...defaultViteConfig.build,
+    emptyOutDir: false,
     watch: {
-      include: path.join(__dirname, "src/**/*"),
+      // include: path.join(__dirname, "src/**/*"),
+      include: "src/**/*",
       clearScreen: false,
     },
   },

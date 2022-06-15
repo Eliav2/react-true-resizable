@@ -8,6 +8,9 @@ import ReactDOM from "react-dom";
 import { defaultHandlersFn } from "./HandleFns";
 import { omitItems } from "./utils";
 
+export type PossiblySpecifyAxis<T> = T | { horizontal?: T; vertical?: T };
+type t = PossiblySpecifyAxis<number>;
+
 export interface ResizableProps {
   /** A simple React element(like div) or React forwardRef element(React element which passed down a ref to a DOM element) */
   children?: React.ReactElement;
@@ -16,8 +19,16 @@ export interface ResizableProps {
    * if passed, children prop will be ignored.
    * */
   nodeRef?: React.RefObject<any>;
-  /** Allow resize with respect to a grid */
-  grid?: number;
+
+  /** Allow resize with respect to a grid
+   *
+   * examples:
+   *  - `grid={20}` - allow resize with respect to a grid of 20px (both horizontal and vertical axis)
+   *  - `grid={{horizontal:20}}` - allow resize with respect to a horizontal grid of 20px
+   * */
+  grid?: number | { horizontal: number; vertical: number };
+  // todo:fix
+  // grid?: PossiblySpecifyAxis<number>;
 
   /** An array handlers to enable */
   enabledHandles?: handleNameType[];
@@ -25,12 +36,17 @@ export interface ResizableProps {
   handlerOptions?: Partial<handleOptionsType>;
   /** options that will be passed to specific handles. overrides handlerOptions */
   handlersOptions?: { [key in handleNameType]?: Partial<handleOptionsType> };
-  /** the height of target DOM node won't be controlled
-   * when set to false, initial height is restored */
-  disableHeightControl?: boolean;
-  /** the width of target DOM node won't be controlled
-   * when set to false, initial width is restored */
-  disableWidthControl?: boolean;
+
+  /** the height/width target DOM node won't be controlled
+   * when set to false, initial height/width is restored
+   *
+   * examples:
+   *  - `disableControl={true}` - will disable the control on height/width of the target DOM node
+   *  - `disableControl={{horizontal: true}}` -  will disable the control on height of the target DOM node
+   * */
+  // disableControl?: boolean | { horizontal: boolean; vertical: boolean };
+  disableControl?: PossiblySpecifyAxis<boolean>;
+
   /** style that will be passed to all handles */
   handleStyle?: React.CSSProperties;
   /** style that will be passed to specific handles. overrides handleStyle */
@@ -43,9 +59,9 @@ export interface ResizableProps {
   //  handlesComponent
 
   // todo
-  //  onResizeEnd?: (dims: positionType) => void;
-  //  onResizeStart?: (dims: positionType) => void;
-  //  onResize?: (dims: positionType) => void;
+  onResizeEnd?: PossiblySpecifyAxis<(dims: positionType) => void>;
+  onResizeStart?: PossiblySpecifyAxis<(dims: positionType) => void>;
+  onResize?: PossiblySpecifyAxis<(dims: positionType) => void>;
 
   /** a callback that is called after resize ended and the DOM element is updated */
   onResizeEffect?: ((dims: positionType) => void) | null;
@@ -75,9 +91,9 @@ const Resizable = React.forwardRef<HTMLElement, ResizableProps>(function Resizab
     enabledHandles = Object.keys(defaultHandlersFn) as handleNameType[],
     handlerOptions = {},
     handlersOptions = {},
-    disableHeightControl = false,
-    disableWidthControl = false,
-
+    // disableHeightControl = false,
+    // disableWidthControl = false,
+    disableControl = false,
     handleStyle = {},
     handlesStyle = {},
   } = props;
@@ -131,6 +147,8 @@ const Resizable = React.forwardRef<HTMLElement, ResizableProps>(function Resizab
     finalHandlesStyle[handle] = mergeRecursive(cloneDeepNoFunction(handleStyle), handlesStyle?.[handle] ?? {});
   }
 
+  const disableWidthControl = typeof disableControl === "boolean" ? disableControl : disableControl?.horizontal;
+  const disableHeightControl = typeof disableControl === "boolean" ? disableControl : disableControl?.vertical;
   const enableHorizontal =
     !disableWidthControl &&
     !!enabledHandles.find((h) => h.toLowerCase().includes("left") || h.toLowerCase().includes("right"));

@@ -1,10 +1,20 @@
 import React, { useRef, useState } from "react";
 import ResizableProd, { handleNameType } from "react-true-resizable";
-import ResizableDev, { ResizableHandle } from "../src/Resizable";
+import ResizableDev, { ResizableHandle } from "../../src/Resizable";
 import useRerender from "shared/hooks/useRerender";
 import { Box, Paper } from "@mui/material";
 import "./App.css";
 import Draggable from "react-draggable";
+
+export const BoxStyle = {
+  border: "solid",
+  borderRadius: 12,
+  width: 120,
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+} as React.CSSProperties;
 
 function App() {
   console.log("App rendered");
@@ -18,37 +28,21 @@ function App() {
     <div style={{ textAlign: "center" }}>
       <button onClick={() => reredner()}>rerender</button>
 
-      <ResizableDev
-        enableRelativeOffset
-        handleStyle={{ background: "red" }}
-        handlesStyle={{ top: { background: "blue" } }}
-        // grid={20}
-        // allHandlerOptions={{ style: { background: "red" } }}
-      >
-        <div
-          style={{
-            position: "relative",
-            border: "2px solid black",
-            height: 200,
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <ResizableProd grid={{ test: "gey" }}>
+          <Box style={BoxStyle}>hey mama</Box>
+        </ResizableProd>
+      </div>
 
-            // minHeight: 100,
-          }}
-        >
-          enableRelativeOffset
-        </div>
-      </ResizableDev>
+      {/*<ResizableExample />*/}
 
-      <GridResizable />
+      {/*<RelativeOffsetResizable />*/}
+      {/*<GridResizable />*/}
 
       {/*/!* nested components that need to access the dom node*!/*/}
 
       {/*<Examples.WithDraggable />*/}
       {/*<Examples.NestedResizeable />*/}
-
-      <ResizableExample />
 
       {/*<div style={{ border: "solid", margin: 16 }}>normal div</div>*/}
 
@@ -96,9 +90,9 @@ const ResizableMuiBottomBar = () => {
 const GridResizable = ({ reredner = () => {} }) => {
   const [allowHResize, setAllowHResize] = useState(false);
   const [allowVResize, setAllowVResize] = useState(false);
-  const handles: handleNameType[] = [];
-  if (allowHResize) handles.push("left", "right");
-  if (allowVResize) handles.push("top", "bottom");
+  // const handles: handleNameType[] = [];
+  // if (allowHResize) handles.push("left", "right");
+  // if (allowVResize) handles.push("top", "bottom");
 
   const ResizableRef = useRef<ResizableHandle>(null);
   return (
@@ -110,18 +104,42 @@ const GridResizable = ({ reredner = () => {} }) => {
       <button onClick={() => ResizableRef.current?.restControl()}>rest resizable</button>
       <ResizableProd
         ResizableRef={ResizableRef}
-        grid={20}
-        enabledHandles={handles}
-        disableHeightControl={!allowVResize}
-        disableWidthControl={!allowHResize}
+        grid={{ horizontal: 100, vertical: 20 }}
+        disableControl={{ horizontal: !allowHResize, vertical: !allowVResize }}
         handleStyle={{ background: "blue" }}
-        onResizeEffect={reredner}
+        // onResizeEffect={reredner}
       >
         <Box className={"grid-resizable"} style={{ border: "2px solid black", height: 200 }}>
           resizable only vertically {allowHResize && "and horizontally"} with grid 20
         </Box>
       </ResizableProd>
     </div>
+  );
+};
+
+const RelativeOffsetResizable = () => {
+  return (
+    <ResizableDev
+      enableRelativeOffset
+      handleStyle={{ background: "red" }}
+      handlesStyle={{ top: { background: "blue" } }}
+      // grid={20}
+      // allHandlerOptions={{ style: { background: "red" } }}
+    >
+      <div
+        style={{
+          position: "relative",
+          border: "2px solid black",
+          height: 200,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          // minHeight: 100,
+        }}
+      >
+        enableRelativeOffset
+      </div>
+    </ResizableDev>
   );
 };
 

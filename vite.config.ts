@@ -1,16 +1,18 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import path from "path";
+// import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
-  root: "demo",
+  // plugins: [react()],
+  // root: "demo",
   build: {
-    // emptyOutDir: true,
-    outDir: path.join(__dirname, "dist"),
+    emptyOutDir: true,
+    // outDir: path.join(__dirname, "dist"),
+    outDir: "dist",
     lib: {
-      entry: path.join(__dirname, "src", "index.tsx"),
+      // entry: path.join(__dirname, "src", "index.tsx"),
+      entry: "src/index.tsx",
       formats: ["cjs", "es"],
     },
     rollupOptions: {
