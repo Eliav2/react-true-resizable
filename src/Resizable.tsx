@@ -82,7 +82,7 @@ const Resizable = React.forwardRef<HTMLElement, ResizableProps>(function Resizab
   props: ResizableProps,
   forwardedRef
 ) {
-  console.log("Resizable");
+  // console.log("Resizable");
   let {
     grid,
     children,

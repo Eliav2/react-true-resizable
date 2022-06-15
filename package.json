@@ -7,7 +7,7 @@
   "typings": "dist/types",
   "scripts": {
     "prepublishOnly": "pnpm run build",
-    "dev": "concurrently \"tsc --build -w\" \"vite build --config ./vite.config.watch.ts\"",
+    "dev": "concurrently \"tsc -w\" \"vite build --config ./vite.config.watch.ts\"",
     "build": "tsc -p tsconfig.check.json && vite build && tsc",
     "preview": "vite preview"
   },
