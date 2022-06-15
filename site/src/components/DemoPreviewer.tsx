@@ -6,7 +6,7 @@ import { Button, Paper } from "@mui/material";
 const useDynamicDemoImport = (name) => {
   const [raw, setRaw] = useState(null);
   const [rawSimple, setRawSimple] = useState(null);
-  const Comp = React.lazy(() => import(`@site/src/demos/${name}`));
+  // const Comp = React.lazy(() => import(`@site/src/demos/${name}`)); @react18
   useEffect(() => {
     let resolvedRaw = false;
     let resolvedRawSimple = false;
@@ -33,23 +33,32 @@ const useDynamicDemoImport = (name) => {
       resolvedComp = true;
     };
   }, []);
-  return [Comp, raw, rawSimple];
+  return [
+    // Comp, // @react18
+    raw,
+    rawSimple,
+  ];
 };
 
 interface DemoPreviewerProps {
   name: string;
+  Comp: React.FC; // @react18
 }
 
 const RootDemoPreviewer: FC<DemoPreviewerProps> = (props) => {
   return (
-    <React.Suspense fallback={<div>Loading...</div>}>
-      <DemoPreviewer {...props} />
-    </React.Suspense>
+    // <React.Suspense fallback={<div>Loading...</div>}> // @react18
+    <DemoPreviewer {...props} />
+    // </React.Suspense> // @react18
   );
 };
 
 const DemoPreviewer: FC<DemoPreviewerProps> = (props) => {
-  const [Comp, raw, rawSimple] = useDynamicDemoImport(props.name);
+  const [
+    // Comp, // @react18
+    raw,
+    rawSimple,
+  ] = useDynamicDemoImport(props.name);
   const [shouldReset, setShouldReset] = useState(false);
   useLayoutEffect(() => {
     setShouldReset(false);
@@ -63,7 +72,7 @@ const DemoPreviewer: FC<DemoPreviewerProps> = (props) => {
       >
         reset
       </div>
-      <Comp />
+      <props.Comp />
       <CodeBlock simpleSource={rawSimple} fullSource={raw} />
     </Paper>
   );

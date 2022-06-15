@@ -5,7 +5,7 @@
   "scripts": {
     "docusaurus": "docusaurus",
     "start": "docusaurus start --no-open",
-    "build": "docusaurus build",
+    "build": "docusaurus build --out-dir ../docs",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",
@@ -16,9 +16,9 @@
     "typedoc": "typedoc"
   },
   "dependencies": {
-    "@docusaurus/core": "2.0.0-beta.20",
-    "@docusaurus/preset-classic": "2.0.0-beta.20",
-    "@docusaurus/theme-live-codeblock": "2.0.0-beta.20",
+    "@docusaurus/core": "2.0.0-beta.21",
+    "@docusaurus/preset-classic": "2.0.0-beta.21",
+    "@docusaurus/theme-live-codeblock": "2.0.0-beta.21",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
     "@mdx-js/react": "^1.6.22",
@@ -32,7 +32,7 @@
     "react-true-resizable": "*"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "2.0.0-beta.20",
+    "@docusaurus/module-type-aliases": "2.0.0-beta.21",
     "@tsconfig/docusaurus": "^1.0.5",
     "docusaurus": "^1.14.7",
     "docusaurus-plugin-react-docgen": "^0.0.2",

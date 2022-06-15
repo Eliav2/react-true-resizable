@@ -11,7 +11,9 @@ import DemoPreviewer from '@site/src/components/DemoPreviewer';
 Basic example, no fancy props.
 
 
-<DemoPreviewer name={"Basic"} />
+import Basic from '@site/src/demos/Basic';
+
+<DemoPreviewer name={"Basic"} Comp={Basic}/>
 
 ## Enable Relative Offset
 
@@ -25,7 +27,9 @@ in this example, we set the positioning style `relative`, if we choose `absolute
 changed on resizing. the behavior of this demo(code block is heightened even when resizing from top) is the exactly wanted behavior.
 :::
 
-<DemoPreviewer name={"relativeOffset"} />
+import RelativeOffset from '@site/src/demos/relativeOffset';
+
+<DemoPreviewer name={"relativeOffset"} Comp={RelativeOffset}/>
 
 ## Resizable and Draggable
 
@@ -33,9 +37,13 @@ You can use [react-draggable](https://www.npmjs.com/package/react-draggable) wit
 does not forward refs correctly, you will need to pass direct ref to resizable,namely,
 use Resizable.nodeRef prop instead of Resizable.children prop.
 
-<DemoPreviewer name={"draggable"}/>
+import Draggable from '@site/src/demos/draggable';
+
+<DemoPreviewer name={"draggable"} Comp={Draggable}/>
 
 ## handle styling
 
-<DemoPreviewer name={"handleStyles"}/>
+import HandleStyles from '@site/src/demos/handleStyles';
+
+<DemoPreviewer name={"handleStyles"} Comp={HandleStyles}/>
 

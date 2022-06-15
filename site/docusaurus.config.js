@@ -19,7 +19,7 @@ const config = {
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: "eliav2", // Usually your GitHub org/user name.
-  projectName: "my-react-components", // Usually your repo name.
+  projectName: "react-true-resizable", // Usually your repo name.
 
   plugins: [
     // "my-loaders", // loader required for html
