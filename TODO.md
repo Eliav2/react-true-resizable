@@ -1,0 +1,1 @@
+- remove lodash as dependency (implement omit, pick, and merge)
