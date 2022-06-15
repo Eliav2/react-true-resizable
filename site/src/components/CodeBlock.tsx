@@ -48,6 +48,7 @@ const CodeBlock: FC<CodeBlockProps> = (props) => {
       </DocusaurusCodeBlock>
     </TabItem>,
   ];
+
   // @formatter:off
   // if (props.live) {
   //   tabs.push(

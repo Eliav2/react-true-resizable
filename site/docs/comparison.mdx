@@ -87,8 +87,6 @@ export const WorkingTrueResizable = () => (
   </TrueResizable>
 )
 
-<WorkingTrueResizable />
-
 ```jsx
 export const WorkingTrueResizable = () => (
   <TrueResizable >
@@ -97,6 +95,7 @@ export const WorkingTrueResizable = () => (
 )
 ```
 
+<WorkingTrueResizable />
 
 the only component that work as expected is react-true-resizable, because it's the only component that controls the children element
 (the `div`) height and width. also, react-true-resizable does not mutate position style.

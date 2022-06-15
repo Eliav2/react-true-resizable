@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React from "react";
 import Resizable from "react-true-resizable";
 
 export const BoxStyle = {
@@ -11,10 +11,10 @@ export const BoxStyle = {
   alignItems: "center",
 };
 
-export default function BasicExample() {
+export default function RelativeOffset() {
   return (
-    <Resizable>
-      <div style={BoxStyle}>Resizable</div>
+    <Resizable enableRelativeOffset>
+      <div style={{ ...BoxStyle, position: "relative" }}>Resizable</div>
     </Resizable>
   );
 }
