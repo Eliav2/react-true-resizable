@@ -29,9 +29,9 @@ function App() {
       <button onClick={() => reredner()}>rerender</button>
 
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <ResizableProd grid={{ test: "gey" }}>
+        <ResizableDev grid={{ test: "gey" }}>
           <Box style={BoxStyle}>hey mama</Box>
-        </ResizableProd>
+        </ResizableDev>
       </div>
 
       {/*<ResizableExample />*/}

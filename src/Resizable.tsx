@@ -9,7 +9,6 @@ import { defaultHandlersFn } from "./HandleFns";
 import { omitItems } from "./utils";
 
 export type PossiblySpecifyAxis<T> = T | { horizontal?: T; vertical?: T };
-type t = PossiblySpecifyAxis<number>;
 
 export interface ResizableProps {
   /** A simple React element(like div) or React forwardRef element(React element which passed down a ref to a DOM element) */
@@ -83,7 +82,7 @@ const Resizable = React.forwardRef<HTMLElement, ResizableProps>(function Resizab
   props: ResizableProps,
   forwardedRef
 ) {
-  // console.log("Resizable");
+  console.log("Resizable");
   let {
     grid,
     children,

@@ -1,5 +1,6 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+// import typescript from "@rollup/plugin-typescript";
 // import path from "path";
 
 // https://vitejs.dev/config/
@@ -16,6 +17,7 @@ export default defineConfig({
       formats: ["cjs", "es"],
     },
     rollupOptions: {
+      // plugins: [typescript({ tsconfig: "tsconfig.build.json" })], // relatively slow, so running tsc concurrently using package.json script
       external: ["react", "react-dom", "react-fast-compare"],
     },
   },
