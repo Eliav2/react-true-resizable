@@ -1,5 +1,10 @@
 # react-true-resizable
 
+![npm](https://img.shields.io/npm/v/react-true-resizable)
+![npm](https://img.shields.io/npm/dw/react-true-resizable)
+![npm bundle size](https://img.shields.io/bundlephobia/minzip/react-true-resizable)
+![issues](https://img.shields.io/github/issues/Eliav2/react-true-resizable)
+
 A resizable that just work as you would expect!
 
 

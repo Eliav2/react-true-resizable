@@ -1,2 +1,3 @@
 - [x] remove lodash as dependency (implement omit, pick, and merge)
 - [ ] move demo page to its own package
+- [ ] add automatic codesandbox to DemoPreviewer component
