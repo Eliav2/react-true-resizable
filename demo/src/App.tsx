@@ -30,8 +30,11 @@ function App() {
 
       <div style={{ display: "flex", justifyContent: "center" }}>
         <ResizableDev
-          onResizeEffect={reredner}
-          grid={{ horizontal: 50 }}
+          onResize={() => console.log("onResize")}
+          onResizeEnd={() => console.log("onResizeEnd")}
+          onResizeStart={() => console.log("onResizeStart")}
+          // onResizeEffect={reredner}
+          // grid={{ horizontal: 50 }}
           // handleStyle={{}}
           // handlesStyle={{}}
           // handleOptions={{}}

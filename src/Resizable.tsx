@@ -57,11 +57,13 @@ export interface ResizableProps {
   //  handlesProps
   //  handlesComponent
 
-  // todo
-  onResizeEnd?: PossiblySpecifyAxis<(dims: positionType) => void>;
-  onResizeStart?: PossiblySpecifyAxis<(dims: positionType) => void>;
+  onResizeEnd?: (dims: positionType) => void;
+  onResizeStart?: (dims: positionType) => void;
+  onResize?: (dims: positionType) => void;
+  // todo: enable events on specially horizontally or vertically
+  // onResizeEnd?: PossiblySpecifyAxis<(dims: positionType) => void>;
+  // onResizeStart?: PossiblySpecifyAxis<(dims: positionType) => void>;
   // onResize?: PossiblySpecifyAxis<(dims: positionType) => void>;
-  // onResize?: ({he},dims: positionType) => void
 
   /** a callback that is called after resize ended and the DOM element is updated */
   onResizeEffect?: ((dims: positionType) => void) | null;

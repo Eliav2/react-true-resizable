@@ -118,6 +118,7 @@ export const Handle = React.forwardRef(function HandleForward(
       x: event.clientX,
       y: event.clientY,
     });
+    if (typeof ResizableProps?.onResizeStart === "function") ResizableProps.onResizeStart(nodePosition);
   };
   const onPointerUp = (event: React.PointerEvent<HTMLDivElement>) => {
     // release the pointer events lock to this element
@@ -133,6 +134,7 @@ export const Handle = React.forwardRef(function HandleForward(
       if (calculatedWidth && calculatedWidth < 0) left += calculatedWidth;
       setEndDraggingOffsetLeft(left);
     }
+    if (typeof ResizableProps?.onResizeEnd === "function") ResizableProps.onResizeEnd(nodePosition);
   };
   const onPointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
     if (isDragging) {
@@ -166,9 +168,9 @@ export const Handle = React.forwardRef(function HandleForward(
           if (width > 0) setCalculatedLeft(getEnableRelativeOffsetLeft(event) + endDraggingOffsetLeft);
         }
 
-        if (typeof ResizableProps?.onResize === "function") ResizableProps.onResize(width, nodePosition);
         setCalculatedWidth(width);
       }
+      if (typeof ResizableProps?.onResize === "function") ResizableProps.onResize(nodePosition);
     }
   };
 
