@@ -81,9 +81,9 @@ export const Handle = React.forwardRef(function HandleForward(
   const [isDragging, setIsDragging] = useState(false);
   const [pointerId, setPointerId] = useState<number>(0);
 
-  const handlerRef = useRef<HTMLDivElement>(null);
+  const handleRef = useRef<HTMLDivElement>(null);
   // we get only the initial position, and we are confident that the element is not moving relative to its parent
-  const handlerPos = usePosition(handlerRef.current);
+  const handlePos = usePosition(handleRef.current);
 
   let gridH: number | undefined, gridV: number | undefined;
   if (typeof ResizableProps.grid === "number") {
@@ -107,7 +107,7 @@ export const Handle = React.forwardRef(function HandleForward(
   const onPointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
     setIsDragging(true);
     // lock the pointer events to this element until release - this way we don't need to listen to global mouse events
-    handlerRef.current?.setPointerCapture(event.pointerId);
+    handleRef.current?.setPointerCapture(event.pointerId);
     setPointerId(event.pointerId);
     const dims = nodeRef?.current?.getBoundingClientRect();
     setInitialDraggingElementSize({
@@ -121,7 +121,7 @@ export const Handle = React.forwardRef(function HandleForward(
   };
   const onPointerUp = (event: React.PointerEvent<HTMLDivElement>) => {
     // release the pointer events lock to this element
-    handlerRef.current?.releasePointerCapture(pointerId);
+    handleRef.current?.releasePointerCapture(pointerId);
     setIsDragging(false);
     if (reverseVerticalDrag) {
       let top = getEnableRelativeOffsetTop(event) + endDraggingOffsetTop;
@@ -174,15 +174,15 @@ export const Handle = React.forwardRef(function HandleForward(
 
   const style = HandleStyleFn({
     nodePosition,
-    handlerPos,
+    handlePos,
     handlesParentPosition,
-    handlerSize: handleOptions.size,
+    handleSize: handleOptions.size,
     handlesOptions: handlesOptions,
   });
 
   return (
     <div
-      ref={handlerRef}
+      ref={handleRef}
       style={{
         // background: "green",
         position: "absolute",
@@ -196,25 +196,25 @@ export const Handle = React.forwardRef(function HandleForward(
   );
 });
 
-// const useGetHandlerStyle = ({
+// const useGetHandleStyle = ({
 //   nodePosition,
-//   handlerPos,
-//   handlersParentPosition,
-//   handlerSize,
-//   handlersOptions,
-//   handlerPrevPos,
+//   handlePos,
+//   handlesParentPosition,
+//   handleSize,
+//   handlesOptions,
+//   handlePrevPos,
 // }) => {
-//   if (!nodePosition || !handlerPos || !handlersParentPosition) return {};
-//   const calc = nodePosition.width - handlerSize + nodePosition.left - handlerPos.left;
+//   if (!nodePosition || !handlePos || !handlesParentPosition) return {};
+//   const calc = nodePosition.width - handleSize + nodePosition.left - handlePos.left;
 //   const r = useRef();
 //   let left = calc;
 //   // we don't want the 'left' value to leap back and forth so check if the previous value was stable(==0) and if so use it
-//   if (handlerPrevPos) if (calc == 0) left = nodePosition.width - handlerSize + nodePosition.left - handlerPrevPos.left;
+//   if (handlePrevPos) if (calc == 0) left = nodePosition.width - handleSize + nodePosition.left - handlePrevPos.left;
 //   return {
-//     top: nodePosition.top - handlersParentPosition.top,
+//     top: nodePosition.top - handlesParentPosition.top,
 //     left: left,
 //     cursor: "e-resize",
 //     height: nodePosition?.height,
-//     width: handlerSize,
+//     width: handleSize,
 //   };
 // };

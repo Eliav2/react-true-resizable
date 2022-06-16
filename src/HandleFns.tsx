@@ -6,9 +6,9 @@ import { round } from "./utils.js";
 // this is possible hook or possibly normal function
 export type HandleStyleFnType = (arg: {
   nodePosition: positionType;
-  handlerPos: positionType;
+  handlePos: positionType;
   handlesParentPosition: positionType;
-  handlerSize: number;
+  handleSize: number;
   handlesOptions: handlesOptionsType;
 }) => React.CSSProperties | undefined;
 
@@ -17,14 +17,14 @@ export type HandleStyleFnType = (arg: {
  *
  ***************************************************************/
 
-export const topHandlerStyle: HandleStyleFnType = ({
+export const topHandleStyle: HandleStyleFnType = ({
   nodePosition,
-  handlerPos,
+  handlePos,
   handlesParentPosition,
-  handlerSize,
+  handleSize,
   handlesOptions,
 }) => {
-  if (!nodePosition || !handlerPos || !handlesParentPosition) return {};
+  if (!nodePosition || !handlePos || !handlesParentPosition) return {};
   let top = nodePosition.top - handlesParentPosition.top;
 
   return {
@@ -32,133 +32,123 @@ export const topHandlerStyle: HandleStyleFnType = ({
     left: round(nodePosition.left - handlesParentPosition.left + (handlesOptions.left?.size ?? 0)),
     cursor: "ns-resize",
     width: round(nodePosition?.width - (handlesOptions.left?.size ?? 0) - (handlesOptions.right?.size ?? 0)),
-    height: handlerSize,
+    height: handleSize,
   };
 };
-export const bottomHandlerStyle: HandleStyleFnType = ({
+export const bottomHandleStyle: HandleStyleFnType = ({
   nodePosition,
-  handlerPos,
+  handlePos,
   handlesParentPosition,
-  handlerSize,
+  handleSize,
   handlesOptions,
 }) => {
-  if (!nodePosition || !handlerPos || !handlesParentPosition) return {};
-  let top = nodePosition.top + nodePosition.height - handlesParentPosition.top - handlerSize;
+  if (!nodePosition || !handlePos || !handlesParentPosition) return {};
+  let top = nodePosition.top + nodePosition.height - handlesParentPosition.top - handleSize;
 
   return {
     top: round(top),
     left: round(nodePosition.left - handlesParentPosition.left + (handlesOptions.left?.size ?? 0)),
     cursor: "ns-resize",
     width: round(nodePosition?.width - (handlesOptions.left?.size ?? 0) - (handlesOptions.right?.size ?? 0)),
-    height: handlerSize,
+    height: handleSize,
   };
 };
-export const leftHandlerStyle: HandleStyleFnType = ({
-  nodePosition,
-  handlerPos,
-  handlesParentPosition,
-  handlerSize,
-}) => {
-  if (!nodePosition || !handlerPos || !handlesParentPosition) return {};
+export const leftHandleStyle: HandleStyleFnType = ({ nodePosition, handlePos, handlesParentPosition, handleSize }) => {
+  if (!nodePosition || !handlePos || !handlesParentPosition) return {};
   return {
     top: nodePosition.top - handlesParentPosition.top,
     left: nodePosition.left - handlesParentPosition.left,
     cursor: "ew-resize",
     height: nodePosition?.height,
-    width: handlerSize,
+    width: handleSize,
   };
 };
-export const rightHandlerStyle: HandleStyleFnType = ({
-  nodePosition,
-  handlerPos,
-  handlesParentPosition,
-  handlerSize,
-}) => {
-  if (!nodePosition || !handlerPos || !handlesParentPosition) return {};
-  let left = nodePosition.width - handlerSize - (handlesParentPosition.left - nodePosition.left);
+export const rightHandleStyle: HandleStyleFnType = ({ nodePosition, handlePos, handlesParentPosition, handleSize }) => {
+  if (!nodePosition || !handlePos || !handlesParentPosition) return {};
+  let left = nodePosition.width - handleSize - (handlesParentPosition.left - nodePosition.left);
 
   return {
     top: round(nodePosition.top - handlesParentPosition.top),
     left: round(left),
     cursor: "ew-resize",
     height: round(nodePosition?.height),
-    width: round(handlerSize),
+    width: round(handleSize),
   };
 };
-export const bottomRightHandlerStyle: HandleStyleFnType = ({
+export const bottomRightHandleStyle: HandleStyleFnType = ({
   nodePosition,
-  handlerPos,
+  handlePos,
   handlesParentPosition,
-  handlerSize,
+  handleSize,
 }) => {
-  if (!nodePosition || !handlerPos || !handlesParentPosition) return {};
-  let left = nodePosition.width - handlerSize - (handlesParentPosition.left - nodePosition.left);
+  if (!nodePosition || !handlePos || !handlesParentPosition) return {};
+  let left = nodePosition.width - handleSize - (handlesParentPosition.left - nodePosition.left);
 
   return {
-    top: round(nodePosition.top - handlesParentPosition.top + nodePosition.height - handlerSize),
+    top: round(nodePosition.top - handlesParentPosition.top + nodePosition.height - handleSize),
     left: round(left),
     cursor: "nwse-resize",
-    height: round(handlerSize),
-    width: round(handlerSize),
+    height: round(handleSize),
+    width: round(handleSize),
   } as React.CSSProperties;
 };
 
-export const bottomLeftHandlerStyle: HandleStyleFnType = ({
+export const bottomLeftHandleStyle: HandleStyleFnType = ({
   nodePosition,
-  handlerPos,
+  handlePos,
   handlesParentPosition,
-  handlerSize,
+  handleSize,
 }) => {
-  if (!nodePosition || !handlerPos || !handlesParentPosition) return {};
+  if (!nodePosition || !handlePos || !handlesParentPosition) return {};
   return {
-    top: nodePosition.height + -handlerSize + nodePosition.top - handlesParentPosition.top,
+    top: nodePosition.height + -handleSize + nodePosition.top - handlesParentPosition.top,
     left: nodePosition.left - handlesParentPosition.left,
     cursor: "nesw-resize",
-    height: handlerSize,
-    width: handlerSize,
+    height: handleSize,
+    width: handleSize,
   } as React.CSSProperties;
 };
-export const topRightHandlerStyle: HandleStyleFnType = ({
+export const topRightHandleStyle: HandleStyleFnType = ({
   nodePosition,
-  handlerPos,
+  handlePos,
   handlesParentPosition,
-  handlerSize,
+  handleSize,
 }) => {
-  if (!nodePosition || !handlerPos || !handlesParentPosition) return {};
-  let left = nodePosition.width - handlerSize - (handlesParentPosition.left - nodePosition.left);
+  if (!nodePosition || !handlePos || !handlesParentPosition) return {};
+  let left = nodePosition.width - handleSize - (handlesParentPosition.left - nodePosition.left);
 
   return {
     top: round(nodePosition.top - handlesParentPosition.top),
     left: round(left),
     cursor: "nesw-resize",
-    height: round(handlerSize),
-    width: round(handlerSize),
+    height: round(handleSize),
+    width: round(handleSize),
   };
 };
-export const topLeftHandlerStyle: HandleStyleFnType = ({
+export const topLeftHandleStyle: HandleStyleFnType = ({
   nodePosition,
-  handlerPos,
+  handlePos,
   handlesParentPosition,
-  handlerSize,
+  handleSize,
 }) => {
-  if (!nodePosition || !handlerPos || !handlesParentPosition) return {};
+  if (!nodePosition || !handlePos || !handlesParentPosition) return {};
 
   return {
     top: round(nodePosition.top - handlesParentPosition.top),
     left: round(nodePosition.left - handlesParentPosition.left),
     cursor: "nwse-resize",
-    height: round(handlerSize),
-    width: round(handlerSize),
+    height: round(handleSize),
+    width: round(handleSize),
   };
 };
 
-export const defaultHandlersFn = {
-  top: topHandlerStyle,
-  left: leftHandlerStyle,
-  bottom: bottomHandlerStyle,
-  right: rightHandlerStyle,
-  bottomRight: bottomRightHandlerStyle,
-  bottomLeft: bottomLeftHandlerStyle,
-  topRight: topRightHandlerStyle,
-  topLeft: topLeftHandlerStyle,
+export const defaultHandlesFn = {
+  top: topHandleStyle,
+  left: leftHandleStyle,
+  bottom: bottomHandleStyle,
+  right: rightHandleStyle,
+  bottomRight: bottomRightHandleStyle,
+  bottomLeft: bottomLeftHandleStyle,
+  topRight: topRightHandleStyle,
+  topLeft: topLeftHandleStyle,
 } as const;

@@ -29,7 +29,13 @@ function App() {
       <button onClick={() => reredner()}>rerender</button>
 
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <ResizableDev grid={{ horizontal: 50 }}>
+        <ResizableDev
+          grid={{ horizontal: 50 }}
+          handleStyle={{}}
+          handlesStyle={{}}
+          handlerOptions={{}}
+          handlersOptions={{}}
+        >
           <Box style={BoxStyle}>hey mama</Box>
         </ResizableDev>
         {/*<Draggable>*/}
