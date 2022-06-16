@@ -12,7 +12,7 @@ export default defineConfig({
     emptyOutDir: false,
     watch: {
       // include: path.join(__dirname, "src/**/*"),
-      include: "src/**/*",
+      include: ["src/**/*", "../shared/**/*"],
       clearScreen: false,
     },
   },

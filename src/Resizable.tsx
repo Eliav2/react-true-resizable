@@ -1,12 +1,14 @@
-import React, { useEffect, useImperativeHandle, useLayoutEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useImperativeHandle, useLayoutEffect, useMemo, useRef, useState } from "react";
 import usePassRef from "shared/hooks/usePassRef";
 import useRerender from "shared/hooks/useRerender";
 import { cloneDeepNoFunction, mergeRecursive } from "shared/utils";
+import { merge } from "lodash";
 import { Handle, handleOptionsType, handlesOptionsType } from "./Handle";
 import usePosition, { positionType } from "shared/hooks/usePosition";
 import ReactDOM from "react-dom";
 import { defaultHandlersFn } from "./HandleFns";
 import { omitItems } from "./utils";
+import type { RespectDefaultProps } from "shared/types";
 
 export type PossiblySpecifyAxis<T> = T | { horizontal?: T; vertical?: T };
 
@@ -25,9 +27,9 @@ export interface ResizableProps {
    *  - `grid={20}` - allow resize with respect to a grid of 20px (both horizontal and vertical axis)
    *  - `grid={{horizontal:20}}` - allow resize with respect to a horizontal grid of 20px
    * */
-  grid?: number | { horizontal: number; vertical: number };
+  // grid?: number | { horizontal: number; vertical: number };
   // todo:fix
-  // grid?: PossiblySpecifyAxis<number>;
+  grid?: PossiblySpecifyAxis<number>;
 
   /** An array handlers to enable */
   enabledHandles?: handleNameType[];
@@ -43,7 +45,6 @@ export interface ResizableProps {
    *  - `disableControl={true}` - will disable the control on height/width of the target DOM node
    *  - `disableControl={{horizontal: true}}` -  will disable the control on height of the target DOM node
    * */
-  // disableControl?: boolean | { horizontal: boolean; vertical: boolean };
   disableControl?: PossiblySpecifyAxis<boolean>;
 
   /** style that will be passed to all handles */
@@ -60,7 +61,8 @@ export interface ResizableProps {
   // todo
   onResizeEnd?: PossiblySpecifyAxis<(dims: positionType) => void>;
   onResizeStart?: PossiblySpecifyAxis<(dims: positionType) => void>;
-  onResize?: PossiblySpecifyAxis<(dims: positionType) => void>;
+  // onResize?: PossiblySpecifyAxis<(dims: positionType) => void>;
+  // onResize?: ({he},dims: positionType) => void
 
   /** a callback that is called after resize ended and the DOM element is updated */
   onResizeEffect?: ((dims: positionType) => void) | null;
@@ -75,31 +77,39 @@ export interface ResizableProps {
 }
 
 export interface ResizableHandle {
+  /** function that resets the height/width of the target DOM node to initial state*/
   restControl: (resetHeight?: boolean, resetWidth?: boolean) => void;
+  /** react ref to the target DOM node */
+  nodeRef: React.RefObject<HTMLElement>;
+  /** current position of the target DOM node */
+  nodePosition: positionType;
+  /** react ref to the handlers parent DOM node */
+  handlerParentRef: React.RefObject<HTMLDivElement>;
+  /** current position of the handlers parent DOM node */
+  handlesParentPosition: positionType;
+  /** when called re-renders Resizable */
+  render: () => void;
 }
 
+type ResizablePropsDP = RespectDefaultProps<ResizableProps, typeof ResizableDefaultProps>;
 const Resizable = React.forwardRef<HTMLElement, ResizableProps>(function ResizableForward(
-  props: ResizableProps,
+  _props: ResizableProps,
   forwardedRef
 ) {
+  const props = _props as ResizablePropsDP;
   // console.log("Resizable");
   let {
     grid,
     children,
     onResizeEffect,
-    enabledHandles = Object.keys(defaultHandlersFn) as handleNameType[],
-    handlerOptions = {},
-    handlersOptions = {},
-    // disableHeightControl = false,
-    // disableWidthControl = false,
-    disableControl = false,
-    handleStyle = {},
-    handlesStyle = {},
+    enabledHandles,
+    handlerOptions,
+    handlersOptions,
+    disableControl,
+    handleStyle,
+    handlesStyle,
   } = props;
-  let mergedHandlersOptions = mergeRecursive(cloneDeepNoFunction(defaultHandlersOptions), handlersOptions);
-  let mergedHandlerOptions = mergeRecursive(cloneDeepNoFunction(defaultHandlerOptions), handlerOptions);
-  let mergedHandlesStyle = handlesStyle;
-  let mergedHandleStyle = handleStyle;
+
   const render = useRerender();
 
   // if the children passed a ref - copy its value instead of creating a new one
@@ -111,7 +121,7 @@ const Resizable = React.forwardRef<HTMLElement, ResizableProps>(function Resizab
 
   const nodePosition = usePosition(nodeRef.current);
 
-  const handlerParentRef = useRef(null);
+  const handlerParentRef = useRef<HTMLDivElement>(null);
   const handlesParentPosition = usePosition(handlerParentRef.current);
 
   const [initialHeight, setInitialHeight] = useState("");
@@ -130,17 +140,8 @@ const Resizable = React.forwardRef<HTMLElement, ResizableProps>(function Resizab
   // strip away checks in production build
   if (!process.env.NODE_ENV || process.env.NODE_ENV !== "production") checkProps(props);
 
-  let finalHandlesOptions = {} as handlesOptionsType;
+  const finalHandlesOptions = useFinalHandlesOptions(enabledHandles, handlerOptions, handlersOptions);
 
-  // fill up empty handles sizes
-  for (const handle of enabledHandles) {
-    if (handle in mergedHandlersOptions) {
-      finalHandlesOptions[handle] = mergeRecursive(
-        cloneDeepNoFunction(mergedHandlerOptions),
-        mergedHandlersOptions[handle]
-      );
-    }
-  }
   let finalHandlesStyle = {} as { [key in handleNameType]?: React.CSSProperties };
   for (const handle of enabledHandles) {
     finalHandlesStyle[handle] = mergeRecursive(cloneDeepNoFunction(handleStyle), handlesStyle?.[handle] ?? {});
@@ -168,7 +169,7 @@ const Resizable = React.forwardRef<HTMLElement, ResizableProps>(function Resizab
   }, [enableHorizontal]);
 
   // allow imperative reset of height/width
-  useImperativeHandle(props.ResizableRef, () => ({
+  useImperativeHandle<ResizableHandle, ResizableHandle>(props.ResizableRef, () => ({
     restControl: (resetHeight = true, resetWidth = true) => {
       if (nodeRef.current && resetHeight) {
         setCalculatedHeight(null);
@@ -179,6 +180,11 @@ const Resizable = React.forwardRef<HTMLElement, ResizableProps>(function Resizab
         nodeRef.current.style.width = initialWidth;
       }
     },
+    nodeRef,
+    nodePosition,
+    handlerParentRef,
+    handlesParentPosition,
+    render,
   }));
 
   // add event listeners to the window on mount
@@ -298,6 +304,54 @@ const Resizable = React.forwardRef<HTMLElement, ResizableProps>(function Resizab
     </>
   );
 });
+const ResizableDefaultProps = {
+  enabledHandles: Object.keys(defaultHandlersFn) as handleNameType[],
+  handlerOptions: {},
+  handlersOptions: {},
+  disableControl: false,
+  handleStyle: {},
+  handlesStyle: {},
+};
+Resizable.defaultProps = ResizableDefaultProps;
+
+const getFinalHandlesOptions = (
+  enabledHandles: ResizablePropsDP["enabledHandles"],
+  mergedHandlersOptions: { [key in handleNameType]: Partial<handleOptionsType> },
+  mergedHandlerOptions: ResizablePropsDP["handlerOptions"]
+) => {
+  let finalHandlesOptions = {} as handlesOptionsType;
+
+  // fill up empty handles sizes
+  for (const handle of enabledHandles) {
+    if (handle in mergedHandlersOptions) {
+      finalHandlesOptions[handle] = mergeRecursive(
+        cloneDeepNoFunction(mergedHandlerOptions),
+        mergedHandlersOptions[handle]
+      );
+    }
+  }
+  return finalHandlesOptions;
+};
+
+// a hook to get a memorized final handles style
+const useFinalHandlesOptions = (
+  enabledHandles: ResizablePropsDP["enabledHandles"],
+  handlerOptions: ResizablePropsDP["handlerOptions"],
+  handlersOptions: ResizablePropsDP["handlersOptions"]
+) => {
+  let mergedHandlersOptions = useMemo(
+    () => mergeRecursive(cloneDeepNoFunction(defaultHandlersOptions), handlersOptions),
+    [handlersOptions]
+  );
+  let mergedHandlerOptions = useMemo(
+    () => mergeRecursive(cloneDeepNoFunction(defaultHandlerOptions), handlerOptions),
+    [handlerOptions]
+  );
+  return useMemo(
+    () => getFinalHandlesOptions(enabledHandles, mergedHandlersOptions, mergedHandlerOptions),
+    [enabledHandles, handlersOptions, handlerOptions]
+  );
+};
 
 const checkProps = ({ children, nodeRef }: ResizableProps) => {
   {
@@ -339,7 +393,7 @@ const defaultHandlersOptions: { [key in handleNameType]: Partial<handleOptionsTy
   bottomLeft: { allowResize: { horizontal: { reverseDrag: true }, vertical: { reverseDrag: false } } },
   topRight: { allowResize: { horizontal: { reverseDrag: false }, vertical: { reverseDrag: true } } },
   topLeft: { allowResize: { horizontal: { reverseDrag: true }, vertical: { reverseDrag: true } } },
-};
+} as const;
 
 export type handleNameType = keyof typeof defaultHandlersFn;
 

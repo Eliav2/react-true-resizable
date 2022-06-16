@@ -106,6 +106,7 @@ export const Handle = React.forwardRef(function HandleForward(
 
   const onPointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
     setIsDragging(true);
+    // lock the pointer events to this element until release - this way we don't need to listen to global mouse events
     handlerRef.current?.setPointerCapture(event.pointerId);
     setPointerId(event.pointerId);
     const dims = nodeRef?.current?.getBoundingClientRect();
@@ -119,6 +120,7 @@ export const Handle = React.forwardRef(function HandleForward(
     });
   };
   const onPointerUp = (event: React.PointerEvent<HTMLDivElement>) => {
+    // release the pointer events lock to this element
     handlerRef.current?.releasePointerCapture(pointerId);
     setIsDragging(false);
     if (reverseVerticalDrag) {
@@ -164,6 +166,7 @@ export const Handle = React.forwardRef(function HandleForward(
           if (width > 0) setCalculatedLeft(getEnableRelativeOffsetLeft(event) + endDraggingOffsetLeft);
         }
 
+        if (typeof ResizableProps?.onResize === "function") ResizableProps.onResize(width, nodePosition);
         setCalculatedWidth(width);
       }
     }
