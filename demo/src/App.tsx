@@ -30,11 +30,12 @@ function App() {
 
       <div style={{ display: "flex", justifyContent: "center" }}>
         <ResizableDev
+          onResizeEffect={reredner}
           grid={{ horizontal: 50 }}
-          handleStyle={{}}
-          handlesStyle={{}}
-          handlerOptions={{}}
-          handlersOptions={{}}
+          // handleStyle={{}}
+          // handlesStyle={{}}
+          // handleOptions={{}}
+          // handlesOptions={{}}
         >
           <Box style={BoxStyle}>hey mama</Box>
         </ResizableDev>

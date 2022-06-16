@@ -1,8 +1,7 @@
-import React, { useCallback, useEffect, useImperativeHandle, useLayoutEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useImperativeHandle, useLayoutEffect, useMemo, useRef, useState } from "react";
 import usePassRef from "shared/hooks/usePassRef";
 import useRerender from "shared/hooks/useRerender";
 import { cloneDeepNoFunction, mergeRecursive } from "shared/utils";
-import { merge } from "lodash";
 import { Handle, handleOptionsType, handlesOptionsType } from "./Handle";
 import usePosition, { positionType } from "shared/hooks/usePosition";
 import ReactDOM from "react-dom";
@@ -339,10 +338,10 @@ const useFinalHandlesOptions = (
   handleOptions: ResizablePropsDP["handleOptions"],
   handlesOptions: ResizablePropsDP["handlesOptions"]
 ) => {
-  let mergedHandlesOptions = useMemo(
-    () => mergeRecursive(cloneDeepNoFunction(defaultHandlesOptions), handlesOptions),
-    [handlesOptions]
-  );
+  let mergedHandlesOptions = useMemo(() => {
+    console.log("recalculates handles options");
+    return mergeRecursive(cloneDeepNoFunction(defaultHandlesOptions), handlesOptions);
+  }, [handlesOptions]);
   let mergedHandleOptions = useMemo(
     () => mergeRecursive(cloneDeepNoFunction(defaultHandleOptions), handleOptions),
     [handleOptions]
