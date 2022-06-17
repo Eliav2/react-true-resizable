@@ -51,6 +51,20 @@ export interface ResizableProps {
   /** style that will be passed to specific handles. overrides handleStyle */
   handlesStyle?: { [key in handleNameType]?: React.CSSProperties };
 
+  /** controlled height.
+   * Note! the height won't be controlled by Resizable anymore, but by prop given from parent component
+   *
+   * example:
+   * - `height={100}` - will set the height of the target DOM node to 100px
+   * - `height={"100px"}` - will set the height of the target DOM node to 100px
+   * - `height={"50%"}` - will set the height of the target DOM node to 50% of the parent node
+   * - `height={30vh}` - will set the height of the target DOM node to 30% percent of the viewport height
+   * */
+  height?: number | string;
+  /** controlled width.
+   * Note! the width won't be controlled by Resizable anymore, but by prop given from parent component */
+  width?: number | string;
+
   // todo
   //  handleProps
   //  handleComponent
@@ -69,7 +83,7 @@ export interface ResizableProps {
   onResizeEffect?: ((dims: positionType) => void) | null;
 
   /** an imperative ref to Resizable component. ca be used to imperatively trigger actions like height and width control reset */
-  ResizableRef?: React.RefObject<ResizableHandle>;
+  ResizableRef?: React.RefObject<ResizableRefHandle>;
 
   /** will offset the element using style.left and style.top to make the resize feel more natural
    * affects left and top handles
@@ -77,7 +91,7 @@ export interface ResizableProps {
   enableRelativeOffset?: boolean;
 }
 
-export interface ResizableHandle {
+export interface ResizableRefHandle {
   /** function that resets the height/width of the target DOM node to initial state*/
   restControl: (resetHeight?: boolean, resetWidth?: boolean) => void;
   /** react ref to the target DOM node */
@@ -97,8 +111,8 @@ const Resizable = React.forwardRef<HTMLElement, ResizableProps>(function Resizab
   _props: ResizableProps,
   forwardedRef
 ) {
+  console.log("Resizable");
   const props = _props as ResizablePropsDP;
-  // console.log("Resizable");
   let {
     grid,
     children,
@@ -170,7 +184,7 @@ const Resizable = React.forwardRef<HTMLElement, ResizableProps>(function Resizab
   }, [enableHorizontal]);
 
   // allow imperative reset of height/width
-  useImperativeHandle<ResizableHandle, ResizableHandle>(props.ResizableRef, () => ({
+  useImperativeHandle<ResizableRefHandle, ResizableRefHandle>(props.ResizableRef, () => ({
     restControl: (resetHeight = true, resetWidth = true) => {
       if (nodeRef.current && resetHeight) {
         setCalculatedHeight(null);
@@ -214,11 +228,14 @@ const Resizable = React.forwardRef<HTMLElement, ResizableProps>(function Resizab
   const height = enableVertical ? calculatedHeight ?? nodeRef?.current?.style?.height ?? undefined : undefined;
   const width = enableHorizontal ? calculatedWidth ?? nodeRef?.current?.style?.width ?? undefined : undefined;
   if (nodeRef?.current) {
-    if (!disableHeightControl && !!height) {
+    if (props.height)
+      nodeRef.current.style.height = typeof props.height === "number" ? `${props.height}px` : props.height;
+    else if (!disableHeightControl && !!height) {
       nodeRef.current.style.height = height + "px";
       if (props.enableRelativeOffset) nodeRef.current.style.top = calculatedTop + "px";
     }
-    if (!disableWidthControl && !!width) {
+    if (props.width) nodeRef.current.style.width = typeof props.width === "number" ? `${props.width}px` : props.width;
+    else if (!disableWidthControl && !!width) {
       nodeRef.current.style.width = width + "px";
       if (props.enableRelativeOffset) nodeRef.current.style.left = calculatedLeft + "px";
     }
@@ -341,7 +358,7 @@ const useFinalHandlesOptions = (
   handlesOptions: ResizablePropsDP["handlesOptions"]
 ) => {
   let mergedHandlesOptions = useMemo(() => {
-    console.log("recalculates handles options");
+    // console.log("recalculates handles options");
     return mergeRecursive(cloneDeepNoFunction(defaultHandlesOptions), handlesOptions);
   }, [handlesOptions]);
   let mergedHandleOptions = useMemo(

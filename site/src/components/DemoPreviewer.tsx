@@ -64,7 +64,16 @@ const DemoPreviewer: FC<DemoPreviewerProps> = (props) => {
     setShouldReset(false);
   }, [shouldReset]);
   return (
-    <Paper sx={{ position: "relative" }}>
+    <Paper
+      sx={{
+        position: "relative",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        p: 1,
+      }}
+    >
       <div
         className={"button button--secondary"}
         style={{ position: "absolute", right: 0 }}

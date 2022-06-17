@@ -1,8 +1,8 @@
 import React, { useRef, useState } from "react";
 import ResizableProd, { handleNameType } from "react-true-resizable";
-import ResizableDev, { ResizableHandle } from "../../src/Resizable";
+import ResizableDev, { ResizableRefHandle } from "../../src/Resizable";
 import useRerender from "shared/hooks/useRerender";
-import { Box, Paper } from "@mui/material";
+import { Box, Paper, TextField, Typography } from "@mui/material";
 import "./App.css";
 import Draggable from "react-draggable";
 
@@ -24,15 +24,29 @@ function App() {
   const forwardDivRef = useRef<HTMLDivElement>(null);
   // console.log("divRef", divRef.current);
 
+  const [widthInput, setWidthInput] = useState<string>("30px");
+
+  const ResizableRef = useRef<ResizableRefHandle>(null);
   return (
     <div style={{ textAlign: "center" }}>
       <button onClick={() => reredner()}>rerender</button>
+      <button onClick={() => ResizableRef.current?.restControl()}>reset control</button>
 
+      <Box>
+        <Typography>height</Typography>
+        <TextField value={widthInput} onChange={(e) => setWidthInput(e.target.value)} />
+      </Box>
       <div style={{ display: "flex", justifyContent: "center" }}>
         <ResizableDev
-          onResize={() => console.log("onResize")}
-          onResizeEnd={() => console.log("onResizeEnd")}
-          onResizeStart={() => console.log("onResizeStart")}
+          ResizableRef={ResizableRef}
+          width={widthInput}
+          onResize={(pos) => {
+            setWidthInput((pos?.width ?? 0) + "px");
+            // console.log("pos", pos);
+          }}
+          // onResize={() => console.log("onResize")}
+          // onResizeEnd={() => console.log("onResizeEnd")}
+          // onResizeStart={() => console.log("onResizeStart")}
           // onResizeEffect={reredner}
           // grid={{ horizontal: 50 }}
           // handleStyle={{}}
@@ -40,7 +54,7 @@ function App() {
           // handleOptions={{}}
           // handlesOptions={{}}
         >
-          <Box style={BoxStyle}>hey mama</Box>
+          <Box style={{ ...BoxStyle, height: widthInput }}>hey mama</Box>
         </ResizableDev>
         {/*<Draggable>*/}
         {/*  <Box style={BoxStyle}>hey mama draggable</Box>*/}
@@ -107,7 +121,7 @@ const GridResizable = ({ reredner = () => {} }) => {
   // if (allowHResize) handles.push("left", "right");
   // if (allowVResize) handles.push("top", "bottom");
 
-  const ResizableRef = useRef<ResizableHandle>(null);
+  const ResizableRef = useRef<ResizableRefHandle>(null);
   return (
     <div style={{ border: "solid" }}>
       allow horizontal resize
