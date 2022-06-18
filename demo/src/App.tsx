@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import ResizableProd, { handleNameType } from "react-true-resizable";
+import ResizableProd, { HandleNameType } from "react-true-resizable";
 import ResizableDev, { ResizableRefHandle } from "../../src/Resizable";
 import useRerender from "shared/hooks/useRerender";
 import { Box, Paper, TextField, Typography } from "@mui/material";
@@ -24,7 +24,7 @@ function App() {
   const forwardDivRef = useRef<HTMLDivElement>(null);
   // console.log("divRef", divRef.current);
 
-  const [widthInput, setWidthInput] = useState<string>("30px");
+  const [widthInput, setWidthInput] = useState<string>("30%");
 
   const ResizableRef = useRef<ResizableRefHandle>(null);
   return (
@@ -33,17 +33,21 @@ function App() {
       <button onClick={() => ResizableRef.current?.restControl()}>reset control</button>
 
       <Box>
-        <Typography>height</Typography>
+        <Typography>width</Typography>
         <TextField value={widthInput} onChange={(e) => setWidthInput(e.target.value)} />
       </Box>
       <div style={{ display: "flex", justifyContent: "center" }}>
         <ResizableDev
-          ResizableRef={ResizableRef}
-          width={widthInput}
-          onResize={(pos) => {
-            setWidthInput((pos?.width ?? 0) + "px");
-            // console.log("pos", pos);
-          }}
+          resizeRatio={{ horizontal: 2 }}
+          // grid={{ vertical: 30 }}
+          // ResizableRef={ResizableRef}
+          // width={widthInput}
+          // onResize={{
+          //   horizontal: (newPos) => {
+          //     setWidthInput(newPos.width + "px");
+          //     console.log("newPos", newPos);
+          //   },
+          // }}
           // onResize={() => console.log("onResize")}
           // onResizeEnd={() => console.log("onResizeEnd")}
           // onResizeStart={() => console.log("onResizeStart")}
@@ -54,7 +58,7 @@ function App() {
           // handleOptions={{}}
           // handlesOptions={{}}
         >
-          <Box style={{ ...BoxStyle, height: widthInput }}>hey mama</Box>
+          <Box style={BoxStyle}>hey mama</Box>
         </ResizableDev>
         {/*<Draggable>*/}
         {/*  <Box style={BoxStyle}>hey mama draggable</Box>*/}
@@ -62,6 +66,7 @@ function App() {
       </div>
 
       {/*<ResizableExample />*/}
+      {/*<ControlledExample />*/}
 
       {/*<RelativeOffsetResizable />*/}
       {/*<GridResizable />*/}
@@ -92,6 +97,31 @@ function App() {
     </div>
   );
 }
+
+const ControlledExample = () => {
+  const [widthInput, setWidthInput] = useState<string>("30%");
+  return (
+    <div>
+      <Box>
+        <Typography>width</Typography>
+        <TextField value={widthInput} onChange={(e) => setWidthInput(e.target.value)} />
+      </Box>
+      <div style={{ display: "flex", justifyContent: "start" }}>
+        <ResizableDev
+          width={widthInput}
+          onResize={{
+            horizontal: (newPos, prevPos) => {
+              const widthDiff = newPos.width - prevPos.width;
+              setWidthInput(newPos.width.toFixed(1) + 100 + "px");
+            },
+          }}
+        >
+          <Box style={BoxStyle}>hey mama</Box>
+        </ResizableDev>
+      </div>
+    </div>
+  );
+};
 
 const ResizableMuiBottomBar = () => {
   return (

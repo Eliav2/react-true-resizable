@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "docusaurus": "docusaurus",
-    "start": "docusaurus start --no-open",
+    "start": "docusaurus start --no-open --port=3005",
     "build": "docusaurus build && typedoc",
     "swizzle": "docusaurus swizzle",
     "deploy": "set GIT_USER=eliva2&&docusaurus deploy",

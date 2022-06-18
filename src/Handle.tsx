@@ -1,6 +1,14 @@
 import React, { useRef, useState } from "react";
 import usePosition, { positionType } from "shared/hooks/usePosition";
-import { handleNameType, ResizableProps } from "./Resizable";
+import type { Expand, Primitive } from "shared/types";
+import {
+  HandleNameType,
+  PossiblySpecifyAxis,
+  ResizableDefaultProps,
+  ResizableProps,
+  ResizablePropsDP,
+  SpecifyAxis,
+} from "./Resizable";
 import useRerender from "shared/hooks/useRerender";
 import { HandleStyleFnType } from "./HandleFns";
 
@@ -10,11 +18,11 @@ export type handleOptionsType = {
   size: number;
 };
 
-export type handlesOptionsType = { [key in handleNameType]?: Partial<handleOptionsType> };
+export type handlesOptionsType = { [key in HandleNameType]?: Partial<handleOptionsType> };
 
 export interface HandleProps {
-  ResizableProps: ResizableProps;
-  nodePosition: positionType;
+  ResizableProps: ResizablePropsDP;
+  nodePosition: Exclude<positionType, null>;
   nodeRef: React.RefObject<any>;
   setCalculatedHeight: React.Dispatch<React.SetStateAction<number | null | undefined>>;
   setCalculatedWidth: React.Dispatch<React.SetStateAction<number | null | undefined>>;
@@ -33,8 +41,24 @@ export interface HandleProps {
   handleStyle: React.CSSProperties;
 }
 
-/** receives prop and returns a parsed prop(the most expanded form) with a default value */
-const parseProp = (prop) => {};
+const parsePossiblyAxis = <
+  Prop extends PossiblySpecifyAxis<Primitive>,
+  Default extends NonNullable<Primitive> | undefined = undefined
+>(
+  prop: Prop,
+  defaultValue?: Default
+): {
+  horizontal: Prop extends Primitive ? Prop : Prop extends { horizontal: infer V } ? V : Default;
+  vertical: Prop extends Primitive ? Prop : Prop extends { vertical: infer V } ? V : Default;
+} => {
+  if (typeof prop === "object") {
+    // @ts-ignore todo:fix
+    return { horizontal: prop?.horizontal ?? defaultValue, vertical: prop?.vertical ?? defaultValue };
+  } else {
+    // @ts-ignore todo:fix
+    return { horizontal: prop ?? defaultValue, vertical: prop ?? defaultValue };
+  }
+};
 
 export const Handle = React.forwardRef(function HandleForward(
   {
@@ -85,22 +109,17 @@ export const Handle = React.forwardRef(function HandleForward(
   // we get only the initial position, and we are confident that the element is not moving relative to its parent
   const handlePos = usePosition(handleRef.current);
 
-  let gridH: number | undefined, gridV: number | undefined;
-  if (typeof ResizableProps.grid === "number") {
-    gridH = ResizableProps.grid;
-    gridV = ResizableProps.grid;
-  } else {
-    gridH = ResizableProps.grid?.horizontal;
-    gridV = ResizableProps.grid?.vertical;
-  }
+  const grid = parsePossiblyAxis(ResizableProps.grid);
+  const resizeRatio = parsePossiblyAxis(ResizableProps.resizeRatio, ResizableDefaultProps.resizeRatio);
+
   const getEnableRelativeOffsetTop = (event) => {
     let top = event.clientY - initialDraggingPointerPos.y;
-    if (gridV) top -= (event.clientY % gridV) - (initialDraggingPointerPos.y % gridV);
+    if (grid.vertical) top -= (event.clientY % grid.vertical) - (initialDraggingPointerPos.y % grid.vertical);
     return top;
   };
   const getEnableRelativeOffsetLeft = (event) => {
     let left = event.clientX - initialDraggingPointerPos.x;
-    if (gridH) left -= (event.clientX % gridH) - (initialDraggingPointerPos.x % gridH);
+    if (grid.horizontal) left -= (event.clientX % grid.horizontal) - (initialDraggingPointerPos.x % grid.horizontal);
     return left;
   };
 
@@ -109,7 +128,7 @@ export const Handle = React.forwardRef(function HandleForward(
     // lock the pointer events to this element until release - this way we don't need to listen to global mouse events
     handleRef.current?.setPointerCapture(event.pointerId);
     setPointerId(event.pointerId);
-    const dims = nodeRef?.current?.getBoundingClientRect();
+    const dims = nodePosition;
     setInitialDraggingElementSize({
       width: dims.width,
       height: dims.height,
@@ -138,39 +157,42 @@ export const Handle = React.forwardRef(function HandleForward(
   };
   const onPointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
     if (isDragging) {
-      if ("vertical" in handleOptions.allowResize) {
-        const dragDirVertical = reverseVerticalDrag ? -1 : 1;
-        let height =
-          initialDraggingElementSize.height - //  move relative to the elements size
-          // change position relative to the pointer position
-          (initialDraggingPointerPos.y - event.clientY) * dragDirVertical;
-        if (gridV)
-          // snap to grid with initial grid offset
-          height -= ((event.clientY % gridV) - (initialDraggingPointerPos.y % gridV)) * dragDirVertical;
-        // enable natural resize of top handle
-        if (ResizableProps.enableRelativeOffset && dragDirVertical === -1) {
-          if (height > 0) setCalculatedTop(getEnableRelativeOffsetTop(event) + endDraggingOffsetTop);
-        }
+      const dragDirVertical = reverseVerticalDrag ? -1 : 1;
+      let height =
+        initialDraggingElementSize.height - //  move relative to the elements size
+        // change position relative to the pointer position
+        (initialDraggingPointerPos.y - event.clientY) * dragDirVertical * resizeRatio.vertical;
+      if (grid.vertical)
+        // snap to grid with initial grid offset
+        height -= ((event.clientY % grid.vertical) - (initialDraggingPointerPos.y % grid.vertical)) * dragDirVertical;
+      // enable natural resize of top handle
+      if (ResizableProps.enableRelativeOffset && dragDirVertical === -1) {
+        if (height > 0) setCalculatedTop(getEnableRelativeOffsetTop(event) + endDraggingOffsetTop);
+      }
 
+      const dragDirHorizontal = reverseHorizontalDrag ? -1 : 1;
+      let width =
+        initialDraggingElementSize.width - //  move relative to the elements size
+        // change position relative to the pointer position
+        (initialDraggingPointerPos.x - event.clientX) * dragDirHorizontal * resizeRatio.horizontal;
+      if (grid.horizontal)
+        // snap to ResizableProps.grid with initial ResizableProps.grid offset
+        width -=
+          ((event.clientX % grid.horizontal) - (initialDraggingPointerPos.x % grid.horizontal)) * dragDirHorizontal;
+      // enable natural resize of left handle
+      if (ResizableProps.enableRelativeOffset && dragDirHorizontal === -1) {
+        if (width > 0) setCalculatedLeft(getEnableRelativeOffsetLeft(event) + endDraggingOffsetLeft);
+      }
+
+      if ("vertical" in handleOptions.allowResize) {
         setCalculatedHeight(height);
+        if (typeof ResizableProps?.onResize === "object") ResizableProps.onResize.vertical?.({ height }, nodePosition);
       }
       if ("horizontal" in handleOptions.allowResize) {
-        const dragDirHorizontal = reverseHorizontalDrag ? -1 : 1;
-        let width =
-          initialDraggingElementSize.width - //  move relative to the elements size
-          // change position relative to the pointer position
-          (initialDraggingPointerPos.x - event.clientX) * dragDirHorizontal;
-        if (gridH)
-          // snap to ResizableProps.grid with initial ResizableProps.grid offset
-          width -= ((event.clientX % gridH) - (initialDraggingPointerPos.x % gridH)) * dragDirHorizontal;
-        // enable natural resize of left handle
-        if (ResizableProps.enableRelativeOffset && dragDirHorizontal === -1) {
-          if (width > 0) setCalculatedLeft(getEnableRelativeOffsetLeft(event) + endDraggingOffsetLeft);
-        }
-
         setCalculatedWidth(width);
+        if (typeof ResizableProps?.onResize === "object") ResizableProps.onResize.horizontal?.({ width }, nodePosition);
       }
-      if (typeof ResizableProps?.onResize === "function") ResizableProps.onResize(nodePosition);
+      if (typeof ResizableProps?.onResize === "function") ResizableProps.onResize({ height, width }, nodePosition);
     }
   };
 

@@ -67,11 +67,11 @@ const DemoPreviewer: FC<DemoPreviewerProps> = (props) => {
     <Paper
       sx={{
         position: "relative",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        p: 1,
+        // display: "flex",
+        // flexDirection: "column",
+        // alignItems: "center",
+        // justifyContent: "center",
+        // p: 1,
       }}
     >
       <div

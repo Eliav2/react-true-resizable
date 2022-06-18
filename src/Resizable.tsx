@@ -9,7 +9,11 @@ import { defaultHandlesFn } from "./HandleFns";
 import { omitItems } from "./utils";
 import type { RespectDefaultProps } from "shared/types";
 
-export type PossiblySpecifyAxis<T> = T | { horizontal?: T; vertical?: T };
+export type SpecifyAxis<T> = { horizontal?: T; vertical?: T };
+export type PossiblySpecifyAxis<T> = T | SpecifyAxis<T>;
+
+type OnResizeEvent = (newPos: { height: number; width: number }, prevPos: Exclude<positionType, null>) => void;
+type OnResizeUpdate<T> = (newPos: T, prevPos: Exclude<positionType, null>) => void;
 
 export interface ResizableProps {
   /** A simple React element(like div) or React forwardRef element(React element which passed down a ref to a DOM element) */
@@ -30,12 +34,19 @@ export interface ResizableProps {
   // todo:fix
   grid?: PossiblySpecifyAxis<number>;
 
+  /** multiple scale diff by this number
+   * examples:
+   *  - `resizeRatio={2}` - double the resizing ratio
+   *  - `resizeRatio={{horizontal:2}}` - double the resizing ratio only horizontally
+   * */
+  resizeRatio?: PossiblySpecifyAxis<number>;
+
   /** An array handles to enable */
-  enabledHandles?: handleNameType[];
+  enabledHandles?: HandleNameType[];
   /** options that will be passed to all handles */
   handleOptions?: Partial<handleOptionsType>;
   /** options that will be passed to specific handles. overrides handleOptions */
-  handlesOptions?: { [key in handleNameType]?: Partial<handleOptionsType> };
+  handlesOptions?: { [key in HandleNameType]?: Partial<handleOptionsType> };
 
   /** the height/width target DOM node won't be controlled
    * when set to false, initial height/width is restored
@@ -49,7 +60,7 @@ export interface ResizableProps {
   /** style that will be passed to all handles */
   handleStyle?: React.CSSProperties;
   /** style that will be passed to specific handles. overrides handleStyle */
-  handlesStyle?: { [key in handleNameType]?: React.CSSProperties };
+  handlesStyle?: { [key in HandleNameType]?: React.CSSProperties };
 
   /** controlled height.
    * Note! the height won't be controlled by Resizable anymore, but by prop given from parent component
@@ -71,16 +82,18 @@ export interface ResizableProps {
   //  handlesProps
   //  handlesComponent
 
-  onResizeEnd?: (dims: positionType) => void;
-  onResizeStart?: (dims: positionType) => void;
-  onResize?: (dims: positionType) => void;
+  onResizeEnd?: (prevPos: Exclude<positionType, null>) => void;
+  onResizeStart?: (prevPos: Exclude<positionType, null>) => void;
+  onResize?:
+    | OnResizeEvent
+    | { horizontal?: OnResizeUpdate<{ width: number }>; vertical?: OnResizeUpdate<{ height: number }> };
   // todo: enable events on specially horizontally or vertically
   // onResizeEnd?: PossiblySpecifyAxis<(dims: positionType) => void>;
   // onResizeStart?: PossiblySpecifyAxis<(dims: positionType) => void>;
   // onResize?: PossiblySpecifyAxis<(dims: positionType) => void>;
 
   /** a callback that is called after resize ended and the DOM element is updated */
-  onResizeEffect?: ((dims: positionType) => void) | null;
+  onResizeEffect?: ((pos: positionType) => void) | null;
 
   /** an imperative ref to Resizable component. ca be used to imperatively trigger actions like height and width control reset */
   ResizableRef?: React.RefObject<ResizableRefHandle>;
@@ -106,15 +119,15 @@ export interface ResizableRefHandle {
   render: () => void;
 }
 
-type ResizablePropsDP = RespectDefaultProps<ResizableProps, typeof ResizableDefaultProps>;
+// ResizableProps type after merge with default props
+export type ResizablePropsDP = RespectDefaultProps<ResizableProps, typeof ResizableDefaultProps>;
 const Resizable = React.forwardRef<HTMLElement, ResizableProps>(function ResizableForward(
   _props: ResizableProps,
   forwardedRef
 ) {
-  console.log("Resizable");
+  // console.log("Resizable");
   const props = _props as ResizablePropsDP;
   let {
-    grid,
     children,
     onResizeEffect,
     enabledHandles,
@@ -157,7 +170,7 @@ const Resizable = React.forwardRef<HTMLElement, ResizableProps>(function Resizab
 
   const finalHandlesOptions = useFinalHandlesOptions(enabledHandles, handleOptions, handlesOptions);
 
-  let finalHandlesStyle = {} as { [key in handleNameType]?: React.CSSProperties };
+  let finalHandlesStyle = {} as { [key in HandleNameType]?: React.CSSProperties };
   for (const handle of enabledHandles) {
     finalHandlesStyle[handle] = mergeRecursive(cloneDeepNoFunction(handleStyle), handlesStyle?.[handle] ?? {});
   }
@@ -322,19 +335,20 @@ const Resizable = React.forwardRef<HTMLElement, ResizableProps>(function Resizab
     </>
   );
 });
-const ResizableDefaultProps = {
-  enabledHandles: Object.keys(defaultHandlesFn) as handleNameType[],
+export const ResizableDefaultProps = {
+  enabledHandles: Object.keys(defaultHandlesFn) as HandleNameType[],
   handleOptions: {},
   handlesOptions: {},
   disableControl: false,
   handleStyle: {},
   handlesStyle: {},
+  resizeRatio: 1,
 };
 Resizable.defaultProps = ResizableDefaultProps;
 
 const getFinalHandlesOptions = (
   enabledHandles: ResizablePropsDP["enabledHandles"],
-  mergedHandlesOptions: { [key in handleNameType]: Partial<handleOptionsType> },
+  mergedHandlesOptions: { [key in HandleNameType]: Partial<handleOptionsType> },
   mergedHandleOptions: ResizablePropsDP["handleOptions"]
 ) => {
   let finalHandlesOptions = {} as handlesOptionsType;
@@ -402,7 +416,7 @@ const defaultHandleOptions: Partial<handleOptionsType> = {
   size: 10,
 };
 
-const defaultHandlesOptions: { [key in handleNameType]: Partial<handleOptionsType> } = {
+const defaultHandlesOptions: { [key in HandleNameType]: Partial<handleOptionsType> } = {
   top: { allowResize: { vertical: { reverseDrag: true } } },
   left: { allowResize: { horizontal: { reverseDrag: true } } },
   bottom: { allowResize: { vertical: { reverseDrag: false } } },
@@ -413,11 +427,6 @@ const defaultHandlesOptions: { [key in handleNameType]: Partial<handleOptionsTyp
   topLeft: { allowResize: { horizontal: { reverseDrag: true }, vertical: { reverseDrag: true } } },
 } as const;
 
-export type handleNameType = keyof typeof defaultHandlesFn;
-
-Resizable.defaultProps = {
-  enabledHandles: Object.keys(defaultHandlesFn) as handleNameType[],
-};
-
+export type HandleNameType = keyof typeof defaultHandlesFn;
 // export default DelayedResizable;
 export default Resizable;

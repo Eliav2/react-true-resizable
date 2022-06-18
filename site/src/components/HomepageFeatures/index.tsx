@@ -30,7 +30,7 @@ export default function HomepageFeatures() {
 
       <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap" }}>
         {boxes.map((box) => (
-          <Resizable key={box.id}>
+          <Resizable key={box.id} resizeRatio={{ horizontal: 2 }}>
             <div style={BoxStyle}>
               Resizable {box.id}
               <br />

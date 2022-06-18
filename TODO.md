@@ -1,4 +1,5 @@
 - [x] remove lodash as dependency (implement omit, pick, and merge)
 - [x] move demo page to its own package
 - [ ] add automatic codesandbox to DemoPreviewer component
-- [ ] create and add icon to site and package
+- [-] create and add icon to site and package
+- [ ] add algolia search to website
