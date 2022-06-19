@@ -11,6 +11,7 @@ import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 interface CodeBlockProps {
   simpleSource?: string;
   fullSource?: string;
+  codeTitle?: string;
   // live?: string;
   // extraTabs?: { title: string; elem: JSX.Element }[];
 }
@@ -71,12 +72,12 @@ function TabPanel(props: TabPanelProps) {
   );
 }
 
-export const CodeBlockMui: FC<CodeBlockProps> = (props) => {
+export const DemoCodeBlockMui: FC<CodeBlockProps> = (props) => {
   const [tabIndex, setTabIndex] = React.useState(0);
 
   return (
     <Box sx={{ width: "100%" }}>
-      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+      <Box sx={{ borderBottom: 1, borderTop: 1, borderColor: "divider" }}>
         <Tabs value={tabIndex} onChange={(e, v) => setTabIndex(v)}>
           <Tab
             label={
@@ -95,12 +96,12 @@ export const CodeBlockMui: FC<CodeBlockProps> = (props) => {
         </Tabs>
       </Box>
       <TabPanel value={tabIndex} index={0}>
-        <DocusaurusCodeBlock showLineNumbers language="jsx">
+        <DocusaurusCodeBlock showLineNumbers language="jsx" title={props.codeTitle}>
           {props.simpleSource}
         </DocusaurusCodeBlock>
       </TabPanel>
       <TabPanel value={tabIndex} index={1}>
-        <DocusaurusCodeBlock showLineNumbers language="jsx">
+        <DocusaurusCodeBlock showLineNumbers language="jsx" title={props.codeTitle}>
           {props.fullSource}
         </DocusaurusCodeBlock>
       </TabPanel>
@@ -140,4 +141,4 @@ export const CodeBlockMui: FC<CodeBlockProps> = (props) => {
 //   );
 // };
 
-export default CodeBlockMui;
+export default DemoCodeBlockMui;

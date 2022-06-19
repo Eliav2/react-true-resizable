@@ -1,7 +1,20 @@
 import React, { FC, useEffect, useLayoutEffect, useState } from "react";
 import Basic from "@site/src/demos/Basic";
-import CodeBlock from "@site/src/components/CodeBlock";
-import { Button, Paper } from "@mui/material";
+import DemoCodeBlock from "@site/src/components/DemoCodeBlock";
+import {
+  Box,
+  Button,
+  IconButton,
+  Menu,
+  MenuItem,
+  MenuList,
+  Paper,
+  Checkbox,
+  FormControlLabel,
+  Tooltip,
+  Switch,
+} from "@mui/material";
+import SettingsIcon from "@mui/icons-material/Settings";
 
 const useDynamicDemoImport = (name) => {
   const [raw, setRaw] = useState(null);
@@ -63,26 +76,59 @@ const DemoPreviewer: FC<DemoPreviewerProps> = (props) => {
   useLayoutEffect(() => {
     setShouldReset(false);
   }, [shouldReset]);
+
+  const [showSettings, setShowSettings] = useState(false);
+  const [overflowHidden, setOverflowHidden] = useState(true);
+
+  const settingButtonRef = React.useRef(null);
   return (
     <Paper
       sx={{
         position: "relative",
+        // verticalAlign: "top",
         // display: "flex",
         // flexDirection: "column",
-        // alignItems: "center",
-        // justifyContent: "center",
-        // p: 1,
       }}
+      elevation={5}
     >
-      <div
-        className={"button button--secondary"}
-        style={{ position: "absolute", right: 0 }}
-        onClick={() => setShouldReset(true)}
+      <Box sx={{ display: "flex" }}>
+        {/* reset button */}
+        <Box className={"button button--secondary"} onClick={() => setShouldReset(true)}>
+          reset
+        </Box>
+        <Box sx={{ flexGrow: 1 }} />
+        {/* settings button */}
+        <Tooltip title={"Demo Options"}>
+          <IconButton onClick={() => setShowSettings(true)} ref={settingButtonRef}>
+            <SettingsIcon />
+          </IconButton>
+        </Tooltip>
+        <Menu anchorEl={settingButtonRef.current} open={showSettings} onClose={() => setShowSettings(false)}>
+          <MenuList dense>
+            <MenuItem>
+              <FormControlLabel
+                control={<Checkbox checked={overflowHidden ?? true} onChange={(e, v) => setOverflowHidden(v)} />}
+                label={<code>overflow:"hidden"</code>}
+              />
+            </MenuItem>
+          </MenuList>
+        </Menu>
+      </Box>
+      {/* the rendered demo */}
+      <Box
+        sx={{
+          position: "relative",
+          m: 2,
+          overflow: overflowHidden ? "hidden" : "visible",
+          zIndex: overflowHidden ? 0 : 1,
+        }}
       >
-        reset
-      </div>
-      {!shouldReset && <props.Comp />}
-      <CodeBlock simpleSource={rawSimple} fullSource={raw} />
+        {!shouldReset && <props.Comp />}
+      </Box>
+      {/* the demo code preview */}
+      <Paper>
+        <DemoCodeBlock simpleSource={rawSimple} fullSource={raw} />
+      </Paper>
     </Paper>
   );
 };

@@ -3,17 +3,24 @@ import Layout from "@theme/Layout";
 import Link from "@docusaurus/Link";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import styles from "./index.module.css";
-import HomepageFeatures from "@site/src/components/HomepageFeatures";
 import Resizable from "react-true-resizable";
 import React from "react";
 
 const Badges = () => {
   return (
     <div style={{ marginBottom: 16 }}>
-      <img src={"https://img.shields.io/npm/v/react-true-resizable"} />
-      <img src={"https://img.shields.io/npm/dw/react-true-resizable"} />
-      <img src={"https://img.shields.io/bundlephobia/minzip/react-true-resizable"} />
-      <img src={"https://img.shields.io/github/issues/Eliav2/react-true-resizable"} />
+      <a href={"https://www.npmjs.com/package/react-true-resizable"}>
+        <img src={"https://img.shields.io/npm/v/react-true-resizable"} />
+      </a>
+      <a href={"https://www.npmjs.com/package/react-true-resizable"}>
+        <img src={"https://img.shields.io/npm/dw/react-true-resizable"} />
+      </a>
+      <a href={"https://bundlephobia.com/package/react-true-resizable"}>
+        <img src={"https://img.shields.io/bundlephobia/minzip/react-true-resizable"} />
+      </a>
+      <a href={"https://github.com/Eliav2/react-true-resizable/issues"}>
+        <img src={"https://img.shields.io/github/issues/Eliav2/react-true-resizable"} />
+      </a>
     </div>
   );
 };
@@ -46,5 +53,49 @@ export default function Home() {
         <HomepageFeatures />
       </main>
     </Layout>
+  );
+}
+
+const BoxStyle = {
+  border: "solid",
+  borderRadius: 12,
+  padding: 8,
+  margin: 2,
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  overflow: "hidden",
+} as const;
+
+function HomepageFeatures() {
+  const [boxes, setBoxex] = React.useState([{ id: 0 }, { id: 1 }, { id: 2 }]);
+  const removeBox = (id) => {
+    setBoxex(boxes.filter((box) => box.id !== id));
+  };
+  const addBox = () => {
+    let nextId = (boxes.length && Math.max(...boxes.map((box) => box.id)) + 1) || 0;
+    setBoxex([...boxes, { id: nextId }]);
+  };
+  return (
+    <section style={{ textAlign: "center" }}>
+      <button className={"button button--secondary"} style={{ margin: 32 }} onClick={addBox}>
+        Add Box
+      </button>
+
+      <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap" }}>
+        {boxes.map((box) => (
+          <Resizable key={box.id} resizeRatio={{ horizontal: 2 }}>
+            <div style={BoxStyle}>
+              Resizable {box.id}
+              <br />
+              <button className={"button button--secondary button--sm"} onClick={() => removeBox(box.id)}>
+                X
+              </button>
+            </div>
+          </Resizable>
+        ))}
+      </div>
+    </section>
   );
 }

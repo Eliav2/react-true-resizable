@@ -8,8 +8,7 @@ const path = require("path");
 /** @type {import("@docusaurus/types").Config} */
 const config = {
   title: "react-true-resizable",
-  tagline: "A modern Resizable React Component",
-  // tagline: "Resizeable Components for React that work as you would expect",
+  tagline: "A Modern Resizable React Component",
   url: "https://eliav2.github.io",
   baseUrl: "/react-true-resizable/",
   onBrokenLinks: "throw",
