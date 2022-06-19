@@ -1,7 +1,7 @@
 import { default as Resizable } from "./Resizable";
 import type { ResizableProps, HandleNameType } from "./Resizable";
-import type { handleOptionsType, HandleProps } from "./Handle";
+import type { HandleOptions, HandleProps } from "./Handle";
 
 export default Resizable;
-export type { ResizableProps, HandleNameType, handleOptionsType };
+export type { ResizableProps, HandleNameType, HandleOptions };
 export type { HandleProps };

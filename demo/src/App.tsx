@@ -39,7 +39,8 @@ function App() {
       <div style={{ display: "flex", justifyContent: "center" }}>
         <ResizableDev
           resizeRatio={{ horizontal: 2 }}
-          // grid={{ vertical: 30 }}
+          grid={30}
+
           // ResizableRef={ResizableRef}
           // width={widthInput}
           // onResize={{
