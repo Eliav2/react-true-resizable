@@ -1,18 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import usePosition, { positionType } from "shared/hooks/usePosition";
-import type { Expand, Primitive } from "shared/types";
+import type { Primitive } from "shared/types";
 import { pick } from "shared/utils";
-import {
-  HandleNameType,
-  PossiblySpecific,
-  PossiblySpecifyAxis,
-  ResizableDefaultProps,
-  ResizableProps,
-  ResizablePropsDP,
-  SpecifyAxis,
-} from "./Resizable";
+import { HandleNameType, ResizableDefaultProps, ResizablePropsDP } from "./Resizable";
 import useRerender from "shared/hooks/useRerender";
 import type { HandleStyleFnType } from "./HandleFns";
+import { parsePossiblySpecific, PossiblySpecific } from "shared/utils/props";
 
 export type AllowResize = "horizontal" | "vertical";
 export type HandleOptions = {
@@ -41,42 +34,10 @@ export interface HandleProps {
   handleOptions: HandleOptions;
   handlesOptions: HandlesOptions;
   handleStyle: React.CSSProperties;
-  createEventHandlers?:
-    | CreateEventHandle
-    | { start: CreateEventHandle; move: CreateEventHandle; end: CreateEventHandle };
+  createEventHandlers?: PossiblySpecific<CreateEventHandle, "start" | "move" | "end">;
 }
 
 type CreateEventHandle = (e, handler: () => void) => void;
-
-/**
- * will always return a more specific type than the default
- * @param prop - prop supplied by the used
- * @param fields
- * @param defaultValue
- *
- * example:
- * - parsePossiblySpecific(10, ["horizontal"]) => { horizontal: 10 }
- * - parsePossiblySpecific(10, ["horizontal", "vertical"]) => { horizontal: 10, vertical: 10 }
- * - parsePossiblySpecific(null, ["horizontal"],5) => { horizontal: 5 }
- * - parsePossiblySpecific(10, ["horizontal"],5) => { horizontal: 10 }
- */
-const parsePossiblySpecific = <
-  Spec extends string[],
-  Prop extends PossiblySpecific<Primitive, Spec[number]>,
-  Default extends NonNullable<Primitive> | undefined = undefined
->(
-  prop: Prop,
-  fields: [...Spec],
-  defaultValue?: Default
-): {
-  [key in Spec[number]]: Prop extends Primitive ? Prop : Prop extends { [key in keyof Spec]: infer V } ? V : Default;
-} => {
-  if (typeof prop === "object") {
-    return fields.reduce((prev, field) => ({ ...prev, [field]: prop?.[field] ?? defaultValue }), {}) as any;
-  } else {
-    return fields.reduce((prev, field) => ({ ...prev, [field]: prop ?? defaultValue }), {}) as any;
-  }
-};
 
 const parsePossiblyAxis = <
   Spec extends string[],
@@ -86,25 +47,6 @@ const parsePossiblyAxis = <
   prop: Prop,
   defaultProp?: Default
 ) => parsePossiblySpecific<["horizontal", "vertical"], Prop, Default>(prop, ["horizontal", "vertical"], defaultProp);
-
-// const parsePossiblyAxis = <
-//   Prop extends PossiblySpecifyAxis<Primitive>,
-//   Default extends NonNullable<Primitive> | undefined = undefined
-// >(
-//   prop: Prop,
-//   defaultValue?: Default
-// ): {
-//   horizontal: Prop extends Primitive ? Prop : Prop extends { horizontal: infer V } ? V : Default;
-//   vertical: Prop extends Primitive ? Prop : Prop extends { vertical: infer V } ? V : Default;
-// } => {
-//   if (typeof prop === "object") {
-//     // @ts-ignore todo:fix
-//     return { horizontal: prop?.horizontal ?? defaultValue, vertical: prop?.vertical ?? defaultValue };
-//   } else {
-//     // @ts-ignore todo:fix
-//     return { horizontal: prop ?? defaultValue, vertical: prop ?? defaultValue };
-//   }
-// };
 
 export const Handle = React.forwardRef(function HandleForward(
   {
@@ -260,7 +202,7 @@ export const Handle = React.forwardRef(function HandleForward(
   });
 
   useEffect(() => {
-    console.log("handle nodeRef mount!");
+    // console.log("handle nodeRef mount!");
 
     const touchProps = ["clientX", "clientY", "identifier"] as const;
     const ongoingTouches: Pick<Touch, typeof touchProps[number]>[] = [];
@@ -271,11 +213,10 @@ export const Handle = React.forwardRef(function HandleForward(
 
     const handleTouchStart = (e: TouchEvent) => {
       // console.log("touch start", e);
-
-      const touches = e.changedTouches;
-      for (let i = 0; i < touches.length; i++) {
-        ongoingTouches.push(copyTouch(touches[i]));
-      }
+      // const touches = e.changedTouches;
+      // for (let i = 0; i < touches.length; i++) {
+      //   ongoingTouches.push(copyTouch(touches[i]));
+      // }
     };
     const handleTouchMove = (e: TouchEvent) => {
       // console.log("touch move", e);
@@ -285,9 +226,9 @@ export const Handle = React.forwardRef(function HandleForward(
       // console.log("touch start", e);
     };
 
-    nodeRef.current?.addEventListener("touchstart", handleTouchStart);
+    // nodeRef.current?.addEventListener("touchstart", handleTouchStart);
     nodeRef.current?.addEventListener("touchmove", handleTouchMove);
-    nodeRef.current?.addEventListener("touchend", handleTouchEnd);
+    // nodeRef.current?.addEventListener("touchend", handleTouchEnd);
     return () => {};
   }, [nodeRef.current]);
 

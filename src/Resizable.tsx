@@ -12,8 +12,6 @@ import type { RespectDefaultProps } from "shared/types";
 export type SpecifyAxis<T> = { horizontal?: T; vertical?: T };
 export type PossiblySpecifyAxis<T> = T | SpecifyAxis<T>;
 
-export type PossiblySpecific<Prop, Spec extends string> = Prop | { [key in Spec]?: Prop };
-
 type OnResizeEvent = (newPos: { height: number; width: number }, prevPos: Exclude<positionType, null>) => void;
 type OnResizeUpdate<T> = (newPos: T, prevPos: Exclude<positionType, null>) => void;
 
