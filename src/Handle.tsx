@@ -1,6 +1,7 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import usePosition, { positionType } from "shared/hooks/usePosition";
 import type { Expand, Primitive } from "shared/types";
+import { pick } from "shared/utils";
 import {
   HandleNameType,
   PossiblySpecifyAxis,
@@ -23,7 +24,7 @@ export type handlesOptionsType = { [key in HandleNameType]?: Partial<handleOptio
 export interface HandleProps {
   ResizableProps: ResizablePropsDP;
   nodePosition: Exclude<positionType, null>;
-  nodeRef: React.RefObject<any>;
+  nodeRef: React.RefObject<HTMLElement>;
   setCalculatedHeight: React.Dispatch<React.SetStateAction<number | null | undefined>>;
   setCalculatedWidth: React.Dispatch<React.SetStateAction<number | null | undefined>>;
   calculatedHeight: number | null | undefined;
@@ -124,6 +125,7 @@ export const Handle = React.forwardRef(function HandleForward(
   };
 
   const onPointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
+    // console.log("onPointerDown", event.button);
     setIsDragging(true);
     // lock the pointer events to this element until release - this way we don't need to listen to global mouse events
     handleRef.current?.setPointerCapture(event.pointerId);
@@ -140,6 +142,7 @@ export const Handle = React.forwardRef(function HandleForward(
     if (typeof ResizableProps?.onResizeStart === "function") ResizableProps.onResizeStart(nodePosition);
   };
   const onPointerUp = (event: React.PointerEvent<HTMLDivElement>) => {
+    // console.log("onPointerUp");
     // release the pointer events lock to this element
     handleRef.current?.releasePointerCapture(pointerId);
     setIsDragging(false);
@@ -156,6 +159,7 @@ export const Handle = React.forwardRef(function HandleForward(
     if (typeof ResizableProps?.onResizeEnd === "function") ResizableProps.onResizeEnd(nodePosition);
   };
   const onPointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
+    // console.log("onPointerMove", event);
     if (isDragging) {
       const dragDirVertical = reverseVerticalDrag ? -1 : 1;
       let height =
@@ -203,6 +207,38 @@ export const Handle = React.forwardRef(function HandleForward(
     handleSize: handleOptions.size,
     handlesOptions: handlesOptions,
   });
+
+  useEffect(() => {
+    console.log("handle nodeRef mount!");
+
+    const touchProps = ["clientX", "clientY", "identifier"] as const;
+    const ongoingTouches: Pick<Touch, typeof touchProps[number]>[] = [];
+
+    function copyTouch(e: Touch) {
+      return pick(e, ["clientX", "clientY", "identifier"]);
+    }
+
+    const handleTouchStart = (e: TouchEvent) => {
+      // console.log("touch start", e);
+
+      const touches = e.changedTouches;
+      for (let i = 0; i < touches.length; i++) {
+        ongoingTouches.push(copyTouch(touches[i]));
+      }
+    };
+    const handleTouchMove = (e: TouchEvent) => {
+      // console.log("touch move", e);
+      e.preventDefault();
+    };
+    const handleTouchEnd = (e: TouchEvent) => {
+      // console.log("touch start", e);
+    };
+
+    nodeRef.current?.addEventListener("touchstart", handleTouchStart);
+    nodeRef.current?.addEventListener("touchmove", handleTouchMove);
+    nodeRef.current?.addEventListener("touchend", handleTouchEnd);
+    return () => {};
+  }, [nodeRef.current]);
 
   return (
     <div
