@@ -1,15 +1,15 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import usePosition, { positionType } from "shared/hooks/usePosition";
 import type { Primitive } from "shared/types";
-import { pick } from "shared/utils";
 import { ResizableDefaultProps, ResizablePropsDP } from "./Resizable";
-import useRerender from "shared/hooks/useRerender";
-import type { HandleNameType, HandleStyleFnType } from "./HandleFns";
+import type { HandleNameType, HandleStyleFnType } from "../HandleFns";
 import { parsePossiblySpecific, PossiblySpecific } from "shared/utils/props";
+import { useResizableBase } from "./ResizableBase";
 
 export type ResizeDir = "horizontal" | "vertical";
+export type AllowResize = { [key in ResizeDir]?: { reverseDrag: boolean } };
 export type HandleOptions = {
-  allowResize: { [key in ResizeDir]?: { reverseDrag: boolean } };
+  allowResize: AllowResize;
   size: number;
 };
 
@@ -19,16 +19,6 @@ export interface HandleProps {
   ResizableProps: ResizablePropsDP;
   nodePosition: Exclude<positionType, null>;
   nodeRef: React.RefObject<HTMLElement>;
-  setCalculatedHeight: React.Dispatch<React.SetStateAction<number | null | undefined>>;
-  setCalculatedWidth: React.Dispatch<React.SetStateAction<number | null | undefined>>;
-  calculatedHeight: number | null | undefined;
-  calculatedWidth: number | null | undefined;
-  setCalculatedLeft: React.Dispatch<React.SetStateAction<number | null | undefined>>;
-  setCalculatedTop: React.Dispatch<React.SetStateAction<number | null | undefined>>;
-  setEndDraggingOffsetTop: React.Dispatch<React.SetStateAction<number>>;
-  setEndDraggingOffsetLeft: React.Dispatch<React.SetStateAction<number>>;
-  endDraggingOffsetTop: number;
-  endDraggingOffsetLeft: number;
   HandleStyleFn: HandleStyleFnType;
   handlesParentPosition: positionType;
   handleOptions: HandleOptions;
@@ -54,26 +44,32 @@ export const Handle = React.forwardRef(function HandleForward(
     size = 10,
     nodeRef,
     nodePosition,
-    setCalculatedHeight,
-    setCalculatedWidth,
-    setCalculatedLeft,
-    calculatedHeight,
-    calculatedWidth,
-    setCalculatedTop,
     HandleStyleFn,
     handlesParentPosition,
     handleOptions,
     handlesOptions,
     ResizableProps,
-    setEndDraggingOffsetTop,
-    setEndDraggingOffsetLeft,
-    endDraggingOffsetTop,
-    endDraggingOffsetLeft,
     handleStyle,
   }: HandleProps,
   ref
 ) {
   // console.log("Handle");
+
+  const {
+    setCalculatedHeight,
+    setCalculatedWidth,
+    calculatedHeight,
+    calculatedWidth,
+    setCalculatedLeft,
+    setCalculatedTop,
+    setEndDraggingOffsetTop,
+    setEndDraggingOffsetLeft,
+    endDraggingOffsetTop,
+    endDraggingOffsetLeft,
+    calculatedLeft,
+    calculatedTop,
+  } = useResizableState();
+
   const [initialDraggingElementSize, setInitialDraggingElementSize] = useState({
     height: 0,
     width: 0,
@@ -83,11 +79,6 @@ export const Handle = React.forwardRef(function HandleForward(
     x: 0,
   });
 
-  // useLayoutEffect(() => {
-  //   window.addEventListener("resize", (e) => {
-  //     render();
-  //   });
-  // }, []);
   const reverseVerticalDrag = handleOptions.allowResize["vertical"]?.reverseDrag;
   const reverseHorizontalDrag = handleOptions.allowResize["horizontal"]?.reverseDrag;
 
@@ -114,7 +105,7 @@ export const Handle = React.forwardRef(function HandleForward(
   };
 
   const onPointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
-    console.log("onPointerDown", event.button);
+    // console.log("onPointerDown", event.button);
     event.nativeEvent.stopImmediatePropagation();
     setIsDragging(true);
     // lock the pointer events to this element until release - this way we don't need to listen to global mouse events
@@ -245,33 +236,6 @@ export const Handle = React.forwardRef(function HandleForward(
       onTouchStart={() => {
         console.log("onTouchStart");
       }}
-      // onTouchStartCapture={(e) => {
-      //   console.log("onTouchStartCapture");
-      //   e.stopPropagation();
-      // }}
     />
   );
 });
-
-// const useGetHandleStyle = ({
-//   nodePosition,
-//   handlePos,
-//   handlesParentPosition,
-//   handleSize,
-//   handlesOptions,
-//   handlePrevPos,
-// }) => {
-//   if (!nodePosition || !handlePos || !handlesParentPosition) return {};
-//   const calc = nodePosition.width - handleSize + nodePosition.left - handlePos.left;
-//   const r = useRef();
-//   let left = calc;
-//   // we don't want the 'left' value to leap back and forth so check if the previous value was stable(==0) and if so use it
-//   if (handlePrevPos) if (calc == 0) left = nodePosition.width - handleSize + nodePosition.left - handlePrevPos.left;
-//   return {
-//     top: nodePosition.top - handlesParentPosition.top,
-//     left: left,
-//     cursor: "e-resize",
-//     height: nodePosition?.height,
-//     width: handleSize,
-//   };
-// };

@@ -5,6 +5,7 @@ import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import styles from "./index.module.css";
 import Resizable from "react-true-resizable";
 import React from "react";
+import { Box } from "@mui/material";
 
 const Badges = () => {
   return (
@@ -50,7 +51,7 @@ export default function Home() {
     <Layout title={"Home"}>
       <HomepageHeader />
       <main>
-        <HomepageFeatures />
+        <Demo />
       </main>
     </Layout>
   );
@@ -60,7 +61,6 @@ const BoxStyle = {
   border: "solid",
   borderRadius: 12,
   padding: 8,
-  margin: 2,
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
@@ -68,7 +68,7 @@ const BoxStyle = {
   overflow: "hidden",
 } as const;
 
-function HomepageFeatures() {
+function Demo() {
   const [boxes, setBoxex] = React.useState([{ id: 0 }, { id: 1 }, { id: 2 }]);
   const removeBox = (id) => {
     setBoxex(boxes.filter((box) => box.id !== id));
@@ -77,16 +77,17 @@ function HomepageFeatures() {
     let nextId = (boxes.length && Math.max(...boxes.map((box) => box.id)) + 1) || 0;
     setBoxex([...boxes, { id: nextId }]);
   };
+  console.log("asd");
   return (
     <section style={{ textAlign: "center" }}>
       <button className={"button button--secondary"} style={{ margin: 32 }} onClick={addBox}>
         Add Box
       </button>
 
-      <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap" }}>
+      <Box sx={{ display: "flex", justifyContent: "center", flexWrap: "wrap", gap: 1 }}>
         {boxes.map((box) => (
           <Resizable key={box.id} resizeRatio={{ horizontal: 2 }}>
-            <div style={BoxStyle}>
+            <div style={{ ...BoxStyle }}>
               Resizable {box.id}
               <br />
               <button className={"button button--secondary button--sm"} onClick={() => removeBox(box.id)}>
@@ -95,7 +96,7 @@ function HomepageFeatures() {
             </div>
           </Resizable>
         ))}
-      </div>
+      </Box>
     </section>
   );
 }

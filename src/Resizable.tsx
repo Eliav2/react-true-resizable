@@ -2,12 +2,14 @@ import React, { useEffect, useImperativeHandle, useLayoutEffect, useMemo, useRef
 import usePassRef from "shared/hooks/usePassRef";
 import useRerender from "shared/hooks/useRerender";
 import { cloneDeepNoFunction, mergeRecursive } from "shared/utils";
-import { Handle, HandleOptions, HandlesOptions } from "./Handle";
+import { CreateEventHandle, Handle, HandleOptions, HandlesOptions } from "./Handle";
 import usePosition, { positionType } from "shared/hooks/usePosition";
 import ReactDOM from "react-dom";
-import { defaultHandlesFn } from "./HandleFns";
+import { defaultHandlesFn, HandleNameType, PossibleHandle } from "./HandleFns";
 import { omitItems } from "./utils";
-import type { RespectDefaultProps } from "shared/types";
+import type { RespectDefaultProps, Expand, ExpandRecursively } from "shared/types";
+import { useOneTimeWarn } from "shared/hooks/useOneTimeWarn";
+import { PossiblySpecific } from "shared/utils/props";
 
 export type SpecifyAxis<T> = { horizontal?: T; vertical?: T };
 export type PossiblySpecifyAxis<T> = T | SpecifyAxis<T>;
@@ -41,13 +43,6 @@ export interface ResizableProps {
    * */
   resizeRatio?: PossiblySpecifyAxis<number>;
 
-  /** An array handles to enable */
-  enabledHandles?: HandleNameType[];
-  /** options that will be passed to all handles */
-  handleOptions?: Partial<HandleOptions>;
-  /** options that will be passed to specific handles. overrides handleOptions */
-  handlesOptions?: { [key in HandleNameType]?: Partial<HandleOptions> };
-
   /** the height/width target DOM node won't be controlled
    * when set to false, initial height/width is restored
    *
@@ -56,11 +51,6 @@ export interface ResizableProps {
    *  - `disableControl={{horizontal: true}}` -  will disable the control on height of the target DOM node
    * */
   disableControl?: PossiblySpecifyAxis<boolean>;
-
-  /** style that will be passed to all handles */
-  handleStyle?: React.CSSProperties;
-  /** style that will be passed to specific handles. overrides handleStyle */
-  handlesStyle?: { [key in HandleNameType]?: React.CSSProperties };
 
   /** controlled height.
    * Note! the height won't be controlled by Resizable anymore, but by prop given from parent component
@@ -102,7 +92,27 @@ export interface ResizableProps {
    * affects left and top handles
    * Note: style.position must not be 'static' in order left and top take effect */
   enableRelativeOffset?: boolean;
+
+  // createEventHandlers?: PossiblySpecific<CreateEventHandle, "start" | "move" | "end">;
+
+  handle?: HandleType;
+
+  /** An array handles to enable */
+  enabledHandles?: HandleNameType[];
+  /** options that will be passed to all handles */
+  handleOptions?: Partial<HandleOptions>;
+  /** options that will be passed to specific handles. overrides handleOptions */
+  handlesOptions?: PossibleHandle<Partial<HandleOptions>>;
+
+  /** style that will be passed to all handles */
+  handleStyle?: React.CSSProperties;
+  /** style that will be passed to specific handles. overrides handleStyle */
+  handlesStyle?: { [key in HandleNameType]?: React.CSSProperties };
 }
+
+type Handle = { size: number; style?: React.CSSProperties; props?: any; render: any; createEventHandlers?: any };
+// type HandleType = Spread<{ specific: { [key in HandleNameType]?: Handle } }, Handle>;
+type HandleType = Expand<Handle & { specific: { [key in HandleNameType]?: Handle } }>;
 
 export interface ResizableRefHandle {
   /** function that resets the height/width of the target DOM node to initial state*/
@@ -142,7 +152,10 @@ const Resizable = React.forwardRef<HTMLElement, ResizableProps>(function Resizab
 
   // if the children passed a ref - copy its value instead of creating a new one
   let nodeRef = usePassRef<HTMLElement>(children);
-  if (props.nodeRef) nodeRef = props.nodeRef;
+  if (props?.nodeRef) {
+    // if ref for the target DOM node is explicitly passed, use it instead extracting it from the children
+    nodeRef.current = props.nodeRef.current;
+  }
 
   // if Resizable would be wrapped with other components - the node ref would be passed to the wrapper
   if (forwardedRef && typeof forwardedRef == "object" && nodeRef) forwardedRef.current = nodeRef.current;
@@ -166,7 +179,7 @@ const Resizable = React.forwardRef<HTMLElement, ResizableProps>(function Resizab
   // console.log(calculatedTop, calculatedHeight);
 
   // strip away checks in production build
-  if (!process.env.NODE_ENV || process.env.NODE_ENV !== "production") checkProps(props);
+  if (!process.env.NODE_ENV || process.env.NODE_ENV !== "production") checkProps(props, nodeRef);
 
   const finalHandlesOptions = useFinalHandlesOptions(enabledHandles, handleOptions, handlesOptions);
 
@@ -228,8 +241,8 @@ const Resizable = React.forwardRef<HTMLElement, ResizableProps>(function Resizab
       let { height, width } = nodeRef.current?.getBoundingClientRect?.() ?? {};
       setCalculatedHeight(height);
       setCalculatedWidth(width);
-      setInitialHeight(nodeRef.current?.style.height);
-      setInitialWidth(nodeRef.current?.style.width);
+      setInitialHeight(nodeRef.current.style.height);
+      setInitialWidth(nodeRef.current.style.width);
     }
   }, [nodeRef.current]);
 
@@ -255,7 +268,13 @@ const Resizable = React.forwardRef<HTMLElement, ResizableProps>(function Resizab
   }
   // "border-box" sizing is required for correct positioning of handles
   useEffect(() => {
-    if (nodeRef?.current) nodeRef.current.style.boxSizing = "border-box";
+    if (nodeRef?.current) {
+      nodeRef.current.style.boxSizing = "border-box";
+      nodeRef.current.style.touchAction = "none";
+      // if (props.enableRelativeOffset) {
+      //   nodeRef.current.style.position = "absolute";
+      // }
+    }
   }, [nodeRef.current]);
 
   // another render is required when adding or removing a handle
@@ -278,7 +297,8 @@ const Resizable = React.forwardRef<HTMLElement, ResizableProps>(function Resizab
           // inject required styles such border-box, and height/width if enabled
           {
             // inject ref to the element in not present from parent
-            ref: nodeRef,
+            ...(!props.nodeRef ? { ref: nodeRef } : {}),
+            ...(!props.nodeRef ? { ref: nodeRef } : {}),
             key: "ResizableNode", // required after transpile
             //// todo: should we pass the styles to the child? or should we manipulate styles at the DOM directly?
             // style: {
@@ -346,6 +366,7 @@ export const ResizableDefaultProps = {
 };
 Resizable.defaultProps = ResizableDefaultProps;
 
+// extracted to a separate function in order to be memoized
 const getFinalHandlesOptions = (
   enabledHandles: ResizablePropsDP["enabledHandles"],
   mergedHandlesOptions: { [key in HandleNameType]: Partial<HandleOptions> },
@@ -385,30 +406,37 @@ const useFinalHandlesOptions = (
   );
 };
 
-const checkProps = ({ children, nodeRef }: ResizableProps) => {
-  {
-    if (children) {
-      React.Children.only(children);
-      if (typeof children == "string" || typeof children == "number" || typeof children == "boolean")
-        console.error(
-          `Resizable: element '${children}' is not valid child for Resizable, wrap it simple element like div element\nFor example - <div>${children}</div>`
-        );
+const checkProps = (props: ResizableProps, nodeRef: React.RefObject<HTMLElement>) => {
+  const warn = useOneTimeWarn("Resizable: ");
+  if (props.children) {
+    React.Children.only(props.children);
+    if (typeof props.children == "string" || typeof props.children == "number" || typeof props.children == "boolean")
+      warn(
+        `Resizable: element '${props.children}' is not valid child for Resizable, wrap it simple element like div element\nFor example - <div>${children}</div>`
+      );
 
-      if (typeof children.type == "string") {
-        // this is a simple React element (div, span, etc)
-      } else {
-        // this is a React component instance
-        // @ts-ignore
-        const isForwardRef = children?.type?.$$typeof?.toString() == Symbol("react.forward_ref").toString();
-        if (!isForwardRef) {
-          console.error(
-            `Resizable: element '${children.type.name}' is a React component, therefore it should be wrapped with React.forwardRef in order to work properly with Resizable\n see https://reactjs.org/docs/forwarding-refs.html`
-          );
-        }
+    if (typeof props.children.type == "string") {
+      // this is a simple React element (div, span, etc)
+    } else {
+      // this is a React component instance
+      // @ts-ignore
+      const isForwardRef = props.children?.type?.$$typeof?.toString() == Symbol("react.forward_ref").toString();
+      if (!isForwardRef && !props.nodeRef) {
+        warn(
+          `element '${props.children.type.name}' is a React component, therefore it should be wrapped with React.forwardRef in order to work properly with Resizable\n see https://reactjs.org/docs/forwarding-refs.html`
+        );
       }
     }
-    if (!nodeRef && !children)
-      console.error("Resizable: at least one property: 'nodeRef' or 'children' should be passed to Resizable");
+  }
+  if (!props.nodeRef && !props.children)
+    warn("at least one property: 'nodeRef' or 'children' should be passed to Resizable");
+  if (nodeRef.current) {
+    const node = nodeRef.current;
+    if ((props.enableRelativeOffset && !node.style.position) || node.style.position == "static") {
+      warn(
+        `enableRelativeOffset is set to true, so style.position should be set to value other than 'static',currently it is '${node.style.position}'`
+      );
+    }
   }
 };
 
@@ -427,6 +455,5 @@ const defaultHandlesOptions: { [key in HandleNameType]: Partial<HandleOptions> }
   topLeft: { allowResize: { horizontal: { reverseDrag: true }, vertical: { reverseDrag: true } } },
 } as const;
 
-export type HandleNameType = keyof typeof defaultHandlesFn;
 // export default DelayedResizable;
 export default Resizable;

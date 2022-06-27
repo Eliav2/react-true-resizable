@@ -15,14 +15,16 @@ export const BoxStyle = {
 
 export default function ResizableAndDraggable() {
   const divRef = useRef(null);
+
   return (
     <div style={{ height: 50 }}>
-      <Resizable nodeRef={divRef} enableRelativeOffset />
-      <Draggable>
-        <div style={BoxStyle} ref={divRef}>
-          Resizable
-        </div>
-      </Draggable>
+      <Resizable nodeRef={divRef} enableRelativeOffset>
+        <Draggable>
+          <div style={BoxStyle} ref={divRef}>
+            Resizable
+          </div>
+        </Draggable>
+      </Resizable>
     </div>
   );
 }

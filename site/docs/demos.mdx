@@ -13,12 +13,13 @@ Basic example, no fancy props.
 
 import Basic from '@site/src/demos/Basic';
 
-<DemoPreviewer  name={"Basic"} Comp={Basic}/>
+<DemoPreviewer name={"Basic"} Comp={Basic} />
 
 ## Enable Relative Offset
 
 when `enableRelativeOffset` is set to `true`, Resizable would also inject `left` and `top` CSS style,
 in order to make the resizable element resizable more naturally on left and top handles.
+works best when on absolutely positioned elements.
 
 :::note
 `left` and `top` takes affect only when positioning is other than static.
@@ -29,7 +30,7 @@ changed on resizing. the behavior of this demo(code block is heightened even whe
 
 import RelativeOffset from '@site/src/demos/relativeOffset';
 
-<DemoPreviewer name={"relativeOffset"} Comp={RelativeOffset}/>
+<DemoPreviewer name={"relativeOffset"} Comp={RelativeOffset} />
 
 ## Resizable and Draggable
 
@@ -37,13 +38,21 @@ You can use [react-draggable](https://www.npmjs.com/package/react-draggable) wit
 does not forward refs correctly, you will need to pass direct ref to resizable,namely,
 use Resizable.nodeRef prop instead of Resizable.children prop.
 
+:::caution
+Works fine on desktop,but not on mobile.
+react-draggable attach event listeners directly to the DOM element in a not cancellable way(draggable event should be canceled when the resizable handles are clicked).
+
+a possibly better way to achieve resizable-draggable element is using [react-rnd](https://www.npmjs.com/package/react-rnd)
+:::
+
+
 import Draggable from '@site/src/demos/draggable';
 
-<DemoPreviewer name={"draggable"} Comp={Draggable}/>
+<DemoPreviewer name={"draggable"} Comp={Draggable} />
 
 ## handle styling
 
 import HandleStyles from '@site/src/demos/handleStyles';
 
-<DemoPreviewer name={"handleStyles"} Comp={HandleStyles}/>
+<DemoPreviewer name={"handleStyles"} Comp={HandleStyles} />
 

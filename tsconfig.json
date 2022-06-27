@@ -2,6 +2,7 @@
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
     // using rollup to bundle the source code, so we're only using tsc to emit the declarations
-    "emitDeclarationOnly": true
+    "emitDeclarationOnly": true,
+    "noErrorTruncation": true
   },
 }

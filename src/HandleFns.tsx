@@ -1,9 +1,8 @@
 import React from "react";
 import { positionType } from "shared/hooks/usePosition";
-import { HandlesOptions } from "./Handle";
+import { HandleProps, HandlesOptions, ResizeDir } from "./Handle";
 import { round } from "./utils.js";
 
-// this is possible hook or possibly normal function
 export type HandleStyleFnType = (arg: {
   nodePosition: positionType;
   handlePos: positionType;
@@ -152,3 +151,7 @@ export const defaultHandlesFn = {
   topRight: topRightHandleStyle,
   topLeft: topLeftHandleStyle,
 } as const;
+
+export type HandleNameType = keyof typeof defaultHandlesFn;
+
+export type PossibleHandle<T> = { [key in HandleNameType]?: T };

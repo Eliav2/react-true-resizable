@@ -1,20 +1,33 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ResizableProd, { HandleNameType } from "react-true-resizable";
-import ResizableDev, { ResizableRefHandle } from "../../src/Resizable";
+import ResizableDev from "../../src/Resizable";
+import ResizableExpr, { ResizableRefHandle } from "../../src/experamintal/Resizable";
 import useRerender from "shared/hooks/useRerender";
-import { Box, Paper, TextField, Typography } from "@mui/material";
+import { Box, Button, Paper, TextField, Typography } from "@mui/material";
 import "./App.css";
 import Draggable from "react-draggable";
+import ResizableState from "../../src/experamintal/ResizableState";
+import HandleBase from "../../src/experamintal/HandleBase";
+import HandlesParent from "../../src/experamintal/HandlesParent";
+import ResizableBaseForward from "../../src/experamintal/ResizableBase";
 
 export const BoxStyle = {
   border: "solid",
   borderRadius: 12,
-  width: 120,
+  // width: 120,
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
 } as React.CSSProperties;
+
+const SomeComp = React.forwardRef((props, ref) => {
+  return (
+    <div ref={ref} style={{ border: "solid" }}>
+      wonderful div
+    </div>
+  );
+});
 
 function App() {
   console.log("App rendered");
@@ -28,43 +41,45 @@ function App() {
 
   const ResizableRef = useRef<ResizableRefHandle>(null);
   return (
-    <div style={{ textAlign: "center" }}>
+    <div>
       <button onClick={() => reredner()}>rerender</button>
-      <button onClick={() => ResizableRef.current?.restControl()}>reset control</button>
 
-      <Box>
-        <Typography>width</Typography>
-        <TextField value={widthInput} onChange={(e) => setWidthInput(e.target.value)} />
-      </Box>
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        <ResizableDev
-          resizeRatio={{ horizontal: 2 }}
-          grid={30}
+      <div>some div</div>
 
-          // ResizableRef={ResizableRef}
-          // width={widthInput}
-          // onResize={{
-          //   horizontal: (newPos) => {
-          //     setWidthInput(newPos.width + "px");
-          //     console.log("newPos", newPos);
-          //   },
-          // }}
-          // onResize={() => console.log("onResize")}
-          // onResizeEnd={() => console.log("onResizeEnd")}
-          // onResizeStart={() => console.log("onResizeStart")}
-          // onResizeEffect={reredner}
-          // grid={{ horizontal: 50 }}
-          // handleStyle={{}}
-          // handlesStyle={{}}
-          // handleOptions={{}}
-          // handlesOptions={{}}
-        >
-          <Box style={BoxStyle}>hey mama</Box>
-        </ResizableDev>
-        {/*<Draggable>*/}
-        {/*  <Box style={BoxStyle}>hey mama draggable</Box>*/}
-        {/*</Draggable>*/}
-      </div>
+      <ResizableExpr handleStyle={{ background: "red" }} imperativeRef={ResizableRef}>
+        <SomeComp />
+        {/*<div style={{ border: "solid" }}>wonderful div</div>*/}
+      </ResizableExpr>
+
+      {/*<TestResizable />*/}
+
+      {/*<button onClick={() => ResizableRef.current?.restControl()}>reset control</button>*/}
+
+      {/*<ResizableExpr enableRelativeOffset>*/}
+      {/*  <div style={{ ...BoxStyle, position: "relative" }}>ResizableExpr</div>*/}
+      {/*</ResizableExpr>*/}
+
+      {/*<Box>*/}
+      {/*  <Typography>width</Typography>*/}
+      {/*  <TextField value={widthInput} onChange={(e) => setWidthInput(e.target.value)} />*/}
+      {/*</Box>*/}
+      {/*<div style={{ display: "flex", justifyContent: "center", flexDirection: "column", alignItems: "center" }}>*/}
+      {/*  <ResizableExpr enableRelativeOffset>*/}
+      {/*    <div style={{ ...BoxStyle, position: "relative" }}>ResizableExpr</div>*/}
+      {/*  </ResizableExpr>*/}
+
+      {/*  /!*<ResizableDev>*!/*/}
+      {/*  /!*  <div style={BoxStyle}>ResizableDev</div>*!/*/}
+      {/*  /!*</ResizableDev>*!/*/}
+      {/*</div>*/}
+
+      {/*<ResizableDev*/}
+      {/*  resizeRatio={{ horizontal: 2 }}*/}
+      {/*  grid={{ horizontal: 30 }}*/}
+      {/*  */}
+      {/*>*/}
+      {/*  <Box style={{ ...BoxStyle }}>hey mama</Box>*/}
+      {/*</ResizableDev>*/}
 
       {/*<ResizableExample />*/}
       {/*<ControlledExample />*/}
@@ -99,26 +114,119 @@ function App() {
   );
 }
 
+const TestResizable = () => {
+  return (
+    <ResizableExpr>
+      <div style={BoxStyle}>wonderful div</div>
+    </ResizableExpr>
+  );
+};
+
+const testResizableBase = () => {
+  return (
+    <ResizableBaseForward>
+      <Paper style={BoxStyle}>
+        <Box>wonderful div</Box>
+        {/*<HandleBase*/}
+        {/*  offset={{ left: "100%", top: "50%" }}*/}
+        {/*  allowResize={{ horizontal: { reverseDrag: false } }}*/}
+        {/*  resizeRatio={2}*/}
+        {/*>*/}
+        {/*  {({*/}
+        {/*    style: { position, ...style },*/}
+        {/*    eventHandlers,*/}
+        {/*    context: {*/}
+        {/*      nodePosition: { height },*/}
+        {/*    },*/}
+        {/*  }) => {*/}
+        {/*    return (*/}
+        {/*      <div*/}
+        {/*        {...eventHandlers}*/}
+        {/*        style={{ height: height, width: 10, background: "blue", cursor: "e-resize" }}*/}
+        {/*      ></div>*/}
+        {/*    );*/}
+        {/*  }}*/}
+        {/*</HandleBase>*/}
+        <HandlesParent>
+          <HandleBase offset={{ left: "50%", top: "100%" }} allowResize={{ vertical: { reverseDrag: false } }}>
+            {({
+              style,
+              eventHandlers,
+              context: {
+                nodePosition: { width },
+              },
+            }) => (
+              <div
+                {...eventHandlers}
+                style={{ ...style, height: 10, width: width, background: "blue", cursor: "n-resize" }}
+              ></div>
+            )}
+          </HandleBase>
+        </HandlesParent>
+      </Paper>
+    </ResizableBaseForward>
+  );
+};
+
+function ResizableAndDraggable() {
+  const divRef = useRef<HTMLDivElement>(null);
+
+  return (
+    <div style={{ height: 50 }}>
+      <ResizableDev
+        nodeRef={divRef} //ref is required because Draggable does not forward ref correctly
+        enableRelativeOffset
+      >
+        <Draggable onStart={() => console.log("Draggable onStart")}>
+          <div
+            style={{ ...BoxStyle }}
+            ref={divRef}
+            onPointerDown={() => {
+              console.log("div pointer down");
+            }}
+            onClick={() => {
+              console.log("div click");
+            }}
+          >
+            Resizable
+          </div>
+        </Draggable>
+      </ResizableDev>
+    </div>
+  );
+}
+
 const ControlledExample = () => {
   const [widthInput, setWidthInput] = useState<string>("30%");
+  const ResizableRef = useRef<ResizableRefHandle>(null);
   return (
     <div>
       <Box>
         <Typography>width</Typography>
         <TextField value={widthInput} onChange={(e) => setWidthInput(e.target.value)} />
+        <Button
+          variant={"outlined"}
+          onClick={() =>
+            ResizableRef.current?.restControl({
+              callback: (initialHeight, initialWidth) => setWidthInput(initialWidth),
+            })
+          }
+        >
+          Reset
+        </Button>
       </Box>
       <div style={{ display: "flex", justifyContent: "start" }}>
-        <ResizableDev
+        <ResizableExpr
+          ResizableRef={ResizableRef}
           width={widthInput}
           onResize={{
             horizontal: (newPos, prevPos) => {
-              const widthDiff = newPos.width - prevPos.width;
-              setWidthInput(newPos.width.toFixed(1) + 100 + "px");
+              setWidthInput(newPos.width.toFixed(1) + "px");
             },
           }}
         >
-          <Box style={BoxStyle}>hey mama</Box>
-        </ResizableDev>
+          <div style={BoxStyle}>hey mama</div>
+        </ResizableExpr>
       </div>
     </div>
   );
@@ -160,7 +268,7 @@ const GridResizable = ({ reredner = () => {} }) => {
       allow vertical resize
       <input type="checkbox" checked={allowVResize} onChange={() => setAllowVResize(!allowVResize)} />
       <button onClick={() => ResizableRef.current?.restControl()}>rest resizable</button>
-      <ResizableProd
+      <ResizableDev
         ResizableRef={ResizableRef}
         grid={{ horizontal: 100, vertical: 20 }}
         disableControl={{ horizontal: !allowHResize, vertical: !allowVResize }}
@@ -170,7 +278,7 @@ const GridResizable = ({ reredner = () => {} }) => {
         <Box className={"grid-resizable"} style={{ border: "2px solid black", height: 200 }}>
           resizable only vertically {allowHResize && "and horizontally"} with grid 20
         </Box>
-      </ResizableProd>
+      </ResizableDev>
     </div>
   );
 };

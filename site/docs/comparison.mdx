@@ -133,7 +133,7 @@ from the normal document flow([read more](https://developer.mozilla.org/en-US/do
 
 export const WorkingReactRnd = () => (
   <div style={{ position: "relative" }}>
-    <ReactRnd style={BoxStyle}>
+    <ReactRnd style={{ ...BoxStyle,position: "relative" }}>
       <div>ReactRnd</div>
     </ReactRnd>
   </div>
