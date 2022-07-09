@@ -4,10 +4,15 @@ import type { PossiblyArray } from "shared/types";
 import { useResizableBase } from "./ResizableBase";
 import ReactDOM from "react-dom";
 
-export type HandlesParentState = { handleParentRef: React.RefObject<HTMLElement>; handlesParentPosition: positionType };
+export type HandlesParentState = {
+  handleParentRef: React.RefObject<HTMLElement>;
+  handlesParentPosition: positionType;
+  contextAppear: boolean;
+};
 export const HandlesParentState = React.createContext<HandlesParentState>({
   handleParentRef: { current: null },
   handlesParentPosition: null,
+  contextAppear: false,
 });
 
 export interface HandlesParentProps {
@@ -27,7 +32,10 @@ export interface HandlesParentRefHandle {
 /**
  * injects parent handles as a children of the target DOM node using portal
  */
-const HandlesParent = React.forwardRef<HandlesParentRefHandle, HandlesParentProps>(({ children }, ref) => {
+const HandlesParentForward = React.forwardRef<HandlesParentRefHandle, HandlesParentProps>(function HandlesParent(
+  { children },
+  ref
+) {
   // console.log("HandlesParent");
   const handleParentRef = useRef<HTMLDivElement>(null);
   const handlesParentPosition = usePosition(handleParentRef.current);
@@ -42,7 +50,7 @@ const HandlesParent = React.forwardRef<HandlesParentRefHandle, HandlesParentProp
   return (
     nodeRef.current && (
       // inject handles as children to target DOM node
-      <HandlesParentState.Provider value={{ handleParentRef, handlesParentPosition }}>
+      <HandlesParentState.Provider value={{ handleParentRef, handlesParentPosition, contextAppear: true }}>
         {ReactDOM.createPortal(
           <div style={{ position: "absolute" }} ref={handleParentRef} children={children} />,
           nodeRef.current
@@ -52,4 +60,4 @@ const HandlesParent = React.forwardRef<HandlesParentRefHandle, HandlesParentProp
   );
 });
 
-export default HandlesParent;
+export default HandlesParentForward;

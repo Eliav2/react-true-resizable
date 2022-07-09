@@ -12,7 +12,7 @@ import HandleBase from "../../src/experamintal/HandleBase";
 import HandlesParent from "../../src/experamintal/HandlesParent";
 import ResizableBaseForward from "../../src/experamintal/ResizableBase";
 import ResizableElement from "../../src/experamintal/ResizableElement";
-import SpecificHandle from "../../src/experamintal/SpecificHandle";
+import Handle from "../../src/experamintal/Handle";
 
 export const BoxStyle = {
   border: "solid",
@@ -60,34 +60,28 @@ function App() {
       {/*  HandlesComp*/}
       {/*></ResizableExpr>*/}
 
-      <ResizableExpr handleStyle={{}} imperativeRef={ResizableRef}>
-        <SomeComp />
-        {/*<div style={{ border: "solid" }}>wonderful div</div>*/}
-      </ResizableExpr>
+      {/*/!* high level simplified example*!/*/}
+      {/*<ResizableExpr handleStyle={{}} imperativeRef={ResizableRef}>*/}
+      {/*  <SomeComp />*/}
+      {/*</ResizableExpr>*/}
 
+      {/* Low level example*/}
       <ResizableBase>
         <ResizableElement>
-          <SomeComp />
+          <div style={{ border: "solid" }}>wonderful div</div>
         </ResizableElement>
         <HandlesParent>
-          <SpecificHandle
+          <Handle
             offset={{ left: "50%", top: "50%" }}
-            allowResize={{ vertical: false, horizontal: false }}
-            handleBaseProps={{ resizeRatio: 2 }}
-            size={0}
+            allowResize={{ vertical: true, horizontal: true }}
+            handleBaseProps={{ resizeRatio: 2, grid: { vertical: 10, horizontal: 10 } }}
           >
             <div
-              style={{
-                border: "solid blue",
-                borderRadius: "50%",
-                padding: 8,
-                textAlign: "center",
-                cursor: "pointer",
-              }}
+              style={{ border: "solid blue", borderRadius: "50%", padding: 8, textAlign: "center", cursor: "pointer" }}
             >
               resize me
             </div>
-          </SpecificHandle>
+          </Handle>
         </HandlesParent>
       </ResizableBase>
 

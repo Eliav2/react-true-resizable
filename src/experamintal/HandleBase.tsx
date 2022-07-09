@@ -1,14 +1,13 @@
-import React, { FC, useRef, useState } from "react";
+import React, { FC, useState } from "react";
 import { ResizableBaseContextProps, useResizableBase } from "./ResizableBase";
 import { positionType } from "shared/hooks/usePosition";
 import { HandlesParentInjectedChildrenProps, HandlesParentState } from "./HandlesParent";
-import type { Expand, RespectDefaultProps } from "shared/types";
-import { PossiblySpecifyAxis, ResizableDefaultProps } from "./Resizable";
-import { AllowResize } from "./Handle";
+import type { MapNonNullable, Primitive, RelativeSize, RespectDefaultProps } from "shared/types";
+import { PossiblySpecifyAxis } from "./Resizable";
+import { AllowResize } from "./HandleOld";
 import { parsePossiblySpecific, PossiblySpecific } from "shared/utils/props";
-import type { Primitive, MapNonNullable, RelativeSize } from "shared/types";
-import usePassRef from "shared/hooks/usePassRef";
-import { getRelativeSizeValue, parseRelativeSize } from "shared/utils";
+import { parseRelativeSize } from "shared/utils";
+import { useResizableWarn } from "./utils";
 
 type OnResizeEvent = (newPos: { height: number; width: number }, prevPos: Exclude<positionType, null>) => void;
 type OnResizeUpdate<T> = (newPos: T, prevPos: Exclude<positionType, null>) => void;
@@ -59,7 +58,13 @@ const HandleBase: FC<HandleBaseProps> = (_props) => {
     endDraggingOffsetLeft,
   } = ResizableState;
   // const { handlesParentPosition } = props;
-  const { handlesParentPosition } = React.useContext(HandlesParentState);
+  const { handlesParentPosition, contextAppear } = React.useContext(HandlesParentState);
+  const warn = useResizableWarn();
+  if (!process.env.NODE_ENV || process.env.NODE_ENV !== "production")
+    if (!contextAppear)
+      warn(
+        "Handle is used without HandlesParent wrapper. wrap HandlesParent around your Handle component.\n for example: \n <HandlesParent><Handle><div/></Handle></HandlesParent>"
+      );
 
   const [initialDraggingElementSize, setInitialDraggingElementSize] = useState({
     height: 0,
@@ -76,9 +81,9 @@ const HandleBase: FC<HandleBaseProps> = (_props) => {
   if (!nodePosition) return <div />;
 
   const _1 = props.allowResize?.["vertical"];
-  const reverseVerticalDrag = typeof _1 === "boolean" ? _1 : _1?.reverseDrag ?? false;
+  const reverseVerticalDrag = typeof _1 === "boolean" ? false : _1?.reverseDrag ?? false;
   const _2 = props.allowResize?.["horizontal"];
-  const reverseHorizontalDrag = typeof _2 === "boolean" ? _2 : _2?.reverseDrag ?? false;
+  const reverseHorizontalDrag = typeof _2 === "boolean" ? false : _2?.reverseDrag ?? false;
 
   const grid = parsePossiblyAxis(props.grid);
   const resizeRatio = parsePossiblyAxis(props.resizeRatio, HandleNewDefaultProps.resizeRatio);
@@ -169,11 +174,11 @@ const HandleBase: FC<HandleBaseProps> = (_props) => {
         if (width > 0) setCalculatedLeft(getEnableRelativeOffsetLeft(event) + endDraggingOffsetLeft);
       }
 
-      if ("vertical" in props.allowResize) {
+      if ("vertical" in props.allowResize && props.allowResize["vertical"]) {
         setCalculatedHeight(height);
         if (typeof props?.onResize === "object") props.onResize.vertical?.({ height }, nodePosition);
       }
-      if ("horizontal" in props.allowResize) {
+      if ("horizontal" in props.allowResize && props.allowResize["horizontal"]) {
         setCalculatedWidth(width);
         if (typeof props?.onResize === "object") props.onResize.horizontal?.({ width }, nodePosition);
       }

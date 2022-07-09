@@ -1,14 +1,14 @@
 import React, { useImperativeHandle, useLayoutEffect, useRef, useState } from "react";
 import { RespectDefaultProps } from "shared/types/utils";
-import usePassRef from "shared/hooks/usePassRef";
-import ResizableElement from "./ResizableElement";
-import { ResizableDefaultProps, ResizableProps } from "./Resizable";
+import { checkProps } from "./ResizableElement";
+import { ResizableDefaultProps } from "./Resizable";
 import { useOneTimeWarn } from "shared/hooks/useOneTimeWarn";
 import usePosition, { positionType } from "shared/hooks/usePosition";
 import useRerender from "shared/hooks/useRerender";
+import { useResizableWarn } from "./utils";
 
-interface ResizableBaseProps extends ResizableProps {
-  handlesElem?: React.ReactNode;
+interface ResizableBaseProps {
+  children: React.ReactNode;
   imperativeRef?: React.RefObject<{}>;
 }
 
@@ -21,17 +21,6 @@ const ResizableBaseForward = React.forwardRef<HTMLElement, ResizableBaseProps>(f
   forwardedRef
 ) {
   const props = _props as RespectDefaultProps<ResizableBaseProps, typeof ResizableDefaultProps>;
-  // let nodeRef = usePassRef<HTMLElement>(props.children);
-  // // if ref for the target DOM node is explicitly passed, use it instead extracting it from the children
-  // if (props?.nodeRef) {
-  //   // @ts-ignore
-  //   // noinspection JSConstantReassignment
-  //   nodeRef.current = props.nodeRef.current;
-  // }
-  // TODO: check if necessary
-  // if wrapper component tried to access the inner DOM node, let it do so
-  // if (forwardedRef && typeof forwardedRef == "object" && "current" in forwardedRef && nodeRef)
-  //   forwardedRef.current = nodeRef.current;
 
   let nodeRef = useRef<HTMLElement>(null);
   const nodePosition = usePosition(nodeRef.current);
@@ -48,9 +37,6 @@ const ResizableBaseForward = React.forwardRef<HTMLElement, ResizableBaseProps>(f
   const [endDraggingOffsetLeft, setEndDraggingOffsetLeft] = useState(0);
 
   const render = useRerender();
-
-  // strip away checks in production build
-  if (!process.env.NODE_ENV || process.env.NODE_ENV !== "production") checkProps(props, nodeRef);
 
   // rerender when nodeRef changes
   useLayoutEffect(() => {
@@ -106,14 +92,11 @@ const ResizableBaseForward = React.forwardRef<HTMLElement, ResizableBaseProps>(f
 
   useImperativeHandle(props.imperativeRef, () => val);
 
-  const { nodeRef: _1, ...resizableElementProps } = props;
-
   return (
     (props.children && (
       <ResizableBaseContext.Provider value={val}>
         {/*<ResizableElement {...resizableElementProps}>{props.children}</ResizableElement>*/}
         {props.children}
-        {props.handlesElem}
       </ResizableBaseContext.Provider>
     )) ||
     null
@@ -123,7 +106,7 @@ const ResizableBaseForward = React.forwardRef<HTMLElement, ResizableBaseProps>(f
 export const useResizableBase = () => {
   const val = React.useContext(ResizableBaseContext);
   if (process.env.NODE_ENV !== "production") {
-    const warn = useOneTimeWarn("Resizable: ");
+    const warn = useResizableWarn();
     if (!val.contextAppear) warn("Component is not wrapped with ResizableState, so it will not work properly");
   }
   return React.useContext(ResizableBaseContext);
@@ -183,40 +166,5 @@ const ResizableBaseContext = React.createContext<ResizableBaseContextProps>({
 
   render: () => {},
 });
-
-const checkProps = (props: ResizableProps, nodeRef: React.RefObject<HTMLElement>) => {
-  const warn = useOneTimeWarn("Resizable: ");
-
-  if (props.children) {
-    if (typeof props.children.type == "string") {
-      // this is a host React element (div, span, etc)
-    } else {
-      // this is a React component instance
-      // @ts-ignore
-      const isForwardRef = props.children?.type?.$$typeof?.toString() == Symbol("react.forward_ref").toString();
-      if (!isForwardRef && !props.nodeRef) {
-        warn(
-          `element '${props.children?.type?.name}' is a React component, therefore it should be wrapped with React.forwardRef in order to work properly with Resizable\n see https://reactjs.org/docs/forwarding-refs.html`
-        );
-      }
-    }
-
-    // React.Children.only(props.children);
-    if (typeof props.children == "string" || typeof props.children == "number" || typeof props.children == "boolean")
-      warn(
-        `Resizable: element '${props.children}' is not valid child for Resizable, wrap it simple element like div element\nFor example - <div>${props.children}</div>`
-      );
-  }
-  if (!props.nodeRef && !props.children)
-    warn("at least one property: 'nodeRef' or 'children' should be passed to Resizable");
-  if (nodeRef.current) {
-    const node = nodeRef.current;
-    if ((props.enableRelativeOffset && !node.style.position) || node.style.position == "static") {
-      warn(
-        `enableRelativeOffset is set to true, so style.position should be set to value other than 'static',currently it is '${node.style.position}'`
-      );
-    }
-  }
-};
 
 export default ResizableBaseForward;
