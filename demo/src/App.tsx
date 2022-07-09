@@ -2,14 +2,17 @@ import React, { useEffect, useRef, useState } from "react";
 import ResizableProd, { HandleNameType } from "react-true-resizable";
 import ResizableDev from "../../src/Resizable";
 import ResizableExpr, { ResizableRefHandle } from "../../src/experamintal/Resizable";
+import ResizableBase from "../../src/experamintal/ResizableBase";
 import useRerender from "shared/hooks/useRerender";
 import { Box, Button, Paper, TextField, Typography } from "@mui/material";
 import "./App.css";
 import Draggable from "react-draggable";
-import ResizableState from "../../src/experamintal/ResizableState";
+// import ResizableState from "../../src/experamintal/ResizableState";
 import HandleBase from "../../src/experamintal/HandleBase";
 import HandlesParent from "../../src/experamintal/HandlesParent";
 import ResizableBaseForward from "../../src/experamintal/ResizableBase";
+import ResizableElement from "../../src/experamintal/ResizableElement";
+import SpecificHandle from "../../src/experamintal/SpecificHandle";
 
 export const BoxStyle = {
   border: "solid",
@@ -45,11 +48,48 @@ function App() {
       <button onClick={() => reredner()}>rerender</button>
 
       <div>some div</div>
+      <TextField />
 
-      <ResizableExpr handleStyle={{ background: "red" }} imperativeRef={ResizableRef}>
+      {/*/!*@ts-ignore*!/*/}
+      {/*<ResizableExpr*/}
+      {/*  // @ts-ignore*/}
+      {/*  handles={{ all: { style: { background: "red" } } }}*/}
+      {/*  HandleProps*/}
+      {/*  HandlesProps*/}
+      {/*  HandleComp*/}
+      {/*  HandlesComp*/}
+      {/*></ResizableExpr>*/}
+
+      <ResizableExpr handleStyle={{}} imperativeRef={ResizableRef}>
         <SomeComp />
         {/*<div style={{ border: "solid" }}>wonderful div</div>*/}
       </ResizableExpr>
+
+      <ResizableBase>
+        <ResizableElement>
+          <SomeComp />
+        </ResizableElement>
+        <HandlesParent>
+          <SpecificHandle
+            offset={{ left: "50%", top: "50%" }}
+            allowResize={{ vertical: false, horizontal: false }}
+            handleBaseProps={{ resizeRatio: 2 }}
+            size={0}
+          >
+            <div
+              style={{
+                border: "solid blue",
+                borderRadius: "50%",
+                padding: 8,
+                textAlign: "center",
+                cursor: "pointer",
+              }}
+            >
+              resize me
+            </div>
+          </SpecificHandle>
+        </HandlesParent>
+      </ResizableBase>
 
       {/*<TestResizable />*/}
 

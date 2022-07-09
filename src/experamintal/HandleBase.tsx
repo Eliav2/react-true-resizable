@@ -17,12 +17,12 @@ type HandleFunc = (event: React.PointerEvent<HTMLDivElement>) => void;
 
 export interface HandleBaseProps {
   children: (args: {
-    style: Pick<React.CSSProperties, "left" | "top" | "position" | "transform">;
+    style: Pick<React.CSSProperties, "left" | "top" | "position">;
     eventHandlers: { onPointerDown: HandleFunc; onPointerMove: HandleFunc; onPointerUp: HandleFunc };
     context: MapNonNullable<ResizableBaseContextProps>;
   }) => React.ReactNode;
 
-  offset?: { left: RelativeSize; top: RelativeSize };
+  offset?: { left?: RelativeSize; top?: RelativeSize };
   allowResize?: AllowResize;
   grid?: PossiblySpecifyAxis<number>;
   resizeRatio?: PossiblySpecifyAxis<number>;
@@ -75,8 +75,10 @@ const HandleBase: FC<HandleBaseProps> = (_props) => {
 
   if (!nodePosition) return <div />;
 
-  const reverseVerticalDrag = props.allowResize?.["vertical"]?.reverseDrag ?? false;
-  const reverseHorizontalDrag = props.allowResize?.["horizontal"]?.reverseDrag ?? false;
+  const _1 = props.allowResize?.["vertical"];
+  const reverseVerticalDrag = typeof _1 === "boolean" ? _1 : _1?.reverseDrag ?? false;
+  const _2 = props.allowResize?.["horizontal"];
+  const reverseHorizontalDrag = typeof _2 === "boolean" ? _2 : _2?.reverseDrag ?? false;
 
   const grid = parsePossiblyAxis(props.grid);
   const resizeRatio = parsePossiblyAxis(props.resizeRatio, HandleNewDefaultProps.resizeRatio);
@@ -179,8 +181,8 @@ const HandleBase: FC<HandleBaseProps> = (_props) => {
     }
   };
 
-  const leftRel = parseRelativeSize(props.offset.left);
-  const topRel = parseRelativeSize(props.offset.top);
+  const leftRel = parseRelativeSize(props.offset.left ?? "0%");
+  const topRel = parseRelativeSize(props.offset.top ?? "0%");
   const left = handlesParentPosition
     ? nodePosition.left - handlesParentPosition.left + (leftRel.percent * nodePosition.width + leftRel.abs)
     : 0;
@@ -194,7 +196,7 @@ const HandleBase: FC<HandleBaseProps> = (_props) => {
       top,
       position: "absolute",
       // transform: `translate(-${leftP}%,-${topP}%)`,
-      transform: `translate(-${leftRel.percent * 100}%,-${topRel.percent * 100}%)`,
+      // transform: `translate(-${leftRel.percent * 100}%,-${topRel.percent * 100}%)`,
     },
     eventHandlers: { onPointerDown: resizeStart, onPointerMove: resize, onPointerUp: resizeEnd },
     context: ResizableState as MapNonNullable<ResizableBaseContextProps>,

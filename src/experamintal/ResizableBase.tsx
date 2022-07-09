@@ -1,7 +1,7 @@
-import React, { useImperativeHandle, useLayoutEffect, useState } from "react";
+import React, { useImperativeHandle, useLayoutEffect, useRef, useState } from "react";
 import { RespectDefaultProps } from "shared/types/utils";
 import usePassRef from "shared/hooks/usePassRef";
-import { ResizableElement } from "./ResizableElement";
+import ResizableElement from "./ResizableElement";
 import { ResizableDefaultProps, ResizableProps } from "./Resizable";
 import { useOneTimeWarn } from "shared/hooks/useOneTimeWarn";
 import usePosition, { positionType } from "shared/hooks/usePosition";
@@ -21,17 +21,19 @@ const ResizableBaseForward = React.forwardRef<HTMLElement, ResizableBaseProps>(f
   forwardedRef
 ) {
   const props = _props as RespectDefaultProps<ResizableBaseProps, typeof ResizableDefaultProps>;
-  let nodeRef = usePassRef<HTMLElement>(props.children);
-  // if ref for the target DOM node is explicitly passed, use it instead extracting it from the children
-  if (props?.nodeRef) {
-    // @ts-ignore
-    // noinspection JSConstantReassignment
-    nodeRef.current = props.nodeRef.current;
-  }
+  // let nodeRef = usePassRef<HTMLElement>(props.children);
+  // // if ref for the target DOM node is explicitly passed, use it instead extracting it from the children
+  // if (props?.nodeRef) {
+  //   // @ts-ignore
+  //   // noinspection JSConstantReassignment
+  //   nodeRef.current = props.nodeRef.current;
+  // }
+  // TODO: check if necessary
   // if wrapper component tried to access the inner DOM node, let it do so
-  if (forwardedRef && typeof forwardedRef == "object" && "current" in forwardedRef && nodeRef)
-    forwardedRef.current = nodeRef.current;
+  // if (forwardedRef && typeof forwardedRef == "object" && "current" in forwardedRef && nodeRef)
+  //   forwardedRef.current = nodeRef.current;
 
+  let nodeRef = useRef<HTMLElement>(null);
   const nodePosition = usePosition(nodeRef.current);
 
   const [initialHeight, setInitialHeight] = useState("");
@@ -109,9 +111,8 @@ const ResizableBaseForward = React.forwardRef<HTMLElement, ResizableBaseProps>(f
   return (
     (props.children && (
       <ResizableBaseContext.Provider value={val}>
-        <ResizableElement nodeRef={nodeRef} {...resizableElementProps}>
-          {props.children}
-        </ResizableElement>
+        {/*<ResizableElement {...resizableElementProps}>{props.children}</ResizableElement>*/}
+        {props.children}
         {props.handlesElem}
       </ResizableBaseContext.Provider>
     )) ||
@@ -188,19 +189,19 @@ const checkProps = (props: ResizableProps, nodeRef: React.RefObject<HTMLElement>
 
   if (props.children) {
     if (typeof props.children.type == "string") {
-      // this is a simple React element (div, span, etc)
+      // this is a host React element (div, span, etc)
     } else {
       // this is a React component instance
       // @ts-ignore
       const isForwardRef = props.children?.type?.$$typeof?.toString() == Symbol("react.forward_ref").toString();
       if (!isForwardRef && !props.nodeRef) {
         warn(
-          `element '${props.children.type.name}' is a React component, therefore it should be wrapped with React.forwardRef in order to work properly with Resizable\n see https://reactjs.org/docs/forwarding-refs.html`
+          `element '${props.children?.type?.name}' is a React component, therefore it should be wrapped with React.forwardRef in order to work properly with Resizable\n see https://reactjs.org/docs/forwarding-refs.html`
         );
       }
     }
 
-    React.Children.only(props.children);
+    // React.Children.only(props.children);
     if (typeof props.children == "string" || typeof props.children == "number" || typeof props.children == "boolean")
       warn(
         `Resizable: element '${props.children}' is not valid child for Resizable, wrap it simple element like div element\nFor example - <div>${props.children}</div>`

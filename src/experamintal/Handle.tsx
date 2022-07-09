@@ -7,7 +7,7 @@ import { parsePossiblySpecific, PossiblySpecific } from "shared/utils/props";
 import { useResizableBase } from "./ResizableBase";
 
 export type ResizeDir = "horizontal" | "vertical";
-export type AllowResize = { [key in ResizeDir]?: { reverseDrag: boolean } };
+export type AllowResize = { [key in ResizeDir]?: boolean | { reverseDrag: boolean } };
 export type HandleOptions = {
   allowResize: AllowResize;
   size: number;
