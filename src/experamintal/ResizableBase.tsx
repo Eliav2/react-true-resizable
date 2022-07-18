@@ -13,7 +13,7 @@ interface ResizableBaseProps {
 }
 
 /**
- * Provides a shared context state for each individual Resizable component (HandleBase) inside it.
+ * Provides a shared context state for each individual Resizable component (Handle,HandleBase,HandlesParents,ResizableElement) inside it.
  * does not inject handles
  */
 const ResizableBaseForward = React.forwardRef<HTMLElement, ResizableBaseProps>(function ResizableBase(
@@ -50,8 +50,10 @@ const ResizableBaseForward = React.forwardRef<HTMLElement, ResizableBaseProps>(f
 
       setCalculatedHeight(height);
       setCalculatedWidth(width);
-      setInitialHeight(nodeRef.current.style.height ?? "");
-      setInitialWidth(nodeRef.current.style.width ?? "");
+      if (nodeRef.current.style) {
+        setInitialHeight(nodeRef.current.style.height ?? "");
+        setInitialWidth(nodeRef.current.style.width ?? "");
+      }
     }
   }, [nodeRef.current]);
 

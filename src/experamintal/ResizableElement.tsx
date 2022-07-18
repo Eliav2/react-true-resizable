@@ -35,6 +35,7 @@ const ResizableElementForward = React.forwardRef<HTMLElement, ResizableElementPr
     nodeRef,
     render,
   } = ResizableState;
+  console.log(nodeRef.current);
 
   const childNodeRef = usePassRef<HTMLElement>(p.children);
   // @ts-ignore
@@ -49,6 +50,7 @@ const ResizableElementForward = React.forwardRef<HTMLElement, ResizableElementPr
   // if wrapper component tried to access the inner DOM node, let it do so
   if (forwardedRef && typeof forwardedRef == "object" && "current" in forwardedRef && nodeRef)
     forwardedRef.current = nodeRef.current;
+  console.log(nodeRef.current);
 
   // control and update the size of the node on each render
   const disableWidthControl = typeof p.disableControl === "boolean" ? p.disableControl : p.disableControl?.horizontal;
@@ -69,6 +71,7 @@ const ResizableElementForward = React.forwardRef<HTMLElement, ResizableElementPr
   if (nodeRef?.current) {
     if (!disableHeightControl && !!height) {
       nodeRef.current.style.height = height;
+
       if (p.enableRelativeOffset) nodeRef.current.style.top = calculatedTop + "px";
     }
     if (!disableWidthControl && !!width) {
@@ -78,7 +81,7 @@ const ResizableElementForward = React.forwardRef<HTMLElement, ResizableElementPr
   }
   // set required style properties on target DOM node
   useLayoutEffect(() => {
-    if (nodeRef?.current) {
+    if (nodeRef?.current?.style) {
       nodeRef.current.style.boxSizing = "border-box";
       // "border-box" sizing is required for correct positioning of handles
       nodeRef.current.style.touchAction = "none";
@@ -139,9 +142,10 @@ export const checkProps = (props: ResizableProps, nodeRef: React.RefObject<HTMLE
     warn("at least one property: 'nodeRef' or 'children' should be passed to Resizable");
   if (nodeRef.current) {
     const node = nodeRef.current;
-    if ((props.enableRelativeOffset && !node.style.position) || node.style.position == "static") {
+    if (props.enableRelativeOffset || (node.style?.position && node.style?.position == "static")) {
+      console.log(node.style?.position);
       warn(
-        `enableRelativeOffset is set to true, so style.position should be set to value other than 'static',currently it is '${node.style.position}'`
+        `enableRelativeOffset is set to true, so style.position should be set to value other than 'static',currently it is '${node.style?.position}'`
       );
     }
   }

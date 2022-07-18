@@ -47,8 +47,12 @@ function App() {
     <div>
       <button onClick={() => reredner()}>rerender</button>
 
-      <div>some div</div>
-      <TextField />
+      <TestResizableBase />
+
+      <ResizableAndDraggable />
+
+      {/*<div>some div</div>*/}
+      {/*<TextField />*/}
 
       {/*/!*@ts-ignore*!/*/}
       {/*<ResizableExpr*/}
@@ -61,29 +65,12 @@ function App() {
       {/*></ResizableExpr>*/}
 
       {/*/!* high level simplified example*!/*/}
-      {/*<ResizableExpr handleStyle={{}} imperativeRef={ResizableRef}>*/}
+      {/*<ResizableExpr handleStyle={{ background: "gray", opacity: 0.5 }} imperativeRef={ResizableRef}>*/}
       {/*  <SomeComp />*/}
       {/*</ResizableExpr>*/}
-
-      {/* Low level example*/}
-      <ResizableBase>
-        <ResizableElement>
-          <div style={{ border: "solid" }}>wonderful div</div>
-        </ResizableElement>
-        <HandlesParent>
-          <Handle
-            offset={{ left: "50%", top: "50%" }}
-            allowResize={{ vertical: true, horizontal: true }}
-            handleBaseProps={{ resizeRatio: 2, grid: { vertical: 10, horizontal: 10 } }}
-          >
-            <div
-              style={{ border: "solid blue", borderRadius: "50%", padding: 8, textAlign: "center", cursor: "pointer" }}
-            >
-              resize me
-            </div>
-          </Handle>
-        </HandlesParent>
-      </ResizableBase>
+      {/*<Draggable>*/}
+      {/*  <SomeComp />*/}
+      {/*</Draggable>*/}
 
       {/*<TestResizable />*/}
 
@@ -148,57 +135,27 @@ function App() {
   );
 }
 
-const TestResizable = () => {
+const TestResizableBase = () => {
   return (
-    <ResizableExpr>
-      <div style={BoxStyle}>wonderful div</div>
-    </ResizableExpr>
-  );
-};
-
-const testResizableBase = () => {
-  return (
-    <ResizableBaseForward>
-      <Paper style={BoxStyle}>
-        <Box>wonderful div</Box>
-        {/*<HandleBase*/}
-        {/*  offset={{ left: "100%", top: "50%" }}*/}
-        {/*  allowResize={{ horizontal: { reverseDrag: false } }}*/}
-        {/*  resizeRatio={2}*/}
-        {/*>*/}
-        {/*  {({*/}
-        {/*    style: { position, ...style },*/}
-        {/*    eventHandlers,*/}
-        {/*    context: {*/}
-        {/*      nodePosition: { height },*/}
-        {/*    },*/}
-        {/*  }) => {*/}
-        {/*    return (*/}
-        {/*      <div*/}
-        {/*        {...eventHandlers}*/}
-        {/*        style={{ height: height, width: 10, background: "blue", cursor: "e-resize" }}*/}
-        {/*      ></div>*/}
-        {/*    );*/}
-        {/*  }}*/}
-        {/*</HandleBase>*/}
-        <HandlesParent>
-          <HandleBase offset={{ left: "50%", top: "100%" }} allowResize={{ vertical: { reverseDrag: false } }}>
-            {({
-              style,
-              eventHandlers,
-              context: {
-                nodePosition: { width },
-              },
-            }) => (
-              <div
-                {...eventHandlers}
-                style={{ ...style, height: 10, width: width, background: "blue", cursor: "n-resize" }}
-              ></div>
-            )}
-          </HandleBase>
-        </HandlesParent>
-      </Paper>
-    </ResizableBaseForward>
+    // Low level example
+    <ResizableBase>
+      <ResizableElement>
+        <div style={{ border: "solid" }}>wonderful div</div>
+      </ResizableElement>
+      <HandlesParent>
+        <Handle
+          offset={{ left: "50%", top: "50%" }}
+          allowResize={{ vertical: true, horizontal: true }}
+          handleBaseProps={{ resizeRatio: 2 }}
+        >
+          <div
+            style={{ border: "solid blue", borderRadius: "50%", padding: 8, textAlign: "center", cursor: "pointer" }}
+          >
+            resize me
+          </div>
+        </Handle>
+      </HandlesParent>
+    </ResizableBase>
   );
 };
 
@@ -207,25 +164,16 @@ function ResizableAndDraggable() {
 
   return (
     <div style={{ height: 50 }}>
-      <ResizableDev
+      <ResizableExpr
         nodeRef={divRef} //ref is required because Draggable does not forward ref correctly
         enableRelativeOffset
       >
-        <Draggable onStart={() => console.log("Draggable onStart")}>
-          <div
-            style={{ ...BoxStyle }}
-            ref={divRef}
-            onPointerDown={() => {
-              console.log("div pointer down");
-            }}
-            onClick={() => {
-              console.log("div click");
-            }}
-          >
+        <Draggable onStart={() => console.log("Draggable onStart")} nodeRef={divRef}>
+          <div style={{ ...BoxStyle }} ref={divRef}>
             Resizable
           </div>
         </Draggable>
-      </ResizableDev>
+      </ResizableExpr>
     </div>
   );
 }

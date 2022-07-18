@@ -16,7 +16,7 @@ export interface SpecificHandleProps {
   children?: React.ReactNode;
 }
 
-/** the default handle component */
+/** abstraction over HandleBase */
 const Handle: React.FC<SpecificHandleProps> = (props) => {
   let {
     children,

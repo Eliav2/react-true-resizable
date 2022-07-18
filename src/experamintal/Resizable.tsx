@@ -111,7 +111,7 @@ export interface ResizableProps {
   handlesStyle?: { [key in HandleNameType]?: React.CSSProperties };
 }
 
-type Handle = { size: number; style?: React.CSSProperties; props?: any; render: any; createEventHandlers?: any };
+type HandleProps = { size: number; style?: React.CSSProperties; props?: any; render: any; createEventHandlers?: any };
 // type HandleType = Spread<{ specific: { [key in HandleNameType]?: Handle } }, Handle>;
 type HandleType = Expand<HandleOld & { specific: { [key in HandleNameType]?: HandleOld } }>;
 
@@ -354,42 +354,38 @@ const ResizableForward = React.forwardRef<HTMLElement, NewResizableProps>(functi
 
   return (
     (children && (
-      <ResizableBaseForward
-        imperativeRef={ResizableBaseRef}
-        handlesElem={
-          <HandlesParentForward ref={HandlesParentRef}>
-            <TopHandle handleStyle={props.handleStyle} />
-            <RightHandle handleStyle={props.handleStyle} />
-            <BottomHandle handleStyle={props.handleStyle} />
-            <LeftHandle handleStyle={props.handleStyle} />
+      <ResizableBaseForward imperativeRef={ResizableBaseRef}>
+        <ResizableElement {...props}>{children}</ResizableElement>
+        <HandlesParentForward ref={HandlesParentRef}>
+          <TopHandle handleStyle={props.handleStyle} />
+          <RightHandle handleStyle={props.handleStyle} />
+          <BottomHandle handleStyle={props.handleStyle} />
+          <LeftHandle handleStyle={props.handleStyle} />
 
-            <TopLeftHandle />
-            <TopRightHandle />
-            <BottomLeftHandle />
-            <BottomRightHandle />
+          <TopLeftHandle handleStyle={props.handleStyle} />
+          <TopRightHandle handleStyle={props.handleStyle} />
+          <BottomLeftHandle handleStyle={props.handleStyle} />
+          <BottomRightHandle handleStyle={props.handleStyle} />
 
-            <Handle
-              offset={{ left: "50%", top: "50%" }}
-              allowResize={{ vertical: true, horizontal: true }}
-              handleBaseProps={{ resizeRatio: 2 }}
-              size={0}
+          <Handle
+            offset={{ left: "50%", top: "50%" }}
+            allowResize={{ vertical: true, horizontal: true }}
+            handleBaseProps={{ resizeRatio: 2 }}
+            size={0}
+          >
+            <div
+              style={{
+                border: "solid blue",
+                borderRadius: "50%",
+                padding: 8,
+                textAlign: "center",
+                cursor: "pointer",
+              }}
             >
-              <div
-                style={{
-                  border: "solid blue",
-                  borderRadius: "50%",
-                  padding: 8,
-                  textAlign: "center",
-                  cursor: "pointer",
-                }}
-              >
-                resize me
-              </div>
-            </Handle>
-          </HandlesParentForward>
-        }
-      >
-        <ResizableElement>{children}</ResizableElement>
+              resize me
+            </div>
+          </Handle>
+        </HandlesParentForward>
       </ResizableBaseForward>
     )) ||
     null
@@ -446,7 +442,7 @@ const RightHandle: React.FC<SpecificHandleProps> = (props) => {
 const TopLeftHandle: React.FC<SpecificHandleProps> = (props) => {
   return (
     <Handle
-      allowResize={{ horizontal: true, vertical: true }}
+      allowResize={{ horizontal: { reverseDrag: true }, vertical: { reverseDrag: true } }}
       handleCursor={"nwse-resize"}
       transform={"translate(-50%, -50%)"}
       {...props}
@@ -457,7 +453,7 @@ const TopRightHandle: React.FC<SpecificHandleProps> = (props) => {
   return (
     <Handle
       offset={{ left: "100%", top: "0%" }}
-      allowResize={{ horizontal: false, vertical: true }}
+      allowResize={{ horizontal: true, vertical: { reverseDrag: true } }}
       handleCursor={"nesw-resize"}
       transform={"translate(-50%, -50%)"}
       {...props}
@@ -468,7 +464,7 @@ const BottomLeftHandle: React.FC<SpecificHandleProps> = (props) => {
   return (
     <Handle
       offset={{ left: "0%", top: "100%" }}
-      allowResize={{ horizontal: true, vertical: false }}
+      allowResize={{ horizontal: { reverseDrag: true }, vertical: true }}
       handleCursor={"nesw-resize"}
       transform={"translate(-50%, -50%)"}
       {...props}
@@ -479,7 +475,7 @@ const BottomRightHandle: React.FC<SpecificHandleProps> = (props) => {
   return (
     <Handle
       offset={{ left: "100%", top: "100%" }}
-      allowResize={{ horizontal: false, vertical: false }}
+      allowResize={{ horizontal: true, vertical: true }}
       handleCursor={"nwse-resize"}
       transform={"translate(-50%, -50%)"}
       {...props}
