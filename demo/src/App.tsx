@@ -24,7 +24,7 @@ export const BoxStyle = {
   alignItems: "center",
 } as React.CSSProperties;
 
-const SomeComp = React.forwardRef((props, ref) => {
+const SomeDiv = React.forwardRef((props, ref) => {
   return (
     <div ref={ref} style={{ border: "solid" }}>
       wonderful div
@@ -47,11 +47,13 @@ function App() {
     <div>
       <button onClick={() => reredner()}>rerender</button>
 
-      <TestResizableBase />
+      {/*<TestResizableBase />*/}
 
-      <ResizableAndDraggable />
+      {/*<ResizableAndDraggable />*/}
 
-      {/*<div>some div</div>*/}
+      <ResizableExpr resizeRatio={2} enabledHandles={undefined} handleStyle={{ background: "red", opacity: 0.3 }}>
+        <SomeDiv />
+      </ResizableExpr>
       {/*<TextField />*/}
 
       {/*/!*@ts-ignore*!/*/}
@@ -66,10 +68,10 @@ function App() {
 
       {/*/!* high level simplified example*!/*/}
       {/*<ResizableExpr handleStyle={{ background: "gray", opacity: 0.5 }} imperativeRef={ResizableRef}>*/}
-      {/*  <SomeComp />*/}
+      {/*  <SomeDiv />*/}
       {/*</ResizableExpr>*/}
       {/*<Draggable>*/}
-      {/*  <SomeComp />*/}
+      {/*  <SomeDiv />*/}
       {/*</Draggable>*/}
 
       {/*<TestResizable />*/}
@@ -148,11 +150,7 @@ const TestResizableBase = () => {
           allowResize={{ vertical: true, horizontal: true }}
           handleBaseProps={{ resizeRatio: 2 }}
         >
-          <div
-            style={{ border: "solid blue", borderRadius: "50%", padding: 8, textAlign: "center", cursor: "pointer" }}
-          >
-            resize me
-          </div>
+          <div style={{ border: "solid blue", borderRadius: "50%", padding: 8, textAlign: "center", cursor: "pointer" }}>resize me</div>
         </Handle>
       </HandlesParent>
     </ResizableBase>
@@ -304,10 +302,7 @@ export const ResizableExample = () => {
           <div style={{ border: "20px grey solid", overflow: "hidden" }}>
             <div style={{ height: 200, border: "dashed 1px", marginBottom: 16 }}>
               with relative size
-              <ResizableProd
-                handleStyle={{ background: "red" }}
-                handlersOptions={{ left: { size: 24 }, top: { size: 4 } }}
-              >
+              <ResizableProd handleStyle={{ background: "red" }} handlersOptions={{ left: { size: 24 }, top: { size: 4 } }}>
                 <div style={{ border: "solid", height: "50%" }}>
                   my initial size is 50% of parent
                   <br />

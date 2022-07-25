@@ -5,7 +5,7 @@ import usePassRef from "shared/hooks/usePassRef";
 import { useOneTimeWarn } from "shared/hooks/useOneTimeWarn";
 import { useResizableWarn } from "./utils";
 
-interface ResizableElementProps {
+export interface ResizableElementProps {
   children?: React.ReactElement;
   nodeRef?: React.RefObject<HTMLElement>;
   disableControl?: PossiblySpecifyAxis<boolean>;
@@ -35,7 +35,6 @@ const ResizableElementForward = React.forwardRef<HTMLElement, ResizableElementPr
     nodeRef,
     render,
   } = ResizableState;
-  console.log(nodeRef.current);
 
   const childNodeRef = usePassRef<HTMLElement>(p.children);
   // @ts-ignore
@@ -50,7 +49,6 @@ const ResizableElementForward = React.forwardRef<HTMLElement, ResizableElementPr
   // if wrapper component tried to access the inner DOM node, let it do so
   if (forwardedRef && typeof forwardedRef == "object" && "current" in forwardedRef && nodeRef)
     forwardedRef.current = nodeRef.current;
-  console.log(nodeRef.current);
 
   // control and update the size of the node on each render
   const disableWidthControl = typeof p.disableControl === "boolean" ? p.disableControl : p.disableControl?.horizontal;
@@ -143,7 +141,6 @@ export const checkProps = (props: ResizableProps, nodeRef: React.RefObject<HTMLE
   if (nodeRef.current) {
     const node = nodeRef.current;
     if (props.enableRelativeOffset || (node.style?.position && node.style?.position == "static")) {
-      console.log(node.style?.position);
       warn(
         `enableRelativeOffset is set to true, so style.position should be set to value other than 'static',currently it is '${node.style?.position}'`
       );

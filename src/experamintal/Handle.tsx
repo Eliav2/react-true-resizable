@@ -3,8 +3,8 @@ import HandleBase, { HandleBaseProps } from "./HandleBase";
 import { getRelativeSizeValue } from "shared/utils";
 import { RelativeSize } from "shared/types";
 
-export interface SpecificHandleProps {
-  handleBaseProps?: Partial<HandleBaseProps>;
+export interface HandleProps extends Omit<HandleBaseProps, "children"> {
+  // handleBaseProps?: Partial<HandleBaseProps>;
   size?: number;
   allowResize?: HandleBaseProps["allowResize"];
   offset?: HandleBaseProps["offset"];
@@ -17,7 +17,7 @@ export interface SpecificHandleProps {
 }
 
 /** abstraction over HandleBase */
-const Handle: React.FC<SpecificHandleProps> = (props) => {
+const Handle: React.FC<HandleProps> = (props) => {
   let {
     children,
     size = children ? 0 : 12,
@@ -26,9 +26,9 @@ const Handle: React.FC<SpecificHandleProps> = (props) => {
     handleWidth = size,
     handleHeight = size,
     handleCursor = "pointer",
-    handleBaseProps,
     handleStyle,
     transform,
+    ...handleBaseProps
   } = props;
   // if (!props.handleHeight && !props.handleWidth) {
   //   handleWidth = 0;

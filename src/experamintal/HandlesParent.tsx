@@ -16,7 +16,7 @@ export const HandlesParentState = React.createContext<HandlesParentState>({
 });
 
 export interface HandlesParentProps {
-  children: PossiblyArray<React.ReactElement>;
+  children: PossiblyArray<React.ReactNode>;
 }
 
 export interface HandlesParentInjectedChildrenProps {
@@ -47,7 +47,6 @@ const HandlesParentForward = React.forwardRef<HandlesParentRefHandle, HandlesPar
     handlesParentPosition,
   }));
 
-  console.log(nodeRef.current);
   return (
     nodeRef.current && (
       // inject handles as children to target DOM node
