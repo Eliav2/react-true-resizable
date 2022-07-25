@@ -55,9 +55,8 @@ function App() {
         <ResizableExpr
           // enabledHandles={["left", "right"]}
           // handleStyle={{ background: "red", opacity: 0.3 }}
-          HandlesProps={{ style: { background: "red", opacity: 0.3 }, resizeRatio: 2, grid: 30 }}
+          HandlesProps={{ style: { background: "red", opacity: 0.3 }, resizeRatio: { horizontal: 2 }, grid: 30 }}
           HandleProps={{ right: { style: { background: "blue", opacity: 0.3 } } }}
-
           // HandleProps={}
         >
           <SomeDiv />

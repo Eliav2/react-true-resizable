@@ -27,10 +27,10 @@ export interface HandleBaseProps {
   resizeRatio?: PossiblySpecifyAxis<number>;
   onResizeEnd?: (prevPos: Exclude<positionType, null>) => void;
   onResizeStart?: (prevPos: Exclude<positionType, null>) => void;
-  onResize?:
-    | OnResizeEvent
-    | { horizontal?: OnResizeUpdate<{ width: number }>; vertical?: OnResizeUpdate<{ height: number }> };
+  onResize?: OnResizeEvent | { horizontal?: OnResizeUpdate<{ width: number }>; vertical?: OnResizeUpdate<{ height: number }> };
   enableRelativeOffset?: boolean;
+
+  disableControl?: PossiblySpecifyAxis<boolean>;
 }
 
 interface HandleNewFinalProps extends HandleBaseProps, HandlesParentInjectedChildrenProps {}
@@ -137,6 +137,9 @@ const HandleBase: FC<HandleBaseProps> = (_props) => {
     }
     if (typeof props?.onResizeEnd === "function") props.onResizeEnd(nodePosition);
   };
+  const disableWidthControl = typeof props.disableControl === "boolean" ? props.disableControl : props.disableControl?.horizontal;
+  const disableHeightControl = typeof props.disableControl === "boolean" ? props.disableControl : props.disableControl?.vertical;
+
   const resize = (event: React.PointerEvent<HTMLDivElement>) => {
     // console.log("handleResize");
     // event.nativeEvent.stopImmediatePropagation();
@@ -150,9 +153,7 @@ const HandleBase: FC<HandleBaseProps> = (_props) => {
       if (grid.vertical)
         // snap to grid with initial grid offset
         height -=
-          ((event.clientY % grid.vertical) - (initialDraggingPointerPos.y % grid.vertical)) *
-          dragDirVertical *
-          resizeRatio.vertical;
+          ((event.clientY % grid.vertical) - (initialDraggingPointerPos.y % grid.vertical)) * dragDirVertical * resizeRatio.vertical;
       // enable natural resize of top handle
       if (props.enableRelativeOffset && dragDirVertical === -1) {
         if (height > 0) setCalculatedTop(getEnableRelativeOffsetTop(event) + endDraggingOffsetTop);
@@ -174,11 +175,11 @@ const HandleBase: FC<HandleBaseProps> = (_props) => {
         if (width > 0) setCalculatedLeft(getEnableRelativeOffsetLeft(event) + endDraggingOffsetLeft);
       }
 
-      if ("vertical" in props.allowResize && props.allowResize["vertical"]) {
+      if ("vertical" in props.allowResize && props.allowResize["vertical"] && !disableHeightControl) {
         setCalculatedHeight(height);
         if (typeof props?.onResize === "object") props.onResize.vertical?.({ height }, nodePosition);
       }
-      if ("horizontal" in props.allowResize && props.allowResize["horizontal"]) {
+      if ("horizontal" in props.allowResize && props.allowResize["horizontal"] && !disableWidthControl) {
         setCalculatedWidth(width);
         if (typeof props?.onResize === "object") props.onResize.horizontal?.({ width }, nodePosition);
       }
@@ -212,6 +213,7 @@ const HandleNewDefaultProps = {
   offset: { left: "0%", top: "0%" },
   resizeRatio: 1,
   allowResize: {},
+  disableControl: false,
 } as const;
 HandleBase.defaultProps = HandleNewDefaultProps;
 

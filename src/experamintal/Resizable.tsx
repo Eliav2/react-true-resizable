@@ -358,7 +358,11 @@ const ResizableForward = React.forwardRef<HTMLElement, NewResizableProps>(functi
   const finalHandleProps = props.enabledHandles?.reduce(
     (acc, handleName) => ({
       ...acc,
-      [handleName]: { ...props.HandlesProps, ...(props.HandleProps ?? {})[handleName] },
+      [handleName]: {
+        ...props.HandlesProps,
+        ...(props.HandleProps ?? {})[handleName],
+        disableControl: props.disableControl,
+      },
     }),
     {}
   ) as { [key in NonNullable<typeof props.enabledHandles>[number]]: React.ReactElement };
