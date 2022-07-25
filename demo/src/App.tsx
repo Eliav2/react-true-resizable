@@ -51,9 +51,18 @@ function App() {
 
       {/*<ResizableAndDraggable />*/}
 
-      <ResizableExpr resizeRatio={2} enabledHandles={undefined} handleStyle={{ background: "red", opacity: 0.3 }}>
-        <SomeDiv />
-      </ResizableExpr>
+      <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+        <ResizableExpr
+          // enabledHandles={["left", "right"]}
+          // handleStyle={{ background: "red", opacity: 0.3 }}
+          HandlesProps={{ style: { background: "red", opacity: 0.3 }, resizeRatio: 2, grid: 30 }}
+          HandleProps={{ right: { style: { background: "blue", opacity: 0.3 } } }}
+
+          // HandleProps={}
+        >
+          <SomeDiv />
+        </ResizableExpr>
+      </div>
       {/*<TextField />*/}
 
       {/*/!*@ts-ignore*!/*/}
@@ -150,7 +159,17 @@ const TestResizableBase = () => {
           allowResize={{ vertical: true, horizontal: true }}
           handleBaseProps={{ resizeRatio: 2 }}
         >
-          <div style={{ border: "solid blue", borderRadius: "50%", padding: 8, textAlign: "center", cursor: "pointer" }}>resize me</div>
+          <div
+            style={{
+              border: "solid blue",
+              borderRadius: "50%",
+              padding: 8,
+              textAlign: "center",
+              cursor: "pointer",
+            }}
+          >
+            resize me
+          </div>
         </Handle>
       </HandlesParent>
     </ResizableBase>

@@ -98,7 +98,7 @@ export interface ResizableProps {
   handle?: HandleType;
 
   /** An array handles to enable */
-  enabledHandles?: HandleNameType[];
+  enabledHandles?: HandleNamePropType[];
   /** options that will be passed to all handles */
   handleOptions?: Partial<HandleOptions>;
   /** options that will be passed to specific handles. overrides handleOptions */
@@ -302,7 +302,7 @@ export interface ResizableProps {
 // };
 // ResizableBaseOldForward.defaultProps = ResizableDefaultProps;
 
-interface NewResizableProps extends ResizableProps {
+interface NewResizableProps extends ResizableElementProps {
   children?: React.ReactElement;
   nodeRef?: React.RefObject<HTMLElement>;
   // handleStyle?: React.CSSProperties;
@@ -310,12 +310,11 @@ interface NewResizableProps extends ResizableProps {
   imperativeRef?: React.RefObject<ResizableRefHandle>;
 
   enabledHandles?: HandleNameType[];
-  handlesProps?: HandleProps;
-  handleProps?: HandleProps;
-  // handleOptions?: Partial<HandleOptions>;
-  // handlesOptions?: PossibleHandle<Partial<HandleOptions>>;
+  HandlesProps?: HandleProps;
+  HandleProps?: { [key in HandleNameType]?: HandleProps };
   extraHandles?: React.ReactNode;
 
+  // ResizableElementProps?: ResizableElementProps
   // grid?: PossiblySpecifyAxis<number>;
   // resizeRatio?: PossiblySpecifyAxis<number>;
   // disableControl?: PossiblySpecifyAxis<boolean>;
@@ -356,22 +355,34 @@ const ResizableForward = React.forwardRef<HTMLElement, NewResizableProps>(functi
   }));
 
   const ResizableElemProps: ResizableElementProps = pick(props, ["nodeRef", "disableControl", "height", "width", "enableRelativeOffset"]);
-  const eh = props.enabledHandles;
+  const finalHandleProps = props.enabledHandles?.reduce(
+    (acc, handleName) => ({
+      ...acc,
+      [handleName]: { ...props.HandlesProps, ...(props.HandleProps ?? {})[handleName] },
+    }),
+    {}
+  ) as { [key in NonNullable<typeof props.enabledHandles>[number]]: React.ReactElement };
+
   return (
     (children && (
       <ResizableBaseForward imperativeRef={ResizableBaseRef}>
         <ResizableElement {...ResizableElemProps}>{children}</ResizableElement>
         <HandlesParentForward ref={HandlesParentRef}>
-          {/* sides */}
-          {eh?.includes("top") && <TopHandle handleStyle={props.handleStyle} />}
-          {eh?.includes("right") && <RightHandle handleStyle={props.handleStyle} />}
-          {eh?.includes("bottom") && <BottomHandle handleStyle={props.handleStyle} />}
-          {eh?.includes("left") && <LeftHandle handleStyle={props.handleStyle} />}
-          {/* corners */}
-          {eh?.includes("topLeft") && <TopLeftHandle handleStyle={props.handleStyle} />}
-          {eh?.includes("topRight") && <TopRightHandle handleStyle={props.handleStyle} />}
-          {eh?.includes("bottomLeft") && <BottomLeftHandle handleStyle={props.handleStyle} />}
-          {eh?.includes("bottomRight") && <BottomRightHandle handleStyle={props.handleStyle} />}
+          {props.enabledHandles?.map((handleName) => {
+            const Comp = defaultHandlesMap[handleName];
+            return <Comp {...finalHandleProps[handleName]} key={handleName} />;
+          })}
+
+          {/*/!* sides *!/*/}
+          {/*{eh?.includes("top") && <TopHandle style={props.handleStyle} />}*/}
+          {/*{eh?.includes("right") && <RightHandle style={props.handleStyle} />}*/}
+          {/*{eh?.includes("bottom") && <BottomHandle style={props.handleStyle} />}*/}
+          {/*{eh?.includes("left") && <LeftHandle style={props.handleStyle} />}*/}
+          {/*/!* corners *!/*/}
+          {/*{eh?.includes("topLeft") && <TopLeftHandle style={props.handleStyle} />}*/}
+          {/*{eh?.includes("topRight") && <TopRightHandle style={props.handleStyle} />}*/}
+          {/*{eh?.includes("bottomLeft") && <BottomLeftHandle style={props.handleStyle} />}*/}
+          {/*{eh?.includes("bottomRight") && <BottomRightHandle style={props.handleStyle} />}*/}
 
           {/* possibly extra handles */}
           {props.extraHandles}
@@ -382,20 +393,21 @@ const ResizableForward = React.forwardRef<HTMLElement, NewResizableProps>(functi
   );
 });
 
-const defaultHandlesNames = ["top", "right", "bottom", "left", "topLeft", "topRight", "bottomLeft", "bottomRight"] as const;
-type HandleNameType = typeof defaultHandlesNames[number];
+// const defaultHandlesNames = ["top", "right", "bottom", "left", "topLeft", "topRight", "bottomLeft", "bottomRight"] as const;
+// type HandleNameSynonyms = "horizontal" | "vertical" | "corners" | "sides";
+type HandleNameType = keyof typeof defaultHandlesMap;
+// type HandleNamePropType = HandleNameType | HandleNameSynonyms;
 
-export const ResizableDefaultProps = {
-  // enabledHandles: Object.keys(defaultHandlesFn) as HandleNameType[],
-  handleOptions: {},
-  handlesOptions: {},
-  disableControl: false,
-  handleStyle: {},
-  handlesStyle: {},
-  resizeRatio: 1,
-  enabledHandles: defaultHandlesNames as unknown as HandleNameType[],
-} as const;
-ResizableForward.defaultProps = ResizableDefaultProps;
+// const handlesSynonymsOpposite = {
+//   right: ["horizontal", "sides"],
+//   left: ["horizontal", "sides"],
+//   bottom: ["vertical", "sides"],
+//   top: ["vertical", "sides"],
+//   topLeft: ["corners"],
+//   topRight: ["corners"],
+//   bottomLeft: ["corners"],
+//   bottomRight: ["corners"]
+// } as const;
 
 export interface ResizableRefHandle {
   /** function that resets the height/width of the target DOM node to initial state*/
@@ -497,5 +509,28 @@ const BottomRightHandle: React.FC<HandleProps> = (props) => {
     />
   );
 };
+
+const defaultHandlesMap = {
+  top: TopHandle,
+  bottom: BottomHandle,
+  left: LeftHandle,
+  right: RightHandle,
+  topLeft: TopLeftHandle,
+  topRight: TopRightHandle,
+  bottomLeft: BottomLeftHandle,
+  bottomRight: BottomRightHandle,
+} as const;
+
+export const ResizableDefaultProps = {
+  // enabledHandles: Object.keys(defaultHandlesFn) as HandleNameType[],
+  handleOptions: {},
+  handlesOptions: {},
+  disableControl: false,
+  handleStyle: {},
+  handlesStyle: {},
+  resizeRatio: 1,
+  enabledHandles: Object.keys(defaultHandlesMap) as HandleNameType[],
+} as const;
+ResizableForward.defaultProps = ResizableDefaultProps;
 
 export default ResizableForward;

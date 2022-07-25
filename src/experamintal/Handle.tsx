@@ -8,7 +8,7 @@ export interface HandleProps extends Omit<HandleBaseProps, "children"> {
   size?: number;
   allowResize?: HandleBaseProps["allowResize"];
   offset?: HandleBaseProps["offset"];
-  handleStyle?: React.CSSProperties;
+  style?: React.CSSProperties;
   handleWidth?: RelativeSize;
   handleHeight?: RelativeSize;
   handleCursor?: React.CSSProperties["cursor"];
@@ -26,7 +26,7 @@ const Handle: React.FC<HandleProps> = (props) => {
     handleWidth = size,
     handleHeight = size,
     handleCursor = "pointer",
-    handleStyle,
+    style,
     transform,
     ...handleBaseProps
   } = props;
@@ -50,7 +50,7 @@ const Handle: React.FC<HandleProps> = (props) => {
             width: getRelativeSizeValue(handleWidth, calculatedWidth),
             cursor: handleCursor,
             transform,
-            ...handleStyle,
+            ...style,
 
             // @remove
             // background: "red",
