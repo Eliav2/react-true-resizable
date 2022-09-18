@@ -51,17 +51,23 @@ function App() {
 
       {/*<ResizableAndDraggable />*/}
 
-      <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
-        <ResizableExpr
-          // enabledHandles={["left", "right"]}
-          // handleStyle={{ background: "red", opacity: 0.3 }}
-          HandlesProps={{ style: { background: "red", opacity: 0.3 }, resizeRatio: { horizontal: 2 }, grid: 30 }}
-          HandleProps={{ right: { style: { background: "blue", opacity: 0.3 } } }}
-          // HandleProps={}
-        >
-          <SomeDiv />
-        </ResizableExpr>
-      </div>
+      {/*<div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>*/}
+      {/*  <ResizableExpr*/}
+      {/*    enabledHandles={["left", "right", "bottom"]}*/}
+      {/*    // handleStyle={{ background: "red", opacity: 0.3 }}*/}
+      {/*    HandlesProps={{ style: { background: "red", opacity: 0.3 }, resizeRatio: { horizontal: 2 }, grid: 30 }}*/}
+      {/*    HandleProps={{ right: { style: { background: "blue", opacity: 0.3 } } }}*/}
+      {/*    // height={100}*/}
+      {/*    // enableRelativeOffset*/}
+      {/*    // width={300}*/}
+      {/*    // disableControl*/}
+      {/*  >*/}
+      {/*    <SomeDiv />*/}
+      {/*  </ResizableExpr>*/}
+      {/*</div>*/}
+
+      <ControlledExample />
+
       {/*<TextField />*/}
 
       {/*/!*@ts-ignore*!/*/}
@@ -204,11 +210,12 @@ const ControlledExample = () => {
         <TextField value={widthInput} onChange={(e) => setWidthInput(e.target.value)} />
         <Button
           variant={"outlined"}
-          onClick={() =>
+          onClick={() => {
+            // console.log("ResizableRef");
             ResizableRef.current?.restControl({
               callback: (initialHeight, initialWidth) => setWidthInput(initialWidth),
-            })
-          }
+            });
+          }}
         >
           Reset
         </Button>
@@ -217,9 +224,12 @@ const ControlledExample = () => {
         <ResizableExpr
           ResizableRef={ResizableRef}
           width={widthInput}
-          onResize={{
-            horizontal: (newPos, prevPos) => {
-              setWidthInput(newPos.width.toFixed(1) + "px");
+          HandlesProps={{
+            onResize: {
+              horizontal: (newPos, prevPos) => {
+                console.log("horizontal" /*newPos, prevPos*/);
+                setWidthInput(newPos.width.toFixed(1) + "px");
+              },
             },
           }}
         >

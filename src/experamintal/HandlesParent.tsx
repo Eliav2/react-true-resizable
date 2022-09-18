@@ -32,10 +32,7 @@ export interface HandlesParentRefHandle {
 /**
  * injects parent handles as a children of the target DOM node using portal
  */
-const HandlesParentForward = React.forwardRef<HandlesParentRefHandle, HandlesParentProps>(function HandlesParent(
-  { children },
-  ref
-) {
+const HandlesParentForward = React.forwardRef<HandlesParentRefHandle, HandlesParentProps>(function HandlesParent({ children }, ref) {
   // console.log("HandlesParent");
   const handleParentRef = useRef<HTMLDivElement>(null);
   const handlesParentPosition = usePosition(handleParentRef.current);
@@ -51,10 +48,7 @@ const HandlesParentForward = React.forwardRef<HandlesParentRefHandle, HandlesPar
     nodeRef.current && (
       // inject handles as children to target DOM node
       <HandlesParentState.Provider value={{ handleParentRef, handlesParentPosition, contextAppear: true }}>
-        {ReactDOM.createPortal(
-          <div style={{ position: "absolute" }} ref={handleParentRef} children={children} />,
-          nodeRef.current
-        )}
+        {ReactDOM.createPortal(<div style={{ position: "absolute" }} ref={handleParentRef} children={children} />, nodeRef.current)}
       </HandlesParentState.Provider>
     )
   );

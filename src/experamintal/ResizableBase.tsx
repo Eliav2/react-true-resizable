@@ -17,11 +17,9 @@ interface ResizableBaseProps {
  * does not inject handles
  */
 const ResizableBaseForward = React.forwardRef<HTMLElement, ResizableBaseProps>(function ResizableBase(
-  _props: ResizableBaseProps,
+  props: ResizableBaseProps,
   forwardedRef
 ) {
-  const props = _props as RespectDefaultProps<ResizableBaseProps, typeof ResizableDefaultProps>;
-
   let nodeRef = useRef<HTMLElement>(null);
   const nodePosition = usePosition(nodeRef.current);
 
@@ -94,22 +92,15 @@ const ResizableBaseForward = React.forwardRef<HTMLElement, ResizableBaseProps>(f
 
   useImperativeHandle(props.imperativeRef, () => val);
 
-  return (
-    (props.children && (
-      <ResizableBaseContext.Provider value={val}>
-        {/*<ResizableElement {...resizableElementProps}>{props.children}</ResizableElement>*/}
-        {props.children}
-      </ResizableBaseContext.Provider>
-    )) ||
-    null
-  );
+  return (props.children && <ResizableBaseContext.Provider value={val}>{props.children}</ResizableBaseContext.Provider>) || null;
 });
 
 export const useResizableBase = () => {
   const val = React.useContext(ResizableBaseContext);
   if (process.env.NODE_ENV !== "production") {
     const warn = useResizableWarn();
-    if (!val.contextAppear) warn("Component is not wrapped with ResizableState, so it will not work properly");
+    console.log("val.contextAppear", val.contextAppear);
+    if (!val.contextAppear) warn("Component is not wrapped with ResizableBase, so it will not work properly");
   }
   return React.useContext(ResizableBaseContext);
 };

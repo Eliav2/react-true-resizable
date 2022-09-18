@@ -19,22 +19,10 @@ export interface ResizableElementProps {
  * This component will read the state, and sets the DOM node's style properties to match the state.
  * */
 // export const ResizableElement: React.FC<ResizableElementProps> = (p) => {
-const ResizableElementForward = React.forwardRef<HTMLElement, ResizableElementProps>(function ResizableElement(
-  p,
-  forwardedRef
-) {
+const ResizableElementForward = React.forwardRef<HTMLElement, ResizableElementProps>(function ResizableElement(p, forwardedRef) {
   // let { nodeRef, disableControl, height, width, enableRelativeOffset, children } = props;
   const ResizableState = useResizableBase();
-  let {
-    calculatedHeight,
-    calculatedWidth,
-    calculatedTop,
-    calculatedLeft,
-    initialHeight,
-    initialWidth,
-    nodeRef,
-    render,
-  } = ResizableState;
+  let { calculatedHeight, calculatedWidth, calculatedTop, calculatedLeft, initialHeight, initialWidth, nodeRef, render } = ResizableState;
 
   const childNodeRef = usePassRef<HTMLElement>(p.children);
   // @ts-ignore
@@ -47,20 +35,19 @@ const ResizableElementForward = React.forwardRef<HTMLElement, ResizableElementPr
     nodeRef.current = p.nodeRef.current;
   }
   // if wrapper component tried to access the inner DOM node, let it do so
-  if (forwardedRef && typeof forwardedRef == "object" && "current" in forwardedRef && nodeRef)
-    forwardedRef.current = nodeRef.current;
+  if (forwardedRef && typeof forwardedRef == "object" && "current" in forwardedRef && nodeRef) forwardedRef.current = nodeRef.current;
 
   // control and update the size of the node on each render
   const disableWidthControl = typeof p.disableControl === "boolean" ? p.disableControl : p.disableControl?.horizontal;
   const disableHeightControl = typeof p.disableControl === "boolean" ? p.disableControl : p.disableControl?.vertical;
   let height;
-  if (height) p.height = typeof p.height === "number" ? `${p.height}px` : p.height;
+  if (p.height) height = typeof p.height === "number" ? `${p.height}px` : p.height;
   else {
     height = !disableHeightControl ? calculatedHeight ?? nodeRef?.current?.style?.height : undefined;
     if (height) height += "px";
   }
   let width;
-  if (width) p.width = typeof p.width === "number" ? `${p.width}px` : p.width;
+  if (p.width) width = typeof p.width === "number" ? `${p.width}px` : p.width;
   else {
     width = !disableWidthControl ? calculatedWidth ?? nodeRef?.current?.style?.width : undefined;
     if (width) width += "px";
@@ -136,8 +123,7 @@ export const checkProps = (props: ResizableProps, nodeRef: React.RefObject<HTMLE
         `Resizable: element '${props.children}' is not valid child for Resizable, wrap it simple element like div element\nFor example - <div>${props.children}</div>`
       );
   }
-  if (!props.nodeRef && !props.children)
-    warn("at least one property: 'nodeRef' or 'children' should be passed to Resizable");
+  if (!props.nodeRef && !props.children) warn("at least one property: 'nodeRef' or 'children' should be passed to Resizable");
   if (nodeRef.current) {
     const node = nodeRef.current;
     if (props.enableRelativeOffset || (node.style?.position && node.style?.position == "static")) {

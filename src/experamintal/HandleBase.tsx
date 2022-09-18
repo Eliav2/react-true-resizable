@@ -8,13 +8,14 @@ import { AllowResize } from "./HandleOld";
 import { parsePossiblySpecific, PossiblySpecific } from "shared/utils/props";
 import { parseRelativeSize } from "shared/utils";
 import { useResizableWarn } from "./utils";
+import { ResizableElementProps } from "./ResizableElement";
 
 type OnResizeEvent = (newPos: { height: number; width: number }, prevPos: Exclude<positionType, null>) => void;
 type OnResizeUpdate<T> = (newPos: T, prevPos: Exclude<positionType, null>) => void;
 
 type HandleFunc = (event: React.PointerEvent<HTMLDivElement>) => void;
 
-export interface HandleBaseProps {
+export interface HandleBaseProps extends Pick<ResizableElementProps, "disableControl" | "height" | "width"> {
   children: (args: {
     style: Pick<React.CSSProperties, "left" | "top" | "position">;
     eventHandlers: { onPointerDown: HandleFunc; onPointerMove: HandleFunc; onPointerUp: HandleFunc };
@@ -29,8 +30,6 @@ export interface HandleBaseProps {
   onResizeStart?: (prevPos: Exclude<positionType, null>) => void;
   onResize?: OnResizeEvent | { horizontal?: OnResizeUpdate<{ width: number }>; vertical?: OnResizeUpdate<{ height: number }> };
   enableRelativeOffset?: boolean;
-
-  disableControl?: PossiblySpecifyAxis<boolean>;
 }
 
 interface HandleNewFinalProps extends HandleBaseProps, HandlesParentInjectedChildrenProps {}
@@ -155,6 +154,8 @@ const HandleBase: FC<HandleBaseProps> = (_props) => {
         height -=
           ((event.clientY % grid.vertical) - (initialDraggingPointerPos.y % grid.vertical)) * dragDirVertical * resizeRatio.vertical;
       // enable natural resize of top handle
+      if (props.height) height = typeof props.height === "string" ? parseFloat(props.height) : props.height;
+
       if (props.enableRelativeOffset && dragDirVertical === -1) {
         if (height > 0) setCalculatedTop(getEnableRelativeOffsetTop(event) + endDraggingOffsetTop);
       }
@@ -170,6 +171,9 @@ const HandleBase: FC<HandleBaseProps> = (_props) => {
           ((event.clientX % grid.horizontal) - (initialDraggingPointerPos.x % grid.horizontal)) *
           dragDirHorizontal *
           resizeRatio.horizontal;
+
+      if (props.width) width = typeof props.width === "string" ? parseFloat(props.width) : props.width;
+
       // enable natural resize of left handle
       if (props.enableRelativeOffset && dragDirHorizontal === -1) {
         if (width > 0) setCalculatedLeft(getEnableRelativeOffsetLeft(event) + endDraggingOffsetLeft);
@@ -179,6 +183,7 @@ const HandleBase: FC<HandleBaseProps> = (_props) => {
         setCalculatedHeight(height);
         if (typeof props?.onResize === "object") props.onResize.vertical?.({ height }, nodePosition);
       }
+      // console.log(props.onResize);
       if ("horizontal" in props.allowResize && props.allowResize["horizontal"] && !disableWidthControl) {
         setCalculatedWidth(width);
         if (typeof props?.onResize === "object") props.onResize.horizontal?.({ width }, nodePosition);

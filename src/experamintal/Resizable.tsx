@@ -5,9 +5,9 @@ import usePosition, { positionType } from "shared/hooks/usePosition";
 import { defaultHandlesFn, PossibleHandle } from "../HandleFns";
 import { omitItems } from "../utils";
 import type { Expand, RespectDefaultProps } from "shared/types";
-import ResizableBaseForward, { ResizableBaseContextProps, useResizableBase } from "./ResizableBase";
+import ResizableBase, { ResizableBaseContextProps, useResizableBase } from "./ResizableBase";
 import { PossiblySpecific } from "shared/utils/props";
-import HandlesParentForward, { HandlesParentRefHandle } from "./HandlesParent";
+import HandlesParent, { HandlesParentRefHandle } from "./HandlesParent";
 import { HandleBaseProps } from "./HandleBase";
 import Handle, { HandleProps } from "./Handle";
 import ResizableElement, { ResizableElementProps } from "./ResizableElement";
@@ -361,7 +361,7 @@ const ResizableForward = React.forwardRef<HTMLElement, NewResizableProps>(functi
       [handleName]: {
         ...props.HandlesProps,
         ...(props.HandleProps ?? {})[handleName],
-        disableControl: props.disableControl,
+        ...ResizableElemProps,
       },
     }),
     {}
@@ -369,9 +369,9 @@ const ResizableForward = React.forwardRef<HTMLElement, NewResizableProps>(functi
 
   return (
     (children && (
-      <ResizableBaseForward imperativeRef={ResizableBaseRef}>
+      <ResizableBase imperativeRef={ResizableBaseRef}>
         <ResizableElement {...ResizableElemProps}>{children}</ResizableElement>
-        <HandlesParentForward ref={HandlesParentRef}>
+        <HandlesParent ref={HandlesParentRef}>
           {props.enabledHandles?.map((handleName) => {
             const Comp = defaultHandlesMap[handleName];
             return <Comp {...finalHandleProps[handleName]} key={handleName} />;
@@ -390,8 +390,8 @@ const ResizableForward = React.forwardRef<HTMLElement, NewResizableProps>(functi
 
           {/* possibly extra handles */}
           {props.extraHandles}
-        </HandlesParentForward>
-      </ResizableBaseForward>
+        </HandlesParent>
+      </ResizableBase>
     )) ||
     null
   );
