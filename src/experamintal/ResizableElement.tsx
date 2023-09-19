@@ -1,7 +1,7 @@
 import React, { useLayoutEffect } from "react";
 import { useResizableBase } from "./ResizableBase";
 import { PossiblySpecifyAxis, ResizableProps } from "./Resizable";
-import usePassRef from "shared/hooks/usePassRef";
+import { usePassRef } from "shared/hooks/usePassChildrenRef";
 import { useOneTimeWarn } from "shared/hooks/useOneTimeWarn";
 import { useResizableWarn } from "./utils";
 
