@@ -74,9 +74,7 @@ export interface ResizableProps {
 
   onResizeEnd?: (prevPos: Exclude<positionType, null>) => void;
   onResizeStart?: (prevPos: Exclude<positionType, null>) => void;
-  onResize?:
-    | OnResizeEvent
-    | { horizontal?: OnResizeUpdate<{ width: number }>; vertical?: OnResizeUpdate<{ height: number }> };
+  onResize?: OnResizeEvent | { horizontal?: OnResizeUpdate<{ width: number }>; vertical?: OnResizeUpdate<{ height: number }> };
   // todo: enable events on specially horizontally or vertically
   // onResizeEnd?: PossiblySpecifyAxis<(dims: positionType) => void>;
   // onResizeStart?: PossiblySpecifyAxis<(dims: positionType) => void>;
@@ -131,22 +129,10 @@ export interface ResizableRefHandle {
 
 // ResizableProps type after merge with default props
 export type ResizablePropsDP = RespectDefaultProps<ResizableProps, typeof ResizableDefaultProps>;
-const Resizable = React.forwardRef<HTMLElement, ResizableProps>(function ResizableForward(
-  _props: ResizableProps,
-  forwardedRef
-) {
+const Resizable = React.forwardRef<HTMLElement, ResizableProps>(function ResizableForward(_props: ResizableProps, forwardedRef) {
   // console.log("Resizable");
   const props = _props as ResizablePropsDP;
-  let {
-    children,
-    onResizeEffect,
-    enabledHandles,
-    handleOptions,
-    handlesOptions,
-    disableControl,
-    handleStyle,
-    handlesStyle,
-  } = props;
+  let { children, onResizeEffect, enabledHandles, handleOptions, handlesOptions, disableControl, handleStyle, handlesStyle } = props;
 
   const render = useRerender();
 
@@ -179,7 +165,7 @@ const Resizable = React.forwardRef<HTMLElement, ResizableProps>(function Resizab
   // console.log(calculatedTop, calculatedHeight);
 
   // strip away checks in production build
-  if (!process.env.NODE_ENV || process.env.NODE_ENV !== "production") checkProps(props, nodeRef);
+  if (!import.meta.env.NODE_ENV || import.meta.env.NODE_ENV !== "production") checkProps(props, nodeRef);
 
   const finalHandlesOptions = useFinalHandlesOptions(enabledHandles, handleOptions, handlesOptions);
 
@@ -191,11 +177,9 @@ const Resizable = React.forwardRef<HTMLElement, ResizableProps>(function Resizab
   const disableWidthControl = typeof disableControl === "boolean" ? disableControl : disableControl?.horizontal;
   const disableHeightControl = typeof disableControl === "boolean" ? disableControl : disableControl?.vertical;
   const enableHorizontal =
-    !disableWidthControl &&
-    !!enabledHandles.find((h) => h.toLowerCase().includes("left") || h.toLowerCase().includes("right"));
+    !disableWidthControl && !!enabledHandles.find((h) => h.toLowerCase().includes("left") || h.toLowerCase().includes("right"));
   const enableVertical =
-    !disableHeightControl &&
-    !!enabledHandles.find((h) => h.toLowerCase().includes("top") || h.toLowerCase().includes("bottom"));
+    !disableHeightControl && !!enabledHandles.find((h) => h.toLowerCase().includes("top") || h.toLowerCase().includes("bottom"));
 
   // when disabling the control, the width/height should be reset to initial value
   useLayoutEffect(() => {
@@ -254,8 +238,7 @@ const Resizable = React.forwardRef<HTMLElement, ResizableProps>(function Resizab
   const height = enableVertical ? calculatedHeight ?? nodeRef?.current?.style?.height ?? undefined : undefined;
   const width = enableHorizontal ? calculatedWidth ?? nodeRef?.current?.style?.width ?? undefined : undefined;
   if (nodeRef?.current) {
-    if (props.height)
-      nodeRef.current.style.height = typeof props.height === "number" ? `${props.height}px` : props.height;
+    if (props.height) nodeRef.current.style.height = typeof props.height === "number" ? `${props.height}px` : props.height;
     else if (!disableHeightControl && !!height) {
       nodeRef.current.style.height = height + "px";
       if (props.enableRelativeOffset) nodeRef.current.style.top = calculatedTop + "px";
@@ -377,10 +360,7 @@ const getFinalHandlesOptions = (
   // fill up empty handles sizes
   for (const handle of enabledHandles) {
     if (handle in mergedHandlesOptions) {
-      finalHandlesOptions[handle] = mergeRecursive(
-        cloneDeepNoFunction(mergedHandleOptions),
-        mergedHandlesOptions[handle]
-      );
+      finalHandlesOptions[handle] = mergeRecursive(cloneDeepNoFunction(mergedHandleOptions), mergedHandlesOptions[handle]);
     }
   }
   return finalHandlesOptions;
@@ -396,10 +376,7 @@ const useFinalHandlesOptions = (
     // console.log("recalculates handles options");
     return mergeRecursive(cloneDeepNoFunction(defaultHandlesOptions), handlesOptions);
   }, [handlesOptions]);
-  let mergedHandleOptions = useMemo(
-    () => mergeRecursive(cloneDeepNoFunction(defaultHandleOptions), handleOptions),
-    [handleOptions]
-  );
+  let mergedHandleOptions = useMemo(() => mergeRecursive(cloneDeepNoFunction(defaultHandleOptions), handleOptions), [handleOptions]);
   return useMemo(
     () => getFinalHandlesOptions(enabledHandles, mergedHandlesOptions, mergedHandleOptions),
     [enabledHandles, handlesOptions, handleOptions]
@@ -428,8 +405,7 @@ const checkProps = (props: ResizableProps, nodeRef: React.RefObject<HTMLElement>
       }
     }
   }
-  if (!props.nodeRef && !props.children)
-    warn("at least one property: 'nodeRef' or 'children' should be passed to Resizable");
+  if (!props.nodeRef && !props.children) warn("at least one property: 'nodeRef' or 'children' should be passed to Resizable");
   if (nodeRef.current) {
     const node = nodeRef.current;
     if ((props.enableRelativeOffset && !node.style.position) || node.style.position == "static") {

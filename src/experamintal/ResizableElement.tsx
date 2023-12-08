@@ -87,7 +87,7 @@ const ResizableElementForward = React.forwardRef<HTMLElement, ResizableElementPr
   }, [disableWidthControl]);
 
   // strip away checks in production build
-  if (!process.env.NODE_ENV || process.env.NODE_ENV !== "production") checkProps(p, nodeRef);
+  if (!import.meta.env.NODE_ENV || import.meta.env.NODE_ENV !== "production") checkProps(p, nodeRef);
 
   return (
     (p.children &&

@@ -167,7 +167,7 @@ export interface ResizableProps {
 //   // console.log(calculatedTop, calculatedHeight);
 //
 //   // strip away checks in production build
-//   if (!process.env.NODE_ENV || process.env.NODE_ENV !== "production") checkProps(props, ResizableState, nodeRef);
+//   if (!import.meta.env.NODE_ENV || import.meta.env.NODE_ENV !== "production") checkProps(props, ResizableState, nodeRef);
 //
 //   const finalHandlesOptions = useFinalHandlesOptions(enabledHandles, handleOptions, handlesOptions);
 //
@@ -302,7 +302,7 @@ export interface ResizableProps {
 // };
 // ResizableBaseOldForward.defaultProps = ResizableDefaultProps;
 
-interface NewResizableProps extends ResizableElementProps {
+export interface NewResizableProps extends ResizableElementProps {
   children?: React.ReactElement;
   nodeRef?: React.RefObject<HTMLElement>;
   // handleStyle?: React.CSSProperties;

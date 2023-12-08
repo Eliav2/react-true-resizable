@@ -97,9 +97,8 @@ const ResizableBaseForward = React.forwardRef<HTMLElement, ResizableBaseProps>(f
 
 export const useResizableBase = () => {
   const val = React.useContext(ResizableBaseContext);
-  if (process.env.NODE_ENV !== "production") {
+  if (import.meta.env.NODE_ENV !== "production") {
     const warn = useResizableWarn();
-    console.log("val.contextAppear", val.contextAppear);
     if (!val.contextAppear) warn("Component is not wrapped with ResizableBase, so it will not work properly");
   }
   return React.useContext(ResizableBaseContext);

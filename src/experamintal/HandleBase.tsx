@@ -59,7 +59,7 @@ const HandleBase: FC<HandleBaseProps> = (_props) => {
   // const { handlesParentPosition } = props;
   const { handlesParentPosition, contextAppear } = React.useContext(HandlesParentState);
   const warn = useResizableWarn();
-  if (!process.env.NODE_ENV || process.env.NODE_ENV !== "production")
+  if (!import.meta.env.NODE_ENV || import.meta.env.NODE_ENV !== "production")
     if (!contextAppear)
       warn(
         "Handle is used without HandlesParent wrapper. wrap HandlesParent around your Handle component.\n for example: \n <HandlesParent><Handle><div/></Handle></HandlesParent>"
