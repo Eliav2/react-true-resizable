@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import ResizableExpr, { NewResizableProps, ResizableRefHandle } from "../../../../src/experamintal/Resizable";
 
 //MRT Imports
 import {
@@ -41,19 +42,21 @@ const Example = () => {
             id: "name", //id is still required when using accessorFn instead of accessorKey
             header: "Name",
             size: 250,
-            Cell: ({ renderedCellValue, row }) => (
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "1rem",
-                }}
-              >
-                <img alt="avatar" height={30} src={row.original.avatar} loading="lazy" style={{ borderRadius: "50%" }} />
-                {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
-                <span>{renderedCellValue}</span>
-              </Box>
-            ),
+            // Header: ({ column }) => <Box sx={{ border: "1px solid red" }}>{column.columnDef.header}</Box>, //custom header markup
+            // Cell: ({ renderedCellValue, row }) => (
+            //   <Box
+            //     sx={{
+            //       display: "flex",
+            //       alignItems: "center",
+            //       gap: "1rem",
+            //     }}
+            //   >
+            //     <img alt="avatar" height={30} src={row.original.avatar} loading="lazy" style={{ borderRadius: "50%" }} />
+            //     {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
+            //     <span>{renderedCellValue}</span>
+            //   </Box>
+            // ),
+            Header: ({ column }) => <i style={{ color: "red", border: "1px solid red" }}>{column.columnDef.header}</i>,
           },
           {
             accessorKey: "email", //accessorKey used to define `data` column. `id` gets set to accessorKey automatically
@@ -89,6 +92,7 @@ const Example = () => {
                   color: "#fff",
                   maxWidth: "9ch",
                   p: "0.25rem",
+                  // width: 300,
                 })}
               >
                 {cell.getValue<number>()?.toLocaleString?.("en-US", {
@@ -128,6 +132,7 @@ const Example = () => {
 
   const table = useMaterialReactTable({
     columns,
+    // enableColumnResizing: true,
     data, //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
     enableColumnFilterModes: true,
     enableColumnOrdering: true,
@@ -156,6 +161,8 @@ const Example = () => {
       shape: "rounded",
       variant: "outlined",
     },
+
+    // render
     renderDetailPanel: ({ row }) => (
       <Box
         sx={{

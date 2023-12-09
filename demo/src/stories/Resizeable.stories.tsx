@@ -4,6 +4,7 @@ import ResizableExpr, { NewResizableProps, ResizableRefHandle } from "../../../s
 import { Button } from "./Button";
 import React from "react";
 import MrtTable from "./Table/MrtTable";
+import MrtCustomHeadless from "./Table/MrtCustomHeadless/MrtCustomHeadless";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
@@ -55,5 +56,14 @@ export const MrtResizeableColumn: Story = {
   },
   render: (args) => {
     return <MrtTable />;
+  },
+};
+export const MrtCustomHeadlessTableStory: Story = {
+  args: {
+    // primary: true,
+    // label: "Button",
+  },
+  render: (args) => {
+    return <MrtCustomHeadless />;
   },
 };
