@@ -5,6 +5,7 @@ import { Button } from "./Button";
 import React from "react";
 import MrtTable from "./Table/MrtTable";
 import MrtCustomHeadless from "./Table/MrtCustomHeadless/MrtCustomHeadless";
+import useResizeable from "../../../src/experamintal/useResizeable";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
@@ -33,6 +34,7 @@ const BoxStyle = {
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
+  padding: 12,
 } as React.CSSProperties;
 
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
@@ -65,5 +67,26 @@ export const MrtCustomHeadlessTableStory: Story = {
   },
   render: (args) => {
     return <MrtCustomHeadless />;
+  },
+};
+
+export const ResizeableWithHooks: Story = {
+  args: {
+    // primary: true,
+    // label: "Button",
+  },
+  render: (args) => {
+    const nodeRef = React.useRef<HTMLDivElement>(null);
+    const handleRef = React.useRef<HTMLElement>(null);
+    const { style: rs, eventHandlers } = useResizeable({ nodeRef, handleRef });
+    console.log("r", eventHandlers);
+    return (
+      <div>
+        <div style={{ ...BoxStyle }} ref={nodeRef}>
+          box
+        </div>
+        <div {...eventHandlers}>handle</div>
+      </div>
+    );
   },
 };

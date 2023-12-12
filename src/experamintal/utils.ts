@@ -11,3 +11,18 @@ export const omitItems = (arr: any[], removeArr: any[]) => {
 };
 
 export const useResizableWarn = () => useOneTimeWarn("Resizable: ");
+
+type Dict = Record<string, any>;
+export function mergeDefaultValues(...objects: Dict[]): Dict {
+  const merged: Dict = {};
+
+  for (const obj of objects) {
+    for (const key in obj) {
+      if (!(key in merged) || merged[key] === undefined) {
+        merged[key] = obj[key];
+      }
+    }
+  }
+
+  return merged;
+}

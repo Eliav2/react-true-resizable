@@ -1,14 +1,15 @@
-import { useResizableBase } from "./ResizableBase";
+import { ResizableBaseContextProps, useResizableBase } from "./ResizableBase";
 import { usePassRef } from "shared/hooks/usePassChildrenRef";
 import React, { useImperativeHandle, useLayoutEffect, useRef, useState } from "react";
 import { checkProps } from "./ResizableElement";
 import usePosition, { positionType } from "shared/hooks/usePosition";
 import useRerender from "shared/hooks/useRerender";
-import { parseRelativeSize } from "shared/utils";
+import { getRelativeSizeValue, parseRelativeSize } from "shared/utils";
 import { AllowResize } from "./HandleOld";
 import { parsePossiblyAxis } from "./HandleBase";
 import { PossiblySpecifyAxis } from "./Resizable";
-import type { RelativeSize } from "shared/types";
+import type { MapNonNullable, RelativeSize } from "shared/types";
+import { mergeDefaultValues } from "./utils";
 
 type OnResizeEvent = (newPos: { height: number; width: number }, prevPos: Exclude<positionType, null>) => void;
 type OnResizeUpdate<T> = (newPos: T, prevPos: Exclude<positionType, null>) => void;
@@ -36,7 +37,17 @@ interface Props {
   offset?: { left?: RelativeSize; top?: RelativeSize };
 }
 
-const useResizeable = (props: Props) => {
+const useResizeable = (_props: Props) => {
+  const props = mergeDefaultValues(_props, {
+    allowResize: { vertical: true, horizontal: true },
+    grid: { vertical: 0, horizontal: 0 },
+    resizeRatio: { vertical: 1, horizontal: 1 },
+    disableControl: { vertical: false, horizontal: false },
+    enableRelativeOffset: false,
+    offset: { left: "0%", top: "0%" },
+  });
+
+  console.log("useResizeable", props);
   // let { nodeRef, disableControl, height, width, enableRelativeOffset, children } = props;
   // const ResizableState = useResizableBase();
   // let { calculatedHeight, calculatedWidth, calculatedTop, calculatedLeft, initialHeight, initialWidth, nodeRef, render } = ResizableState;
@@ -159,7 +170,7 @@ const useResizeable = (props: Props) => {
   const disableHeightControl = typeof props.disableControl === "boolean" ? props.disableControl : props.disableControl?.vertical;
 
   const resize = (event: React.PointerEvent<HTMLDivElement>) => {
-    // console.log("handleResize");
+    console.log("handleResize");
     // event.nativeEvent.stopImmediatePropagation();
 
     if (isDragging) {
@@ -271,8 +282,23 @@ const useResizeable = (props: Props) => {
     if (nodeRef.current && calculatedWidth) nodeRef.current.style.width = initialWidth;
   }, [disableWidthControl]);
 
+  // const final_height = getRelativeSizeValue(handleHeight, calculatedHeight);
+  // const final_width = getRelativeSizeValue(handleWidth, calculatedWidth);
+
   // // strip away checks in production build
   // if (!import.meta.env.NODE_ENV || import.meta.env.NODE_ENV !== "production") checkProps(props, nodeRef);
+
+  return {
+    style: {
+      left,
+      top,
+      position: "absolute",
+      // transform: `translate(-${leftP}%,-${topP}%)`,
+      // transform: `translate(-${leftRel.percent * 100}%,-${topRel.percent * 100}%)`,
+      cursor: "n-resize",
+    },
+    eventHandlers: { onPointerDown: resizeStart, onPointerMove: resize, onPointerUp: resizeEnd },
+  };
 
   // return (
   //   (p.children &&
@@ -282,5 +308,4 @@ const useResizeable = (props: Props) => {
   //   null
   // );
 };
-
 export default useResizeable;
