@@ -34,7 +34,7 @@ const ResizableElementForward = React.forwardRef<HTMLElement, ResizableElementPr
     // noinspection JSConstantReassignment
     nodeRef.current = p.nodeRef.current;
   }
-  // if wrapper component tried to access the inner DOM node, let it do so
+  // if a wrapper component tried to access the inner DOM node, let it do so
   if (forwardedRef && typeof forwardedRef == "object" && "current" in forwardedRef && nodeRef) forwardedRef.current = nodeRef.current;
 
   // control and update the size of the node on each render

@@ -20,11 +20,11 @@ export interface HandleProps extends Omit<HandleBaseProps, "children"> {
 const Handle: React.FC<HandleProps> = (props) => {
   let {
     children,
-    size = children ? 0 : 12,
+    size = children ? null : 12,
     offset,
     allowResize,
-    handleWidth = size,
-    handleHeight = size,
+    handleWidth = size ?? 12,
+    handleHeight = size ?? 12,
     handleCursor = "pointer",
     style,
     transform,

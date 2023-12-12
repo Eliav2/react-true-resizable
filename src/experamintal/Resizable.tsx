@@ -443,7 +443,9 @@ const BottomHandle: React.FC<HandleProps> = (props) => {
       handleCursor={"n-resize"}
       transform={"translateY(-50%)"}
       {...props}
-    />
+    >
+      <hr style={{ border: "rgba(0, 0, 0, 0.3) 3px solid", borderRadius: 2, width: "80%", height: 0 }}></hr>
+    </Handle>
   );
 };
 const LeftHandle: React.FC<HandleProps> = (props) => {
@@ -463,10 +465,13 @@ const RightHandle: React.FC<HandleProps> = (props) => {
       offset={{ left: "100%", top: "0%" }}
       allowResize={{ horizontal: { reverseDrag: false } }}
       handleHeight={"100%"}
+      // handleWidth={12}
       handleCursor={"e-resize"}
       transform={"translateX(-50%)"}
       {...props}
-    />
+    >
+      <hr style={{ border: "rgba(0, 0, 0, 0.3) 3px solid", borderRadius: 2, width: 0, height: "100%" }}></hr>
+    </Handle>
   );
 };
 

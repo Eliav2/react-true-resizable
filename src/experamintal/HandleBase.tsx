@@ -222,7 +222,7 @@ const HandleNewDefaultProps = {
 } as const;
 HandleBase.defaultProps = HandleNewDefaultProps;
 
-const parsePossiblyAxis = <
+export const parsePossiblyAxis = <
   Spec extends string[],
   Prop extends PossiblySpecific<Primitive, "horizontal" | "vertical">,
   Default extends NonNullable<Primitive> | undefined = undefined

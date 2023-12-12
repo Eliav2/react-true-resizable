@@ -6,10 +6,12 @@ import {
   flexRender,
   type MRT_ColumnDef,
   useMaterialReactTable,
+  MRT_Header,
 } from "material-react-table";
 import { Box, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import { type Person, data } from "./makeData";
 import ResizableExpr, { NewResizableProps, ResizableRefHandle } from "../../../../../src/experamintal/Resizable";
+import React from "react";
 
 const columns: MRT_ColumnDef<Person>[] = [
   {
@@ -72,22 +74,30 @@ const MrtCustomHeadless = () => {
       {/* Using Vanilla Material-UI Table components here */}
       <TableContainer>
         <Table>
-          {/* Use your own markup, customize however you want using the power of TanStack Table */}
+          {/* Use your own markup, customize however you want to use the power of TanStack Table */}
           <TableHead>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
-                  <ResizableExpr
-                    enabledHandles={["right", "bottom"]}
-                    HandlesProps={{ resizeRatio: 2, style: {} }}
-                    HandleProps={{ bottom: { resizeRatio: 1 } }}
-                  >
-                    <TableCell align="center" variant="head" key={header.id} sx={{ border: "1px solid gray" }}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(header.column.columnDef.Header ?? header.column.columnDef.header, header.getContext())}
-                    </TableCell>
-                  </ResizableExpr>
+                  // <ResizeableCell header={header} />
+                  <ResizeableCellWithHooks header={header} key={header.id} />
+                  // <ResizableExpr
+                  //   enabledHandles={["right", "bottom"]}
+                  //   HandlesProps={{
+                  //     resizeRatio: 2,
+                  //     size: 24,
+                  //     style: {
+                  //       // background: "gray",
+                  //     },
+                  //   }}
+                  //   HandleProps={{ bottom: { resizeRatio: 1 } }}
+                  // >
+                  //   <TableCell align="center" variant="head" key={header.id} sx={{ border: "1px solid gray" }}>
+                  //     {header.isPlaceholder
+                  //       ? null
+                  //       : flexRender(header.column.columnDef.Header ?? header.column.columnDef.header, header.getContext())}
+                  //   </TableCell>
+                  // </ResizableExpr>
                 ))}
               </TableRow>
             ))}
@@ -108,6 +118,36 @@ const MrtCustomHeadless = () => {
       </TableContainer>
       <MRT_ToolbarAlertBanner stackAlertBanner table={table} />
     </Stack>
+  );
+};
+
+const ResizeableCell = ({ header }: { header: MRT_Header<Person> }) => {
+  return (
+    <ResizableExpr
+      enabledHandles={["right", "bottom"]}
+      HandlesProps={{
+        resizeRatio: 2,
+        size: 24,
+        style: {
+          // background: "gray",
+        },
+      }}
+      HandleProps={{ bottom: { resizeRatio: 1 } }}
+    >
+      <TableCell align="center" variant="head" sx={{ border: "1px solid gray" }}>
+        {header.isPlaceholder ? null : flexRender(header.column.columnDef.Header ?? header.column.columnDef.header, header.getContext())}
+      </TableCell>
+    </ResizableExpr>
+  );
+};
+const ResizeableCellWithHooks = ({ header }: { header: MRT_Header<Person> }) => {
+  const ref = React.useRef(null);
+  console.log(ref);
+  return (
+    <TableCell align="center" variant="head" sx={{ border: "1px solid gray" }} ref={ref}>
+      {header.isPlaceholder ? null : flexRender(header.column.columnDef.Header ?? header.column.columnDef.header, header.getContext())}
+      <hr style={{ border: "rgba(0, 0, 0, 0.3) 3px solid", position: "absolute", borderRadius: 2, width: 0, height: 10 }}></hr>
+    </TableCell>
   );
 };
 
