@@ -6,6 +6,7 @@ import React from "react";
 import MrtTable from "./Table/MrtTable";
 import MrtCustomHeadless from "./Table/MrtCustomHeadless/MrtCustomHeadless";
 import useResizeable from "../../../src/experamintal/useResizeable";
+import useResizeableHandle, { UseHandleProps } from "../../../src/experamintal/useResizeableHandle";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
@@ -19,9 +20,9 @@ const meta = {
   tags: ["autodocs"],
   // More on argTypes: https://storybook.js.org/docs/api/argtypes
   argTypes: {
-    backgroundColor: { control: "color" },
+    // backgroundColor: { control: "color" },
   },
-} satisfies Meta<typeof NewResizableProps>;
+} satisfies Meta<NewResizableProps>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -72,20 +73,27 @@ export const MrtCustomHeadlessTableStory: Story = {
 
 export const ResizeableWithHooks: Story = {
   args: {
-    // primary: true,
-    // label: "Button",
+    enabledHandles: ["bottom"],
   },
   render: (args) => {
+    console.log("args", args);
     const nodeRef = React.useRef<HTMLDivElement>(null);
-    const handleRef = React.useRef<HTMLElement>(null);
-    const { style: rs, eventHandlers } = useResizeable({ nodeRef, handleRef });
+    const horizontalHandleRef = React.useRef<HTMLElement>(null);
+    // const verticalHandleRef = React.useRef<HTMLElement>(null);
+    // const { style: rs, eventHandlers } = useResizeable({ nodeRef, handleRef: horizontalHandleRef, ...args });
+    const { style: rs, eventHandlers } = useResizeableHandle({ nodeRef, handleRef: horizontalHandleRef, ...args });
     console.log("r", eventHandlers);
     return (
       <div>
         <div style={{ ...BoxStyle }} ref={nodeRef}>
           box
         </div>
-        <div {...eventHandlers}>handle</div>
+        <div {...eventHandlers} style={{ cursor: "ew-resize", userSelect: "none" }}>
+          horizontal-handle
+        </div>
+        {/*<div {...eventHandlers} style={{ cursor: "ew-resize", userSelect: "none" }}>*/}
+        {/*  vertical-handle*/}
+        {/*</div>*/}
       </div>
     );
   },

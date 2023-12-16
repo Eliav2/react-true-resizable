@@ -16,7 +16,7 @@ type OnResizeUpdate<T> = (newPos: T, prevPos: Exclude<positionType, null>) => vo
 
 type HandleFunc = (event: React.PointerEvent<HTMLDivElement>) => void;
 
-interface Props {
+export interface UseHandleProps {
   nodeRef: React.RefObject<HTMLElement>;
   handleRef: React.RefObject<HTMLElement>;
   allowResize?: AllowResize;
@@ -34,20 +34,20 @@ interface Props {
   height?: number | string;
   width?: number | string;
   enableRelativeOffset?: boolean;
-  offset?: { left?: RelativeSize; top?: RelativeSize };
+  // offset?: { left?: RelativeSize; top?: RelativeSize };
 }
 
-const useResizeable = (_props: Props) => {
+const useResizeableHandle = (_props: UseHandleProps) => {
   const props = mergeDefaultValues(_props, {
     allowResize: { vertical: true, horizontal: true },
     grid: { vertical: 0, horizontal: 0 },
     resizeRatio: { vertical: 1, horizontal: 1 },
     disableControl: { vertical: false, horizontal: false },
     enableRelativeOffset: false,
-    offset: { left: "0%", top: "0%" },
+    // offset: { left: "0%", top: "0%" },
   });
 
-  console.log("useResizeable", props);
+  // console.log("useResizeable", props);
   // let { nodeRef, disableControl, height, width, enableRelativeOffset, children } = props;
   // const ResizableState = useResizableBase();
   // let { calculatedHeight, calculatedWidth, calculatedTop, calculatedLeft, initialHeight, initialWidth, nodeRef, render } = ResizableState;
@@ -225,16 +225,16 @@ const useResizeable = (_props: Props) => {
     }
   };
 
-  const leftRel = parseRelativeSize(props?.offset?.left ?? "0%");
-  const topRel = parseRelativeSize(props?.offset?.top ?? "0%");
-  const left =
-    handlesParentPosition && nodePosition
-      ? nodePosition.left - handlesParentPosition.left + (leftRel.percent * nodePosition.width + leftRel.abs)
-      : 0;
-  const top =
-    handlesParentPosition && nodePosition
-      ? nodePosition.top - handlesParentPosition.top + (topRel.percent * nodePosition.height + topRel.abs)
-      : 0;
+  // const leftRel = parseRelativeSize(props?.offset?.left ?? "0%");
+  // const topRel = parseRelativeSize(props?.offset?.top ?? "0%");
+  // const left =
+  //   handlesParentPosition && nodePosition
+  //     ? nodePosition.left - handlesParentPosition.left + (leftRel.percent * nodePosition.width + leftRel.abs)
+  //     : 0;
+  // const top =
+  //   handlesParentPosition && nodePosition
+  //     ? nodePosition.top - handlesParentPosition.top + (topRel.percent * nodePosition.height + topRel.abs)
+  //     : 0;
 
   // control and update the size of the node on each render
   let height;
@@ -291,14 +291,14 @@ const useResizeable = (_props: Props) => {
   // if (!import.meta.env.NODE_ENV || import.meta.env.NODE_ENV !== "production") checkProps(props, nodeRef);
 
   return {
-    style: {
-      left,
-      top,
-      position: "absolute",
-      // transform: `translate(-${leftP}%,-${topP}%)`,
-      // transform: `translate(-${leftRel.percent * 100}%,-${topRel.percent * 100}%)`,
-      cursor: "n-resize",
-    },
+    // style: {
+    //   // left,
+    //   // top,
+    //   // position: "absolute",
+    //   // transform: `translate(-${leftP}%,-${topP}%)`,
+    //   // transform: `translate(-${leftRel.percent * 100}%,-${topRel.percent * 100}%)`,
+    //   cursor: "n-resize",
+    // },
     eventHandlers: { onPointerDown: resizeStart, onPointerMove: resize, onPointerUp: resizeEnd },
   };
 
@@ -310,4 +310,4 @@ const useResizeable = (_props: Props) => {
   //   null
   // );
 };
-export default useResizeable;
+export default useResizeableHandle;
