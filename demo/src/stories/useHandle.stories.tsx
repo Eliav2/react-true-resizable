@@ -9,13 +9,11 @@ import useResizeable from "../../../src/experamintal/useResizeable";
 import useResizeableHandle, { UseHandleProps } from "../../../src/experamintal/useResizeableHandle";
 
 const UseHandleDemo = (args) => {
-  console.log("args", args);
   const nodeRef = React.useRef<HTMLDivElement>(null);
   const horizontalHandleRef = React.useRef<HTMLElement>(null);
   // const verticalHandleRef = React.useRef<HTMLElement>(null);
   // const { style: rs, eventHandlers } = useResizeable({ nodeRef, handleRef: horizontalHandleRef, ...args });
   const { eventHandlers } = useResizeableHandle({ nodeRef, handleRef: horizontalHandleRef, ...args });
-  console.log("r", eventHandlers);
   return (
     <div>
       <div style={{ ...BoxStyle }} ref={nodeRef}>
@@ -61,6 +59,7 @@ const BoxStyle = {
 export const ResizeableWithHooks: Story = {
   args: {
     disableControl: false,
+    resetOnDisableControl: false,
     // height: null,
     // width: null,
     // enableRelativeOffset: false,

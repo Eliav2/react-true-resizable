@@ -8,7 +8,7 @@ import { getRelativeSizeValue, parseRelativeSize } from "shared/utils";
 import { AllowResize } from "./HandleOld";
 import { parsePossiblyAxis } from "./HandleBase";
 import { PossiblySpecifyAxis } from "./Resizable";
-import type { MapNonNullable, RelativeSize } from "shared/types";
+import type { MapNonNullable, RelativeSize, RespectDefaultProps } from "shared/types";
 import { mergeDefaultValues } from "./utils";
 
 type OnResizeEvent = (newPos: { height: number; width: number }, prevPos: Exclude<positionType, null>) => void;
@@ -31,6 +31,13 @@ export interface UseHandleProps {
         vertical?: OnResizeUpdate<{ height: number }>;
       };
   disableControl?: PossiblySpecifyAxis<boolean>;
+
+  /**
+   * reset width/height to initial value when disabled
+   * @default true
+   */
+  resetOnDisableControl?: PossiblySpecifyAxis<boolean>;
+
   height?: number | string;
   width?: number | string;
   enableRelativeOffset?: boolean;
@@ -38,14 +45,16 @@ export interface UseHandleProps {
 }
 
 const useResizeableHandle = (_props: UseHandleProps) => {
-  const props = mergeDefaultValues(_props, {
+  const defaultProps = {
     allowResize: { vertical: true, horizontal: true },
     grid: { vertical: 0, horizontal: 0 },
     resizeRatio: { vertical: 1, horizontal: 1 },
     disableControl: { vertical: false, horizontal: false },
     enableRelativeOffset: false,
     // offset: { left: "0%", top: "0%" },
-  });
+    resetOnDisableControl: { vertical: true, horizontal: true },
+  } as const;
+  const props = mergeDefaultValues(_props, defaultProps);
 
   // console.log("useResizeable", props);
   // let { nodeRef, disableControl, height, width, enableRelativeOffset, children } = props;
@@ -167,11 +176,12 @@ const useResizeableHandle = (_props: UseHandleProps) => {
     }
     if (typeof props?.onResizeEnd === "function" && nodePosition) props.onResizeEnd(nodePosition);
   };
-  const disableWidthControl = typeof props.disableControl === "boolean" ? props.disableControl : props.disableControl?.horizontal;
-  const disableHeightControl = typeof props.disableControl === "boolean" ? props.disableControl : props.disableControl?.vertical;
+  // const disableWidthControl = typeof props.disableControl === "boolean" ? props.disableControl : props.disableControl?.horizontal;
+  // const disableHeightControl = typeof props.disableControl === "boolean" ? props.disableControl : props.disableControl?.vertical;
+  const disableControl = parsePossiblyAxis(props.disableControl, false);
 
   const resize = (event: React.PointerEvent<HTMLDivElement>) => {
-    console.log("handleResize");
+    // console.log("handleResize");
     // event.nativeEvent.stopImmediatePropagation();
 
     if (isDragging) {
@@ -211,12 +221,12 @@ const useResizeableHandle = (_props: UseHandleProps) => {
       }
 
       if (props.allowResize && nodePosition) {
-        if ("vertical" in props.allowResize && props.allowResize["vertical"] && !disableHeightControl) {
+        if ("vertical" in props.allowResize && props.allowResize["vertical"] && !disableControl.vertical) {
           setCalculatedHeight(height);
           if (typeof props?.onResize === "object") props.onResize.vertical?.({ height }, nodePosition);
         }
         // console.log(props.onResize);
-        if ("horizontal" in props.allowResize && props.allowResize["horizontal"] && !disableWidthControl) {
+        if ("horizontal" in props.allowResize && props.allowResize["horizontal"] && !disableControl.horizontal) {
           setCalculatedWidth(width);
           if (typeof props?.onResize === "object") props.onResize.horizontal?.({ width }, nodePosition);
         }
@@ -240,24 +250,24 @@ const useResizeableHandle = (_props: UseHandleProps) => {
   let height;
   if (props.height) height = typeof props.height === "number" ? `${props.height}px` : props.height;
   else {
-    height = !disableHeightControl ? calculatedHeight ?? nodeRef?.current?.style?.height : undefined;
+    height = !disableControl.vertical ? calculatedHeight ?? nodeRef?.current?.style?.height : undefined;
     if (height) height += "px";
   }
   let width;
   if (props.width) width = typeof props.width === "number" ? `${props.width}px` : props.width;
   else {
-    width = !disableWidthControl ? calculatedWidth ?? nodeRef?.current?.style?.width : undefined;
+    width = !disableControl.horizontal ? calculatedWidth ?? nodeRef?.current?.style?.width : undefined;
     if (width) width += "px";
   }
 
   // mutate the DOM node directly
   if (nodeRef?.current) {
-    if (!disableHeightControl && !!height) {
+    if (!disableControl.vertical && !!height) {
       nodeRef.current.style.height = height;
 
       if (props.enableRelativeOffset) nodeRef.current.style.top = calculatedTop + "px";
     }
-    if (!disableWidthControl && !!width) {
+    if (!disableControl.horizontal && !!width) {
       nodeRef.current.style.width = width;
       if (props.enableRelativeOffset) nodeRef.current.style.left = calculatedLeft + "px";
     }
@@ -272,17 +282,20 @@ const useResizeableHandle = (_props: UseHandleProps) => {
     render();
   }, [nodeRef.current]);
 
+  const resetOnDisableControl = parsePossiblyAxis(props.resetOnDisableControl, true);
+  console.log("resetOnDisableControl", resetOnDisableControl);
+  console.log("disableControl", disableControl);
   // when disabling the control, the width/height should be reset to initial value
   useLayoutEffect(() => {
-    if (nodeRef.current && disableHeightControl) setCalculatedHeight(null);
+    if (nodeRef.current && disableControl.vertical && resetOnDisableControl.vertical) setCalculatedHeight(null);
     // after first render
     if (nodeRef.current && calculatedHeight) nodeRef.current.style.height = initialHeight;
-  }, [disableHeightControl]);
+  }, [disableControl.vertical, resetOnDisableControl.vertical]);
   useLayoutEffect(() => {
-    if (nodeRef.current && disableWidthControl) setCalculatedWidth(null);
+    if (nodeRef.current && disableControl.horizontal && resetOnDisableControl.horizontal) setCalculatedWidth(null);
     // after first render
     if (nodeRef.current && calculatedWidth) nodeRef.current.style.width = initialWidth;
-  }, [disableWidthControl]);
+  }, [disableControl.horizontal, resetOnDisableControl.horizontal]);
 
   // const final_height = getRelativeSizeValue(handleHeight, calculatedHeight);
   // const final_width = getRelativeSizeValue(handleWidth, calculatedWidth);
