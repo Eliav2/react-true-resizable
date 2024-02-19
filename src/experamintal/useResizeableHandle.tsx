@@ -45,6 +45,7 @@ export interface UseHandleProps {
 }
 
 const useResizeableHandle = (_props: UseHandleProps) => {
+  console.log("useResizeableHandle render");
   const defaultProps = {
     allowResize: { vertical: true, horizontal: true },
     grid: { vertical: 0, horizontal: 0 },
@@ -65,10 +66,12 @@ const useResizeableHandle = (_props: UseHandleProps) => {
   const nodePosition = usePosition(nodeRef.current);
   const handlesParentPosition = usePosition(handleRef.current);
 
-  const [initialHeight, setInitialHeight] = useState("");
-  const [initialWidth, setInitialWidth] = useState("");
+  const [initialHeight, setInitialHeight] = useState<string | undefined>();
+  const [initialWidth, setInitialWidth] = useState<string | undefined>();
   const [calculatedHeight, setCalculatedHeight] = useState<number | null | undefined>(undefined);
   const [calculatedWidth, setCalculatedWidth] = useState<number | null | undefined>(undefined);
+  const [heightBeforeReset, setHeightBeforeReset] = useState<number | null | undefined>(undefined);
+  const [widthBeforeReset, setWidthBeforeReset] = useState<number | null | undefined>(undefined);
 
   const [calculatedLeft, setCalculatedLeft] = useState<number | null | undefined>(0);
   const [calculatedTop, setCalculatedTop] = useState<number | null | undefined>(0);
@@ -103,10 +106,10 @@ const useResizeableHandle = (_props: UseHandleProps) => {
 
       setCalculatedHeight(height);
       setCalculatedWidth(width);
-      if (nodeRef.current.style) {
-        setInitialHeight(nodeRef.current.style.height ?? "");
-        setInitialWidth(nodeRef.current.style.width ?? "");
-      }
+      // if (nodeRef.current.style) {
+      setInitialHeight(nodeRef.current.style.height);
+      setInitialWidth(nodeRef.current.style.width);
+      // }
     }
   }, [nodeRef.current]);
 
@@ -287,14 +290,31 @@ const useResizeableHandle = (_props: UseHandleProps) => {
   console.log("disableControl", disableControl);
   // when disabling the control, the width/height should be reset to initial value
   useLayoutEffect(() => {
-    if (nodeRef.current && disableControl.vertical && resetOnDisableControl.vertical) setCalculatedHeight(null);
-    // after first render
-    if (nodeRef.current && calculatedHeight) nodeRef.current.style.height = initialHeight;
+    if (nodeRef.current) {
+      if (resetOnDisableControl.vertical) {
+        if (disableControl.vertical) {
+          setCalculatedHeight(null);
+          setHeightBeforeReset(calculatedHeight);
+        } else {
+          setCalculatedHeight(heightBeforeReset);
+        }
+      }
+    }
+    // // after first render
+    // if (nodeRef.current && calculatedHeight) nodeRef.current.style.height = initialHeight;
   }, [disableControl.vertical, resetOnDisableControl.vertical]);
   useLayoutEffect(() => {
-    if (nodeRef.current && disableControl.horizontal && resetOnDisableControl.horizontal) setCalculatedWidth(null);
-    // after first render
-    if (nodeRef.current && calculatedWidth) nodeRef.current.style.width = initialWidth;
+    if (nodeRef.current)
+      if (resetOnDisableControl.horizontal) {
+        if (disableControl.horizontal) {
+          setCalculatedWidth(null);
+          setWidthBeforeReset(calculatedWidth);
+        } else {
+          setCalculatedWidth(widthBeforeReset);
+        }
+      }
+    // // after first render
+    // if (nodeRef.current && calculatedWidth) nodeRef.current.style.width = initialWidth;
   }, [disableControl.horizontal, resetOnDisableControl.horizontal]);
 
   // const final_height = getRelativeSizeValue(handleHeight, calculatedHeight);
